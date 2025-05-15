@@ -39,35 +39,53 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="flex justify-center">
               <div className="relative w-full max-w-md aspect-square">
-                <Image src="/images/president.jpg" alt="Chapter President" fill className="object-cover rounded-md" />
+                <Image
+                  src="/images/brothers/fiona-holdaway.jpg"
+                  alt="Chapter President"
+                  fill
+                  className="object-cover rounded-md"
+                />
               </div>
             </div>
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold mb-4">A LETTER FROM OUR PRESIDENT</h1>
+              <h1 className="text-3xl md:text-4xl font-bold mb-4">
+                A LETTER FROM OUR PRESIDENT
+              </h1>
               <p className="mb-4">
-                On behalf of Santa Clara University's Psi Omega Chapter, I would like to welcome you to our fraternity's
-                website. Our platform offers insight into our chapter's identity while also providing you with
-                information about our extensive network and guiding goals.
+                On behalf of our chapter, I&apos;d like to welcome you to our
+                official website. This platform offers a glimpse into who we
+                are: our values, goals, and the community we&apos;ve built.
+                Here, you&apos;ll find information about our chapter&apos;s
+                mission, our far-reaching professional network, and the dynamic
+                individuals who make up our brotherhood.
               </p>
               <p className="mb-4">
-                In essence, Alpha Kappa Psi is a diverse group of distinct, motivated, and insightful individuals from
-                all around the world. Every member of the Psi Omega chapter is constantly striving to grow
-                professionally and personally, supporting each other in all of their endeavors. Each brother offers a
-                unique perspective and set of skills that make our chapter the perfect place for growth and development.
+                Alpha Kappa Psi is more than just a professional fraternity. We
+                are a diverse and driven group of students who share a passion
+                for leadership, growth, and excellence. At the Psi Omega
+                chapter, every member brings a unique perspective and skill set,
+                creating a collaborative environment where we challenge and
+                uplift one another in both professional and personal pursuits.
               </p>
               <p className="mb-4">
-                I became a member of Alpha Kappa Psi during my freshman year at SCU, and since then, this group of
-                people and being a part of this fraternity has genuinely been life-changing. I have made all of my
-                closest friends and built a support system I can rely on for life. Words truly cannot express how
-                grateful I am for the last three years that I have been a part of this community, and I am so lucky to
-                be able to guide this talented and caring group in the upcoming academic year. Alpha Kappa Psi has
-                shaped my college experience, and I look forward to giving back to this outstanding organization.
+                I joined Alpha Kappa Psi during my freshman year at SCU, and it
+                has been one of the most impactful experiences of my college
+                journey. Through this fraternity, I&apos;ve built lifelong
+                friendships and found a support system that has shaped who I am
+                today. The last three years have been transformative, and I am
+                incredibly honored to lead this inspiring and dedicated chapter
+                in the upcoming academic year.
+              </p>
+              <p className="mb-4">
+                Alpha Kappa Psi has given me so much, and I&apos;m excited to
+                give back to the organization and the people who have made it
+                feel like home.
               </p>
               <div className="text-right">
-                <p>Sincerely,</p>
-                <p>Avery Pierson</p>
+                <p>Best,</p>
+                <p>Fiona Holdaway </p>
                 <p className="italic">President, Psi Omega Chapter</p>
-                <p className="italic">Santa Clara University '25</p>
+                <p className="italic">Santa Clara University &apos;26</p>
               </div>
             </div>
           </div>
