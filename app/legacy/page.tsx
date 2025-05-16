@@ -43,7 +43,7 @@ export default function LegacyPage() {
                             >
                                 <div className='flex items-center justify-center aspect-square w-24 h-24'>
                                     <Image
-                                        src={`/companies/${company.logo}`}
+                                        src={`/images/companies/${company.logo}`}
                                         alt={company.name}
                                         width={96}
                                         height={96}
