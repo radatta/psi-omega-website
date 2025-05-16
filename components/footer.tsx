@@ -32,7 +32,7 @@ export default function Footer() {
 
     return (
         <footer className='bg-black text-white py-12'>
-            <div className='container mx-auto px-4'>
+            <div className='container'>
                 <div className='text-center mb-8'>
                     <nav className='flex flex-wrap justify-center gap-4 md:gap-8'>
                         {navLinks.map((link) => (

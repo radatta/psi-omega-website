@@ -32,8 +32,6 @@ export default function Navbar() {
         { name: 'Rush AKPsi', href: '/rush-akpsi' },
         { name: 'Legacy', href: '/legacy' },
         { name: 'Events', href: '/events' },
-        { name: 'Database', href: '/database' },
-        { name: 'Advice', href: '/advice' },
     ];
 
     return (
@@ -44,7 +42,7 @@ export default function Navbar() {
                     : 'bg-transparent text-white'
             }`}
         >
-            <div className='container mx-auto px-4'>
+            <div className='container'>
                 <div className='flex justify-between items-center py-4'>
                     <Link href='/' className='flex items-center'>
                         <Image

@@ -11,7 +11,7 @@ export default function AboutPage() {
             {/* Hero Section */}
             <section
                 id='psi-omega-chapter'
-                className='relative h-[60vh] flex items-center justify-center text-white'
+                className='relative h-screen flex items-center justify-center text-white'
             >
                 <div className='absolute inset-0 z-0'>
                     <Image
@@ -23,7 +23,7 @@ export default function AboutPage() {
                     />
                     <div className='absolute inset-0 bg-black/50'></div>
                 </div>
-                <div className='container mx-auto px-4 z-10 text-center'>
+                <div className='container z-10 text-center'>
                     <h1 className='text-4xl md:text-6xl font-bold mb-4'>
                         PSI OMEGA CHAPTER
                     </h1>
@@ -43,17 +43,20 @@ export default function AboutPage() {
             <HistorySection />
 
             {/* Contact Section */}
-            <section id='question' className='relative py-20 text-white'>
+            <section
+                id='question'
+                className='relative h-screen py-20 text-white'
+            >
                 <div className='absolute inset-0 z-0'>
                     <Image
-                        src='/images/contact-bg.jpg'
+                        src='/images/Got-A-Question.jpg'
                         alt='Contact Background'
                         fill
-                        className='object-cover'
+                        className='object-fill'
                     />
                     <div className='absolute inset-0 bg-black/60'></div>
                 </div>
-                <div className='container mx-auto px-4 relative z-10 text-center'>
+                <div className='container relative z-10 text-center'>
                     <h1 className='text-3xl md:text-5xl font-bold mb-4'>
                         GOT A QUESTION?
                     </h1>

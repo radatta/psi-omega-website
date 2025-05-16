@@ -22,7 +22,7 @@ export default function RushPage() {
                     priority
                 />
 
-                <div className='container mx-auto px-4 z-10 text-center'>
+                <div className='container z-10 text-center'>
                     <h1 className='text-4xl md:text-6xl font-bold mb-4 animate-fade-in'>
                         RUSH ALPHA KAPPA PSI
                     </h1>
@@ -64,7 +64,7 @@ export default function RushPage() {
             <div className='relative z-10 bg-white'>
                 {/* Rush Info Section */}
                 <section id='rush-info' className='py-16 bg-white'>
-                    <div className='container mx-auto px-4'>
+                    <div className='container'>
                         <div className='text-center mb-8'>
                             <h1 className='text-3xl md:text-4xl font-bold mb-4'>
                                 WINTER RUSH 2025
@@ -131,7 +131,7 @@ export default function RushPage() {
 
                 {/* FAQ Section */}
                 <section id='faq' className='py-16 bg-gray-50'>
-                    <div className='container mx-auto px-4'>
+                    <div className='container'>
                         <h1 className='text-3xl md:text-4xl font-bold text-center mb-4'>
                             Frequently Asked Questions
                         </h1>
@@ -144,7 +144,10 @@ export default function RushPage() {
                 </section>
 
                 {/* Contact Section */}
-                <section id='contact' className='relative py-20 text-white'>
+                <section
+                    id='contact'
+                    className='relative h-screen py-20 text-white'
+                >
                     <div className='absolute inset-0 z-0'>
                         <Image
                             src='/images/contact-bg.jpg'
@@ -154,7 +157,7 @@ export default function RushPage() {
                         />
                         <div className='absolute inset-0 bg-black/60'></div>
                     </div>
-                    <div className='container mx-auto px-4 relative z-10 text-center'>
+                    <div className='container relative z-10 text-center'>
                         <h1 className='text-3xl md:text-5xl font-bold mb-4'>
                             Contact Us
                         </h1>

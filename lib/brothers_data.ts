@@ -12,16 +12,18 @@ export const executiveCommittee = [
 
 // Data for Committee Chairs
 export const committeeChairs = [
-    { name: 'Isha Nag + Sanjana Badami', position: 'Fundraising' },
+    { name: 'Sanjana Badami + Isha Nag', position: 'Fundraising' },
+    { name: 'Vaishnavi Tatipamula + Noor Khan', position: 'Professional' },
     { name: 'Kyle Poon + Hyatt Tullu', position: 'Service' },
+    { name: 'Naila Ahsan + Clair Kim', position: 'Brotherhood' },
+
+    { name: 'Aayush Kumbhare + Thomas Wickersham', position: 'STEAM' },
+    { name: 'Dzidzo Lassey + Kaardhika Nair', position: 'Wellness' },
+
     {
         name: 'Jonathan Felix Saucedo + Juana Melgoza',
         position: 'Diversity, Equity, & Inclusion',
     },
-    { name: 'Vaishnavi Tatipamula + Noor Khan', position: 'Professional' },
-    { name: 'Aayush Kumbhare + Thomas Wickersham', position: 'STEAM' },
-    { name: 'Dzidzo Lassey + Kaardhika Nair', position: 'Wellness' },
-    { name: 'Clair Kim + Naila Ahsan', position: 'Brotherhood' },
     { name: 'Marcus Jackson + Youki Imai', position: 'Social' },
     { name: 'Shayla Bansal + Anna Brundage', position: 'Content' },
 ];
@@ -214,4 +216,66 @@ export const alphaRho = [
     { name: 'Joelle Amelsvoort', major: 'Undeclared', year: '2028' },
     { name: 'Isha Nag', major: 'Management Information Systems', year: '2028' },
     { name: 'Lucca Wall', major: 'Business Economics', year: '2028' },
+];
+
+// Data for Alpha Sigma | Winter 2025
+export const alphaSigma = [
+    { name: 'Hannah Yang', major: 'Marketing', year: '2028' },
+    { name: 'Conan Xie', major: 'Accounting', year: '2027' },
+    { name: 'Anna Brundage', major: 'Public Health', year: '2028' },
+    { name: 'Leo Lin', major: 'Accounting', year: '2028' },
+    { name: 'Sophia Mikkelson', major: 'Management', year: '2028' },
+    {
+        name: 'Sabrina Amaro',
+        major: 'Accounting & Information Systems',
+        year: '2028',
+    },
+    { name: 'Derek Lin', major: 'Finance', year: '2027' },
+    { name: 'Audrey Bowes', major: 'English', year: '2028' },
+    {
+        name: 'Rahul Datta',
+        major: 'Computer Science & Mathematics',
+        year: '2028',
+    },
+    {
+        name: 'Sanjana Badami',
+        major: 'Management Information Systems',
+        year: '2028',
+    },
+    {
+        name: 'Rachana Channagiri',
+        major: 'Management Information Systems',
+        year: '2028',
+    },
+    { name: 'Naila Ahsan', major: 'Economics', year: '2028' },
+    { name: 'Aidan Kwapisz', major: 'Economics & Mathematics', year: '2028' },
+    { name: 'Ari Martin', major: 'Business Management', year: '2027' },
+    { name: 'Kaiya Lu', major: 'Business Undeclared', year: '2028' },
+    { name: 'Clair Kim', major: 'Political Science', year: '2028' },
+    { name: 'Kashina Daceus', major: 'Political Science', year: '2028' },
+];
+
+// Chart data for StatisticsSection
+export const schoolsCollegesData = [
+    { name: 'Leavey School of Business', value: 66 },
+    { name: 'School of Engineering', value: 11 },
+    { name: 'College of Arts and Sciences', value: 20 },
+];
+
+export const classDistributionData = [
+    { name: '2025', value: 21 },
+    { name: '2026', value: 25 },
+    { name: '2027', value: 29 },
+    { name: '2028', value: 22 },
+];
+
+export const globalPopulationData = [
+    { name: 'USA', value: 89 },
+    { name: 'United Kingdom', value: 2 },
+    { name: 'China', value: 1 },
+    { name: 'Vietnam', value: 1 },
+    { name: 'Mexico', value: 1 },
+    { name: 'Japan', value: 1 },
+    { name: 'India', value: 1 },
+    { name: 'Taiwan', value: 1 },
 ];

@@ -93,6 +93,11 @@ body {
 }
 
 @layer base {
+    .container {
+        padding-left: calc(var(--spacing) * 10);
+        padding-right: calc(var(--spacing) * 10);
+        margin-inline: auto;
+    }
     /** {*/
     /*     @apply border-border;*/
     /*   }*/
