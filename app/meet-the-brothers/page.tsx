@@ -9,6 +9,7 @@ import {
     alphaOmicron,
     alphaPi,
     alphaRho,
+    alphaSigma,
 } from '@/lib/brothers_data';
 import Image from 'next/image';
 
@@ -187,6 +188,20 @@ export default function MeetTheBrotherhood() {
                     </h2>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                         {alphaRho.map((member, index) => (
+                            <BrotherCard key={index} {...member} />
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Alpha Sigma | Winter 2025 */}
+            <section className='py-16 bg-white'>
+                <div className='container mx-auto px-4'>
+                    <h2 className='text-4xl font-bold text-center mb-12'>
+                        ALPHA SIGMA | WINTER 2025
+                    </h2>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                        {alphaSigma.map((member, index) => (
                             <BrotherCard key={index} {...member} />
                         ))}
                     </div>
