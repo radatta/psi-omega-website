@@ -147,8 +147,8 @@ const brotherhoodImages = [
     { src: '/images/events/Brotherhood-2.jpg', alt: 'Brothers at the beach' },
     { src: '/images/events/Brotherhood-3.jpg', alt: 'Brotherhood retreat' },
     { src: '/images/events/Brotherhood-4.jpg', alt: 'Brotherhood gathering' },
-    { src: '/images/events/brotherhood-5.jpg', alt: 'Brothers hanging out' },
-    { src: '/images/events/brotherhood-6.jpg', alt: 'Company tour' },
+    { src: '/images/events/Brotherhood-5.jpg', alt: 'Brothers hanging out' },
+    { src: '/images/events/Brotherhood-6.jpg', alt: 'Company tour' },
 ];
 
 // Image data for the Service section
@@ -157,8 +157,8 @@ const serviceImages = [
     { src: '/images/events/Service-2.jpg', alt: 'Volunteering' },
     { src: '/images/events/Service-3.jpg', alt: 'Beach cleanup' },
     { src: '/images/events/Service-4.jpg', alt: 'Service project' },
-    { src: '/images/events/service-5.jpg', alt: 'Charity event' },
-    { src: '/images/events/service-6.jpg', alt: 'Fundraising event' },
+    { src: '/images/events/Service-5.jpg', alt: 'Charity event' },
+    { src: '/images/events/Service-6.jpg', alt: 'Fundraising event' },
 ];
 
 // Image data for the Professional section
