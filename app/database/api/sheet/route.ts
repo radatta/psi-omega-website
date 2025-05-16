@@ -2,7 +2,10 @@ import { google } from 'googleapis';
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 
-if (!process.env.GOOGLE_SHEET_ID || !process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+if (
+    !process.env.GOOGLE_SHEET_ID ||
+    !process.env.GOOGLE_APPLICATION_CREDENTIALS
+) {
     throw new Error(
         'Missing GOOGLE_SHEET_ID or GOOGLE_APPLICATION_CREDENTIALS environment variable'
     );

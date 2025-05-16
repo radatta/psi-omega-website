@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import * as React from 'react';
 import {
     useReactTable,
@@ -7,6 +9,7 @@ import {
     getPaginationRowModel,
     flexRender,
     ColumnDef,
+    ColumnSizingState,
 } from '@tanstack/react-table';
 
 interface DataTableProps<T extends object> {
@@ -19,18 +22,31 @@ export function DataTable<T extends object>({
     data,
 }: DataTableProps<T>) {
     const [globalFilter, setGlobalFilter] = React.useState('');
+    const [columnSizing, setColumnSizing] = React.useState<ColumnSizingState>(
+        {}
+    );
+
     const table = useReactTable({
         data,
         columns,
         state: {
             globalFilter,
+            columnSizing,
         },
+        enableColumnResizing: true,
+        columnResizeMode: 'onChange',
+        onColumnSizingChange: setColumnSizing,
         onGlobalFilterChange: setGlobalFilter,
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getRowId: (row, index) => String(index),
+        defaultColumn: {
+            minSize: 50,
+            size: 150,
+            maxSize: 500,
+        },
     });
 
     return (
@@ -44,26 +60,62 @@ export function DataTable<T extends object>({
                 />
             </div>
             <div className='overflow-x-auto rounded shadow'>
-                <table className='min-w-full divide-y divide-gray-200 bg-white'>
+                <table
+                    className='min-w-full divide-y divide-gray-200 bg-white table-fixed'
+                    style={{ width: table.getCenterTotalSize() }}
+                >
                     <thead className='bg-gray-100'>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <tr key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => (
                                     <th
                                         key={header.id}
-                                        className='px-4 py-2 text-left text-xs font-semibold text-gray-700 cursor-pointer select-none'
-                                        onClick={header.column.getToggleSortingHandler()}
+                                        colSpan={header.colSpan}
+                                        style={{ width: header.getSize() }}
+                                        className='relative px-4 py-2 text-left text-xs font-semibold text-gray-700 border-b border border-gray-300'
                                     >
-                                        {flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
+                                        <div
+                                            onClick={header.column.getToggleSortingHandler()}
+                                            onKeyDown={(e) => {
+                                                if (
+                                                    e.key === 'Enter' ||
+                                                    e.key === ' '
+                                                ) {
+                                                    header.column.getToggleSortingHandler()?.(
+                                                        e
+                                                    );
+                                                }
+                                            }}
+                                            role='button'
+                                            tabIndex={0}
+                                            className={`flex-grow ${header.column.getCanSort() ? 'cursor-pointer select-none' : ''}`}
+                                        >
+                                            {flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                            <span className='ml-1'>
+                                                {header.column.getIsSorted() ===
+                                                'asc'
+                                                    ? ' ▲'
+                                                    : header.column.getIsSorted() ===
+                                                        'desc'
+                                                      ? ' ▼'
+                                                      : header.column.getCanSort()
+                                                        ? ' ▼'
+                                                        : ''}
+                                            </span>
+                                        </div>
+
+                                        {header.column.getCanResize() && (
+                                            <div
+                                                onMouseDown={header.getResizeHandler()}
+                                                onTouchStart={header.getResizeHandler()}
+                                                role='separator'
+                                                aria-orientation='vertical'
+                                                className={`absolute top-0 right-0 h-full w-[3px] cursor-col-resize hover:bg-blue-500 active:bg-blue-600 select-none touch-none`}
+                                            />
                                         )}
-                                        {header.column.getIsSorted() === 'asc'
-                                            ? ' ▲'
-                                            : header.column.getIsSorted() ===
-                                                'desc'
-                                              ? ' ▼'
-                                              : ''}
                                     </th>
                                 ))}
                             </tr>
@@ -75,7 +127,8 @@ export function DataTable<T extends object>({
                                 {row.getVisibleCells().map((cell) => (
                                     <td
                                         key={cell.id}
-                                        className='px-4 py-2 text-sm text-gray-900'
+                                        style={{ width: cell.column.getSize() }}
+                                        className='px-4 py-2 text-sm text-gray-900 overflow-hidden text-ellipsis whitespace-nowrap border-r border-gray-300'
                                     >
                                         {flexRender(
                                             cell.column.columnDef.cell,

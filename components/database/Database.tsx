@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { DataTable } from './DataTable';
-import { ColumnDef } from '@tanstack/react-table';
+import React, { useEffect, useMemo, useState } from 'react';
+// import { DataTable } from './DataTable'; // Old DataTable, will be replaced
+import { getColumns } from './columns'; // Import from new columns.tsx
+import { DataTable as ShadcnDataTable } from '@/components/database/data-table'; // New shadcn data-table component (to be created)
 
 export default function Database() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [unlocked, setUnlocked] = useState(true);
-    const [data, setData] = useState<any[][]>([]);
+    const [unlocked, setUnlocked] = useState(true); // For testing, default to true
+    const [rawData, setRawData] = useState<any[][]>([]); // Renamed to rawData
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -37,16 +39,17 @@ export default function Database() {
                                 idx === 0 ||
                                 (row && row[4] && String(row[4]).trim() !== '')
                         );
-                        setData(filtered);
+                        setRawData(filtered);
                     }
                 });
         }
     }, [unlocked]);
 
-    const tableData = React.useMemo(() => {
-        if (!data || data.length < 1 || !data[0]) return [];
-        const headers = data[0] as string[];
-        return data.slice(1).map((row: any[]) => {
+    // Transform rawData (arrays) into data suitable for TanStack Table (array of objects)
+    const processedData = useMemo(() => {
+        if (!rawData || rawData.length < 1 || !rawData[0]) return [];
+        const headers = rawData[0] as string[];
+        return rawData.slice(1).map((row: any[]) => {
             const obj: Record<string, any> = {};
             headers.forEach((header: string, i: number) => {
                 const key = header || `_col_${i}`;
@@ -55,74 +58,74 @@ export default function Database() {
             });
             return obj;
         });
-    }, [data]);
+    }, [rawData]);
 
-    const columns = React.useMemo<ColumnDef<any, any>[]>(() => {
-        if (!data || data.length < 1 || !data[0]) return [];
-        const headers = data[0] as string[];
-        return headers.map((originalHeader: string, i: number) => {
-            const accessor = originalHeader || `_col_${i}`;
-            return {
-                id: accessor,
-                accessorKey: accessor,
-                header: originalHeader,
-                cell: (info: any) => {
-                    const value = info.getValue();
-                    let displayValue =
-                        value !== undefined && value !== null
-                            ? String(value)
-                            : '';
-                    if (accessor === '_col_0') {
-                        displayValue = `${Number(info.row.id) + 1}`;
-                    }
-                    return displayValue;
-                },
-            };
-        });
-    }, [data]);
+    const columns = useMemo(() => getColumns(rawData), [rawData]);
 
     return (
-        <section id='database-section' className='py-16 min-h-screen'>
-            <div className='container space-y-12'>
+        <section
+            id='database-section'
+            className='py-16 min-h-screen bg-gray-50'
+        >
+            <div className='container mx-auto space-y-12 px-4'>
                 {!unlocked ? (
-                    <form
-                        onSubmit={handleSubmit}
-                        className='space-y-4 max-w-sm mx-auto p-6 shadow-lg rounded-lg bg-white'
-                    >
-                        <h2 className='text-2xl font-semibold text-center text-gray-700 mb-4'>
-                            Enter Password
-                        </h2>
-                        <input
-                            type='password'
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder='Password'
-                            className='w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500'
-                            required
-                        />
-                        <button
-                            type='submit'
-                            className='w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-150 ease-in-out'
+                    <div className='flex justify-center items-center min-h-[calc(100vh-10rem)]'>
+                        <form
+                            onSubmit={handleSubmit}
+                            className='w-full max-w-md p-8 space-y-6 shadow-xl rounded-lg bg-white'
                         >
-                            Unlock Database
-                        </button>
-                        {error && (
-                            <div className='text-red-500 text-sm text-center mt-2'>
-                                {error}
-                            </div>
-                        )}
-                    </form>
-                ) : (
-                    <div className='text-center'>
-                        <h2 className='text-3xl font-bold text-green-600 mb-6'>
-                            Access Granted!
-                        </h2>
-                        {tableData.length > 0 && columns.length > 0 ? (
-                            <DataTable columns={columns} data={tableData} />
-                        ) : (
-                            <p className='text-gray-600'>
-                                Loading data or no data available...
+                            <h2 className='text-3xl font-bold text-center text-gray-800'>
+                                AKPsi Database Access
+                            </h2>
+                            <p className='text-center text-gray-600'>
+                                Please enter the password to view the alumni
+                                database.
                             </p>
+                            <div>
+                                <label htmlFor='password' className='sr-only'>
+                                    Password
+                                </label>
+                                <input
+                                    id='password'
+                                    type='password'
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                    placeholder='Password'
+                                    className='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow'
+                                    required
+                                />
+                            </div>
+                            <button
+                                type='submit'
+                                className='w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                            >
+                                Unlock Database
+                            </button>
+                            {error && (
+                                <div className='text-red-600 text-sm text-center pt-2 font-medium'>
+                                    {error}
+                                </div>
+                            )}
+                        </form>
+                    </div>
+                ) : (
+                    <div>
+                        {/* <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">Alumni Database</h2> */}
+                        {processedData.length > 0 && columns.length > 0 ? (
+                            // Replace with ShadcnDataTable once it's created
+                            <ShadcnDataTable
+                                columns={columns}
+                                data={processedData}
+                            />
+                        ) : (
+                            <div className='text-center py-10'>
+                                <p className='text-gray-600 text-xl'>
+                                    Loading data or no data available...
+                                </p>
+                                {/* Optional: Add a spinner here */}
+                            </div>
                         )}
                     </div>
                 )}
