@@ -7,7 +7,7 @@ export default function HistorySection() {
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-12'>
                     {/* Fraternity History */}
                     <div>
-                        <h1 className='text-3xl md:text-4xl font-bold mb-4'>
+                        <h1 className='text-4xl md:text-5xl font-bold mb-8'>
                             FRATERNITY HISTORY
                         </h1>
                         <hr className='border-gray-300 mb-8' />
@@ -27,7 +27,7 @@ export default function HistorySection() {
                             later known as the Brooklyn Four, walked together
                             over the Brooklyn Bridge from school.
                         </p>
-                        <p className='mb-8'>
+                        <p className='mb-48'>
                             The spirit of the brotherhood grew so strong in the
                             hearts and in the minds of the men from Brooklyn
                             that they decided to suggest to the other members of
@@ -42,7 +42,7 @@ export default function HistorySection() {
                             Psi on May 20, 1905.
                         </p>
 
-                        <div className='relative h-96 w-full rounded-lg overflow-hidden'>
+                        <div className='relative pt-48 h-[calc(100vh-100px)] w-full rounded-lg overflow-hidden'>
                             <Image
                                 src='/images/fraternity-history.jpg'
                                 alt='Fraternity History'
@@ -54,7 +54,7 @@ export default function HistorySection() {
 
                     {/* Chapter History */}
                     <div>
-                        <div className='relative h-96 w-full rounded-lg overflow-hidden mb-8'>
+                        <div className='relative h-[calc(100vh-100px)] w-full rounded-lg overflow-hidden mb-8'>
                             <Image
                                 src='/images/chapter-history.jpg'
                                 alt='Chapter History'
@@ -63,7 +63,7 @@ export default function HistorySection() {
                             />
                         </div>
 
-                        <h1 className='text-3xl md:text-4xl font-bold mb-4'>
+                        <h1 className='text-4xl md:text-5xl font-bold mb-8'>
                             CHAPTER HISTORY
                         </h1>
                         <hr className='border-gray-300 mb-8' />

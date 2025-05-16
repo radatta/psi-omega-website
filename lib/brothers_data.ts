@@ -254,3 +254,28 @@ export const alphaSigma = [
     { name: 'Clair Kim', major: 'Political Science', year: '2028' },
     { name: 'Kashina Daceus', major: 'Political Science', year: '2028' },
 ];
+
+// Chart data for StatisticsSection
+export const schoolsCollegesData = [
+    { name: 'Leavey School of Business', value: 66 },
+    { name: 'School of Engineering', value: 11 },
+    { name: 'College of Arts and Sciences', value: 20 },
+];
+
+export const classDistributionData = [
+    { name: '2025', value: 21 },
+    { name: '2026', value: 25 },
+    { name: '2027', value: 29 },
+    { name: '2028', value: 22 },
+];
+
+export const globalPopulationData = [
+    { name: 'USA', value: 89 },
+    { name: 'United Kingdom', value: 2 },
+    { name: 'China', value: 1 },
+    { name: 'Vietnam', value: 1 },
+    { name: 'Mexico', value: 1 },
+    { name: 'Japan', value: 1 },
+    { name: 'India', value: 1 },
+    { name: 'Taiwan', value: 1 },
+];

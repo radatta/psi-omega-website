@@ -11,7 +11,7 @@ export default function AboutPage() {
             {/* Hero Section */}
             <section
                 id='psi-omega-chapter'
-                className='relative h-[60vh] flex items-center justify-center text-white'
+                className='relative h-screen flex items-center justify-center text-white'
             >
                 <div className='absolute inset-0 z-0'>
                     <Image
@@ -43,13 +43,16 @@ export default function AboutPage() {
             <HistorySection />
 
             {/* Contact Section */}
-            <section id='question' className='relative py-20 text-white'>
+            <section
+                id='question'
+                className='relative h-screen py-20 text-white'
+            >
                 <div className='absolute inset-0 z-0'>
                     <Image
-                        src='/images/contact-bg.jpg'
+                        src='/images/Got-A-Question.jpg'
                         alt='Contact Background'
                         fill
-                        className='object-cover'
+                        className='object-fill'
                     />
                     <div className='absolute inset-0 bg-black/60'></div>
                 </div>
