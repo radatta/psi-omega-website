@@ -1,0 +1,5 @@
+# Run type check
+bun check-types
+
+# Run lint
+bun lint
