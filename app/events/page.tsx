@@ -1,5 +1,41 @@
 import Image from 'next/image';
 
+// Image data for the Brotherhood section
+const brotherhoodImages = [
+    { src: '/images/events/Brotherhood-1.jpg', alt: 'Brotherhood event' },
+    { src: '/images/events/Brotherhood-2.jpg', alt: 'Brothers at the beach' },
+    { src: '/images/events/Brotherhood-3.jpg', alt: 'Brotherhood retreat' },
+    { src: '/images/events/Brotherhood-4.jpg', alt: 'Brotherhood gathering' },
+    { src: '/images/events/Brotherhood-5.jpg', alt: 'Brothers hanging out' },
+    { src: '/images/events/Brotherhood-6.jpg', alt: 'Company tour' },
+];
+
+// Image data for the Service section
+const serviceImages = [
+    { src: '/images/events/Service-1.jpg', alt: 'Community service event' },
+    { src: '/images/events/Service-2.jpg', alt: 'Volunteering' },
+    { src: '/images/events/Service-3.jpg', alt: 'Beach cleanup' },
+    { src: '/images/events/Service-4.jpg', alt: 'Service project' },
+    { src: '/images/events/Service-5.jpg', alt: 'Charity event' },
+    { src: '/images/events/Service-6.jpg', alt: 'Fundraising event' },
+];
+
+// Image data for the Professional section
+const professionalImages = [
+    {
+        src: '/images/events/Professional-1.jpg',
+        alt: 'Professional development workshop',
+    },
+    { src: '/images/events/Professional-2.jpg', alt: 'Company visit' },
+    { src: '/images/events/Professional-3.jpg', alt: 'Guest speaker event' },
+    {
+        src: '/images/events/Professional-4.jpg',
+        alt: 'Professional networking',
+    },
+    { src: '/images/events/Professional-5.jpg', alt: 'Career fair' },
+    { src: '/images/events/Professional-6.jpg', alt: 'Professional training' },
+];
+
 export default function EventsPage() {
     return (
         <main className='min-h-screen'>
@@ -140,39 +176,3 @@ export default function EventsPage() {
         </main>
     );
 }
-
-// Image data for the Brotherhood section
-const brotherhoodImages = [
-    { src: '/images/events/Brotherhood-1.jpg', alt: 'Brotherhood event' },
-    { src: '/images/events/Brotherhood-2.jpg', alt: 'Brothers at the beach' },
-    { src: '/images/events/Brotherhood-3.jpg', alt: 'Brotherhood retreat' },
-    { src: '/images/events/Brotherhood-4.jpg', alt: 'Brotherhood gathering' },
-    { src: '/images/events/Brotherhood-5.jpg', alt: 'Brothers hanging out' },
-    { src: '/images/events/Brotherhood-6.jpg', alt: 'Company tour' },
-];
-
-// Image data for the Service section
-const serviceImages = [
-    { src: '/images/events/Service-1.jpg', alt: 'Community service event' },
-    { src: '/images/events/Service-2.jpg', alt: 'Volunteering' },
-    { src: '/images/events/Service-3.jpg', alt: 'Beach cleanup' },
-    { src: '/images/events/Service-4.jpg', alt: 'Service project' },
-    { src: '/images/events/Service-5.jpg', alt: 'Charity event' },
-    { src: '/images/events/Service-6.jpg', alt: 'Fundraising event' },
-];
-
-// Image data for the Professional section
-const professionalImages = [
-    {
-        src: '/images/events/Professional-1.jpg',
-        alt: 'Professional development workshop',
-    },
-    { src: '/images/events/Professional-2.jpg', alt: 'Company visit' },
-    { src: '/images/events/Professional-3.jpg', alt: 'Guest speaker event' },
-    {
-        src: '/images/events/Professional-4.jpg',
-        alt: 'Professional networking',
-    },
-    { src: '/images/events/Professional-5.jpg', alt: 'Career fair' },
-    { src: '/images/events/Professional-6.jpg', alt: 'Professional training' },
-];
