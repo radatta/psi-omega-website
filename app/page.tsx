@@ -49,7 +49,7 @@ export default function Home() {
                         <div className='flex justify-center'>
                             <div className='relative w-full max-w-md aspect-square'>
                                 <Image
-                                    src='/images/brothers/fiona-holdaway.jpg'
+                                    src='/images/brothers/Fiona-Holdaway.jpg'
                                     alt='Chapter President'
                                     fill
                                     className='object-cover rounded-md'

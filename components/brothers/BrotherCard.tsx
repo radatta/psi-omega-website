@@ -11,7 +11,7 @@ export function BrotherCard({ name, position, major, linkedin }: BrotherProps) {
     const imageUrl = `/images/brothers/${name
         .split(' ')
         .map((part, index) =>
-            index === 0 ? part : part.charAt(0) + part.slice(1).toLowerCase()
+            index === 0 ? part : part.charAt(0) + part.slice(1)
         )
         .join('-')}.jpg`;
     return (

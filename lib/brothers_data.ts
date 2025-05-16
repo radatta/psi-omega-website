@@ -43,7 +43,7 @@ export const alphaMu = [
         year: '2025',
     },
     { name: 'Nehchal Thind', major: 'Economics', year: '2025' },
-    { name: 'Pavi Dobaria', major: 'Finance', year: '2025' },
+    { name: 'Pavitra Dobaria', major: 'Finance', year: '2025' },
     { name: 'Natalie McLean', major: 'Accounting', year: '2025' },
     { name: 'Komi Sugimoto', major: 'Finance', year: '2025' },
 ];
