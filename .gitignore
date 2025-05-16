@@ -43,3 +43,5 @@ next-env.d.ts
 bun.lockb
 
 .vscode
+
+google-service-account.json

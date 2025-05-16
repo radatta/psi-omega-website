@@ -16,6 +16,7 @@ export default function Navbar() {
         { name: 'RUSH AKPSI', href: '/rush-akpsi' },
         { name: 'LEGACY', href: '/legacy' },
         { name: 'EVENTS', href: '/events' },
+        { name: 'DATABASE', href: '/database' },
     ];
 
     return (
