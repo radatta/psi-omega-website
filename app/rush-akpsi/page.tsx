@@ -146,7 +146,7 @@ export default function RushPage() {
                 {/* Contact Section */}
                 <section
                     id='contact'
-                    className='relative h-screen py-20 text-white'
+                    className='relative h-screen flex items-center justify-center text-white'
                 >
                     <div className='absolute inset-0 z-0'>
                         <Image
