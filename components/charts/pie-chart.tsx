@@ -73,7 +73,7 @@ export function PieChart({ data }: PieChartProps) {
                                 const label = context.label || '';
                                 const value = context.raw as number;
                                 const total = context.dataset.data.reduce(
-                                    (a: number, b: number) => a + b,
+                                    (a, b) => (a as number) + (b as number),
                                     0
                                 ) as number;
                                 const percentage = Math.round(

@@ -76,7 +76,7 @@ export default function Navbar() {
                         aria-label='Toggle menu'
                     >
                         {mobileMenuOpen ? (
-                            <Cross2Icon size={24} />
+                            <Cross2Icon className='h-6 w-6' />
                         ) : (
                             <Menu size={24} />
                         )}
