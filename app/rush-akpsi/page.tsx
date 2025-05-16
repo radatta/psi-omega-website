@@ -144,7 +144,10 @@ export default function RushPage() {
                 </section>
 
                 {/* Contact Section */}
-                <section id='contact' className='relative py-20 text-white'>
+                <section
+                    id='contact'
+                    className='relative h-screen py-20 text-white'
+                >
                     <div className='absolute inset-0 z-0'>
                         <Image
                             src='/images/contact-bg.jpg'

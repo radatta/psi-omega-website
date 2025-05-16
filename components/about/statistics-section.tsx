@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { PieChart } from '@/components/charts/pie-chart';
 import {
     schoolsCollegesData,
