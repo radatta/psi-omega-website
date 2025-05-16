@@ -179,7 +179,7 @@ export default function Home() {
                 </div>
                 <div className='container mx-auto px-4 relative z-10'>
                     <h1 className='text-3xl md:text-4xl font-bold mb-12 text-center'>
-                        THANK YOU TO OUR SPONSORS!
+                        THANK YOU TO OUR SPONSORS!!
                     </h1>
                     <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                         <div className='flex flex-col items-center'>
