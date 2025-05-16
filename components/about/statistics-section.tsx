@@ -8,7 +8,7 @@ import {
 export default function StatisticsSection() {
     return (
         <section id='statistics' className='py-16'>
-            <div className='container mx-auto px-4'>
+            <div className='container'>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-8 mb-12'>
                     <div className='md:col-span-1'></div>
                     <div>

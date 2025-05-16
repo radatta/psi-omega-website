@@ -42,7 +42,7 @@ export default function Navbar() {
                     : 'bg-transparent text-white'
             }`}
         >
-            <div className='container mx-auto px-4'>
+            <div className='container'>
                 <div className='flex justify-between items-center py-4'>
                     <Link href='/' className='flex items-center'>
                         <Image

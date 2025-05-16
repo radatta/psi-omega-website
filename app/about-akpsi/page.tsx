@@ -23,7 +23,7 @@ export default function AboutPage() {
                     />
                     <div className='absolute inset-0 bg-black/50'></div>
                 </div>
-                <div className='container mx-auto px-4 z-10 text-center'>
+                <div className='container z-10 text-center'>
                     <h1 className='text-4xl md:text-6xl font-bold mb-4'>
                         PSI OMEGA CHAPTER
                     </h1>
@@ -56,7 +56,7 @@ export default function AboutPage() {
                     />
                     <div className='absolute inset-0 bg-black/60'></div>
                 </div>
-                <div className='container mx-auto px-4 relative z-10 text-center'>
+                <div className='container relative z-10 text-center'>
                     <h1 className='text-3xl md:text-5xl font-bold mb-4'>
                         GOT A QUESTION?
                     </h1>

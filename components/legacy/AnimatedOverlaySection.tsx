@@ -44,7 +44,7 @@ export default function AnimatedOverlaySection() {
                     }}
                 ></div>
             </div>
-            <div className='container mx-auto px-4 relative z-10 text-center'>
+            <div className='container relative z-10 text-center'>
                 <h1 className='text-4xl md:text-6xl font-bold mb-4'>
                     CAMPUS INVOLVEMENT
                 </h1>

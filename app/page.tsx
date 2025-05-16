@@ -21,7 +21,7 @@ export default function Home() {
                     />
                     <div className='absolute inset-0 bg-black/50'></div>
                 </div>
-                <div className='container mx-auto px-4 z-10 text-center'>
+                <div className='container z-10 text-center'>
                     <h1 className='text-4xl md:text-6xl font-bold mb-4'>
                         SHAPING PEOPLE, SHAPING BUSINESS
                     </h1>
@@ -44,7 +44,7 @@ export default function Home() {
 
             {/* President Letter Section */}
             <section id='letter-president' className='py-16 bg-white'>
-                <div className='container mx-auto px-4'>
+                <div className='container'>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
                         <div className='flex justify-center'>
                             <div className='relative w-full max-w-md aspect-square'>
@@ -115,7 +115,7 @@ export default function Home() {
 
             {/* What is AKPsi Section */}
             <section id='what-is-akpsi' className='py-16 bg-gray-100 relative'>
-                <div className='container mx-auto px-4 relative z-10'>
+                <div className='container relative z-10'>
                     <div className='max-w-4xl mx-auto text-center'>
                         <h1 className='text-3xl md:text-4xl font-bold mb-4'>
                             WHAT IS ALPHA KAPPA PSI?
@@ -152,7 +152,7 @@ export default function Home() {
 
             {/* Rush Section */}
             <section id='rush-akpsi' className='py-16 bg-white'>
-                <div className='container mx-auto px-4 text-center'>
+                <div className='container text-center'>
                     <h1 className='text-3xl md:text-4xl font-bold mb-4'>
                         RUSH AKPSI
                     </h1>
@@ -177,7 +177,7 @@ export default function Home() {
                         className='object-cover'
                     />
                 </div>
-                <div className='container mx-auto px-4 relative z-10'>
+                <div className='container relative z-10'>
                     <h1 className='text-3xl md:text-4xl font-bold mb-12 text-center'>
                         THANK YOU TO OUR SPONSORS!!
                     </h1>

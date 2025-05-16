@@ -19,7 +19,7 @@ export default function LegacyPage() {
                     />
                     <div className='absolute inset-0 bg-black/50'></div>
                 </div>
-                <div className='container mx-auto px-4 z-10 text-center'>
+                <div className='container z-10 text-center'>
                     <h1 className='text-4xl md:text-6xl font-bold mb-4'>
                         OUR NETWORK
                     </h1>
@@ -34,7 +34,7 @@ export default function LegacyPage() {
 
             {/* Companies Section */}
             <section id='companies' className='py-16 bg-white'>
-                <div className='container mx-auto px-4'>
+                <div className='container'>
                     <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8'>
                         {companies.map((company, index) => (
                             <div
@@ -61,7 +61,7 @@ export default function LegacyPage() {
 
             {/* Campus Organizations Section */}
             <section id='campus-involvement' className='py-16 bg-white'>
-                <div className='container mx-auto px-4'>
+                <div className='container'>
                     <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                         {/* Column 1 */}
                         <div>

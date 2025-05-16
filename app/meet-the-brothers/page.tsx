@@ -29,7 +29,7 @@ export default function MeetTheBrotherhood() {
                     priority
                 />
 
-                <div className='container mx-auto px-4 z-10 text-center'>
+                <div className='container z-10 text-center'>
                     <h1 className='text-4xl md:text-6xl font-bold mb-4'>
                         MEET OUR BROTHERS
                     </h1>
@@ -60,7 +60,7 @@ export default function MeetTheBrotherhood() {
 
             {/* Executive Committee Section */}
             <section className='py-16 bg-white'>
-                <div className='container mx-auto px-4'>
+                <div className='container'>
                     <h2 className='text-4xl font-bold text-center mb-12'>
                         EXECUTIVE COMMITTEE
                     </h2>
@@ -74,7 +74,7 @@ export default function MeetTheBrotherhood() {
 
             {/* Committee Chairs Section */}
             <section className='py-16'>
-                <div className='container mx-auto px-4'>
+                <div className='container'>
                     <h2 className='text-4xl font-bold text-center mb-12'>
                         COMMITTEE CHAIRS
                     </h2>
@@ -98,7 +98,7 @@ export default function MeetTheBrotherhood() {
 
             {/* Alpha Lambda | Fall 2021 */}
             <section className='py-16 bg-white'>
-                <div className='container mx-auto px-4'>
+                <div className='container'>
                     <h2 className='text-4xl font-bold text-center mb-12'>
                         ALPHA LAMBDA | FALL 2021
                     </h2>
@@ -112,7 +112,7 @@ export default function MeetTheBrotherhood() {
 
             {/* Alpha Mu | Winter 2022 */}
             <section className='py-16 bg-gray-50'>
-                <div className='container mx-auto px-4'>
+                <div className='container'>
                     <h2 className='text-4xl font-bold text-center mb-12'>
                         ALPHA MU | WINTER 2022
                     </h2>
@@ -126,7 +126,7 @@ export default function MeetTheBrotherhood() {
 
             {/* Alpha Nu | Fall 2022 */}
             <section className='py-16 bg-white'>
-                <div className='container mx-auto px-4'>
+                <div className='container'>
                     <h2 className='text-4xl font-bold text-center mb-12'>
                         ALPHA NU | FALL 2022
                     </h2>
@@ -140,7 +140,7 @@ export default function MeetTheBrotherhood() {
 
             {/* Alpha Xi | Winter 2023 */}
             <section className='py-16 bg-gray-50'>
-                <div className='container mx-auto px-4'>
+                <div className='container'>
                     <h2 className='text-4xl font-bold text-center mb-12'>
                         ALPHA XI | WINTER 2023
                     </h2>
@@ -154,7 +154,7 @@ export default function MeetTheBrotherhood() {
 
             {/* Alpha Omicron | Fall 2023 */}
             <section className='py-16 bg-white'>
-                <div className='container mx-auto px-4'>
+                <div className='container'>
                     <h2 className='text-4xl font-bold text-center mb-12'>
                         ALPHA OMICRON | FALL 2023
                     </h2>
@@ -168,7 +168,7 @@ export default function MeetTheBrotherhood() {
 
             {/* Alpha Pi | Winter 2024 */}
             <section className='py-16 bg-gray-50'>
-                <div className='container mx-auto px-4'>
+                <div className='container'>
                     <h2 className='text-4xl font-bold text-center mb-12'>
                         ALPHA PI | WINTER 2024
                     </h2>
@@ -182,7 +182,7 @@ export default function MeetTheBrotherhood() {
 
             {/* Alpha Rho | Fall 2024 */}
             <section className='py-16 bg-white'>
-                <div className='container mx-auto px-4'>
+                <div className='container'>
                     <h2 className='text-4xl font-bold text-center mb-12'>
                         ALPHA RHO | FALL 2024
                     </h2>
@@ -196,7 +196,7 @@ export default function MeetTheBrotherhood() {
 
             {/* Alpha Sigma | Winter 2025 */}
             <section className='py-16 bg-white'>
-                <div className='container mx-auto px-4'>
+                <div className='container'>
                     <h2 className='text-4xl font-bold text-center mb-12'>
                         ALPHA SIGMA | WINTER 2025
                     </h2>

@@ -18,20 +18,20 @@ export default function EventsPage() {
                     />
                     <div className='absolute inset-0 bg-black/50'></div>
                 </div>
-                <div className='container mx-auto px-10 z-10 text-center'>
+                <div className='container z-10 text-center'>
                     <h1 className='text-4xl md:text-6xl font-bold mb-4'>
                         OUR EVENTS
                     </h1>
                     <p className='text-xl max-w-3xl mx-auto'>
-                        Check out what we've done and stay updated with what's
-                        next!
+                        Check out what we&apos;ve done and stay updated with
+                        what&apos;s next!
                     </p>
                 </div>
             </section>
 
             {/* Past Events Section */}
             <section id='past-events' className='py-16 bg-white'>
-                <div className='container mx-auto px-10 space-y-24'>
+                <div className='container space-y-24'>
                     {/* Brotherhood: Text Left, Photos Right */}
                     <div className='flex flex-col md:flex-row items-center md:items-start gap-12'>
                         {/* Text */}

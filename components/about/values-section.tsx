@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 export default function ValuesSection() {
     return (
         <section id='values' className='py-16 bg-white'>
-            <div className='container mx-auto px-4'>
+            <div className='container'>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
                     <div>
                         <h1 className='text-4xl md:text-5xl font-bold mb-8'>
