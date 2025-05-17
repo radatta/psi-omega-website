@@ -54,6 +54,7 @@ export const getColumns = (data: any[][]): ColumnDef<any, any>[] => {
             'COMPANY',
             'LOCATION',
             'INDUSTRY',
+            'ROLE',
         ];
 
         if (originalHeader.toUpperCase() === 'EMAIL') {
@@ -61,6 +62,7 @@ export const getColumns = (data: any[][]): ColumnDef<any, any>[] => {
                 <DataTableColumnHeader column={column} title={originalHeader} />
             );
             emailColumn = columnDef;
+            columnDef.maxSize = 150;
             return;
         }
 
@@ -170,6 +172,12 @@ export const getColumns = (data: any[][]): ColumnDef<any, any>[] => {
                 return url;
             };
             columnDef.enableSorting = false;
+        }
+
+        if (originalHeader.toUpperCase() === 'ROLE') {
+            columnDef.header = ({ column }: { column: Column<any, any> }) => (
+                <DataTableColumnHeader column={column} title={originalHeader} />
+            );
         }
 
         if (originalHeader.toUpperCase() !== 'EMAIL') {
