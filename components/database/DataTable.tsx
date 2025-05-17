@@ -113,7 +113,7 @@ export function DataTable<T extends object>({
                                                 onTouchStart={header.getResizeHandler()}
                                                 role='separator'
                                                 aria-orientation='vertical'
-                                                className={`absolute top-0 right-0 h-full w-[3px] cursor-col-resize hover:bg-blue-500 active:bg-blue-600 select-none touch-none`}
+                                                className={`absolute top-0 right-0 h-full w-1 cursor-col-resize hover:bg-blue-500 active:bg-blue-600 select-none touch-none`}
                                             />
                                         )}
                                     </th>

@@ -16,6 +16,7 @@ import {
     ColumnSizingState,
     SortingState,
     VisibilityState,
+    ColumnPinningState,
 } from '@tanstack/react-table';
 
 import {
@@ -47,7 +48,9 @@ export function DataTable<TData extends object, TValue>({
         {}
     );
     const [columnVisibility, setColumnVisibility] =
-        React.useState<VisibilityState>({});
+        React.useState<VisibilityState>({ _col_0: false });
+    const [columnPinning, setColumnPinning] =
+        React.useState<ColumnPinningState>({ left: ['EMAIL'] });
 
     const table = useReactTable({
         data,
@@ -57,11 +60,13 @@ export function DataTable<TData extends object, TValue>({
             globalFilter,
             columnSizing,
             columnVisibility,
+            columnPinning,
         },
         onSortingChange: setSorting,
         onGlobalFilterChange: setGlobalFilter,
         onColumnSizingChange: setColumnSizing,
         onColumnVisibilityChange: setColumnVisibility,
+        onColumnPinningChange: setColumnPinning,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
@@ -91,7 +96,7 @@ export function DataTable<TData extends object, TValue>({
                 />
                 <DataTableViewOptions table={table} />
             </div>
-            <div className='rounded-md border'>
+            <div className='rounded-md border overflow-x-auto'>
                 <Table
                     style={{
                         width: table.getCenterTotalSize(),
@@ -102,11 +107,39 @@ export function DataTable<TData extends object, TValue>({
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
+                                    const { column } = header;
+                                    const isPinned = column.getIsPinned();
+                                    const isLastLeftPinned =
+                                        isPinned === 'left' &&
+                                        column.getIsLastColumn('left');
+
+                                    const headerStyles: React.CSSProperties = {
+                                        width: header.getSize(),
+                                    };
+                                    if (isPinned) {
+                                        headerStyles.position = 'sticky';
+                                        headerStyles.left =
+                                            isPinned === 'left'
+                                                ? column.getStart('left')
+                                                : undefined;
+                                        headerStyles.right =
+                                            isPinned === 'right'
+                                                ? column.getAfter('right')
+                                                : undefined;
+                                        headerStyles.zIndex = 1;
+                                        headerStyles.backgroundColor =
+                                            'hsl(var(--background))';
+                                        if (isLastLeftPinned) {
+                                            headerStyles.boxShadow =
+                                                '4px 0 4px -2px rgba(0, 0, 0, 0.05)';
+                                        }
+                                    }
+
                                     return (
                                         <TableHead
                                             key={header.id}
                                             colSpan={header.colSpan}
-                                            style={{ width: header.getSize() }}
+                                            style={headerStyles}
                                             className='relative border-r border-b border-gray-300 last:border-r-0 h-12 PADDING_FOR_HEADER_CONTENT_HERE'
                                         >
                                             {header.isPlaceholder
@@ -139,21 +172,51 @@ export function DataTable<TData extends object, TValue>({
                                     data-state={
                                         row.getIsSelected() && 'selected'
                                     }
+                                    className='even:bg-gray-200 hover:bg-gray-300 dark:hover:bg-gray-300 transition-colors'
                                 >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell
-                                            key={cell.id}
-                                            style={{
-                                                width: cell.column.getSize(),
-                                            }}
-                                            className='p-2 border-r border-gray-200 last:border-r-0 overflow-hidden text-ellipsis whitespace-nowrap h-10'
-                                        >
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
-                                        </TableCell>
-                                    ))}
+                                    {row.getVisibleCells().map((cell) => {
+                                        const { column } = cell;
+                                        const isPinned = column.getIsPinned();
+                                        const isLastLeftPinned =
+                                            isPinned === 'left' &&
+                                            column.getIsLastColumn('left');
+
+                                        const cellStyles: React.CSSProperties =
+                                            {
+                                                width: column.getSize(),
+                                            };
+
+                                        if (isPinned) {
+                                            cellStyles.position = 'sticky';
+                                            cellStyles.left =
+                                                isPinned === 'left'
+                                                    ? column.getStart('left')
+                                                    : undefined;
+                                            cellStyles.right =
+                                                isPinned === 'right'
+                                                    ? column.getAfter('right')
+                                                    : undefined;
+                                            cellStyles.backgroundColor =
+                                                'hsl(var(--background))';
+                                            if (isLastLeftPinned) {
+                                                cellStyles.boxShadow =
+                                                    '4px 0 4px -2px rgba(0, 0, 0, 0.05)';
+                                            }
+                                        }
+
+                                        return (
+                                            <TableCell
+                                                key={cell.id}
+                                                style={cellStyles}
+                                                className='p-2 border-r border-gray-200 last:border-r-0 overflow-hidden text-ellipsis whitespace-nowrap h-10'
+                                            >
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext()
+                                                )}
+                                            </TableCell>
+                                        );
+                                    })}
                                 </TableRow>
                             ))
                         ) : (

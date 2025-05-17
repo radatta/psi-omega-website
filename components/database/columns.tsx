@@ -13,7 +13,10 @@ export const getColumns = (data: any[][]): ColumnDef<any, any>[] => {
     if (!data || data.length < 1 || !data[0]) return [];
     const headers = data[0] as string[];
 
-    return headers.map((originalHeader: string, i: number) => {
+    let emailColumn: ColumnDef<any, any> | undefined;
+    const otherColumns: ColumnDef<any, any>[] = [];
+
+    headers.forEach((originalHeader: string, i: number) => {
         const accessor = originalHeader || `_col_${i}`;
 
         const columnDef: ColumnDef<any, any> = {
@@ -40,11 +43,9 @@ export const getColumns = (data: any[][]): ColumnDef<any, any>[] => {
             columnDef.minSize = 40;
             columnDef.maxSize = 100;
             columnDef.enableSorting = false;
-            columnDef.enableHiding = false;
         }
 
         const standardSortableHeaders = [
-            'EMAIL',
             'LAST',
             'FIRST',
             'YEAR + PC',
@@ -54,6 +55,15 @@ export const getColumns = (data: any[][]): ColumnDef<any, any>[] => {
             'LOCATION',
             'INDUSTRY',
         ];
+
+        if (originalHeader.toUpperCase() === 'EMAIL') {
+            columnDef.header = ({ column }: { column: Column<any, any> }) => (
+                <DataTableColumnHeader column={column} title={originalHeader} />
+            );
+            emailColumn = columnDef;
+            return;
+        }
+
         if (standardSortableHeaders.includes(originalHeader.toUpperCase())) {
             columnDef.header = ({ column }: { column: Column<any, any> }) => (
                 <DataTableColumnHeader column={column} title={originalHeader} />
@@ -72,7 +82,7 @@ export const getColumns = (data: any[][]): ColumnDef<any, any>[] => {
         if (originalHeader === 'Open to coffee chats?') {
             columnDef.header = () => (
                 <div className='flex items-center'>
-                    <Coffee className='h-4 w-4 mr-1' /> Coffee Chats
+                    <Coffee className='h-6 w-6 mr-1' /> Coffee Chats
                 </div>
             );
             columnDef.cell = (info: any) => {
@@ -162,6 +172,10 @@ export const getColumns = (data: any[][]): ColumnDef<any, any>[] => {
             columnDef.enableSorting = false;
         }
 
-        return columnDef;
+        if (originalHeader.toUpperCase() !== 'EMAIL') {
+            otherColumns.push(columnDef);
+        }
     });
+
+    return emailColumn ? [emailColumn, ...otherColumns] : otherColumns;
 };
