@@ -35,7 +35,7 @@ export default function AnimatedOverlaySection() {
     return (
         <section
             id='involvement'
-            className='relative h-[270vh] md:h-[250vh] text-white mb-[43vh] md:mb-[35vh]'
+            className='relative h-[270vh] md:h-[250vh] text-white mb-[45vh] md:mb-[38vh]'
             ref={involvementRef}
         >
             <div

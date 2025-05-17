@@ -1,6 +1,5 @@
 import { google } from 'googleapis';
 import { NextResponse } from 'next/server';
-import fs from 'fs';
 
 if (
     !process.env.GOOGLE_SHEET_ID ||
@@ -14,10 +13,7 @@ if (
 export async function GET() {
     // Load credentials from JSON file
     const credentials = JSON.parse(
-        fs.readFileSync(
-            process.env.GOOGLE_APPLICATION_CREDENTIALS as string,
-            'utf8'
-        )
+        process.env.GOOGLE_APPLICATION_CREDENTIALS as string
     );
 
     const auth = new google.auth.GoogleAuth({
