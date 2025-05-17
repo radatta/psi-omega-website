@@ -9,7 +9,7 @@ import { DataTable as ShadcnDataTable } from '@/components/database/data-table';
 export default function Database() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [unlocked, setUnlocked] = useState(true); // For testing, default to true
+    const [unlocked, setUnlocked] = useState(false); // For testing, default to true
     const [rawData, setRawData] = useState<any[][]>([]); // Renamed to rawData
 
     async function handleSubmit(e: React.FormEvent) {
