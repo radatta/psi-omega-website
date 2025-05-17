@@ -45,7 +45,7 @@ export default function AboutPage() {
             {/* Contact Section */}
             <section
                 id='question'
-                className='relative h-screen py-20 text-white'
+                className='relative h-screen flex items-center justify-center py-20 text-white'
             >
                 <div className='absolute inset-0 z-0'>
                     <Image
