@@ -2,8 +2,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
+import { TypewriterEffect } from '@/components/ui/typewriter-effect';
 
 export default function Home() {
+    const taglineWords = [
+        { text: 'SHAPING' },
+        { text: 'PEOPLE,', pauseAfter: 1 },
+        { text: 'SHAPING' },
+        { text: 'BUSINESS' },
+    ];
+
     return (
         <main className='min-h-screen'>
             {/* Hero Section */}
@@ -24,9 +32,12 @@ export default function Home() {
                     <div className='absolute inset-0 bg-black/50'></div>
                 </div>
                 <div className='container z-10 text-center'>
-                    <h1 className='text-4xl md:text-6xl font-bold mb-4'>
-                        SHAPING PEOPLE, SHAPING BUSINESS
-                    </h1>
+                    <TypewriterEffect
+                        words={taglineWords}
+                        className='text-4xl md:text-6xl font-bold mb-4'
+                        cursorClassName='bg-white h-8 md:h-12'
+                        delay={1000}
+                    />
                     <h3 className='font-light text-xl md:text-2xl mb-8'>
                         Alpha Kappa Psi is recognized as the premier developer
                         of principled business leaders.
