@@ -78,8 +78,7 @@ export default function Database() {
                                 AKPsi Database Access
                             </h2>
                             <p className='text-center text-gray-600'>
-                                Please enter the password to view the alumni
-                                database.
+                                Please enter the password to view the database.
                             </p>
                             <div>
                                 <label htmlFor='password' className='sr-only'>
