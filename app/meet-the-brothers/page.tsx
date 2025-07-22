@@ -2,8 +2,6 @@ import { BrotherCard } from '@/components/brothers/BrotherCard';
 import {
     executiveCommittee,
     committeeChairs,
-    alphaLambda,
-    alphaMu,
     alphaNu,
     alphaXi,
     alphaOmicron,
@@ -91,34 +89,6 @@ export default function MeetTheBrotherhood() {
                                     {member.name}
                                 </h3>
                             </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Alpha Lambda | Fall 2021 */}
-            <section className='py-16 bg-white'>
-                <div className='container'>
-                    <h2 className='text-4xl font-bold text-center mb-12'>
-                        ALPHA LAMBDA | FALL 2021
-                    </h2>
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-                        {alphaLambda.map((member, index) => (
-                            <BrotherCard key={index} {...member} />
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Alpha Mu | Winter 2022 */}
-            <section className='py-16 bg-gray-50'>
-                <div className='container'>
-                    <h2 className='text-4xl font-bold text-center mb-12'>
-                        ALPHA MU | WINTER 2022
-                    </h2>
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-                        {alphaMu.map((member, index) => (
-                            <BrotherCard key={index} {...member} />
                         ))}
                     </div>
                 </div>
