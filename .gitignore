@@ -45,3 +45,5 @@ bun.lockb
 .vscode
 
 google-service-account.json
+
+.kiro
