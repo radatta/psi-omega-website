@@ -98,6 +98,10 @@ body {
         padding-right: calc(var(--spacing) * 10);
         margin-inline: auto;
     }
+
+    h1 {
+        font-family: var(--font-rubik);
+    }
     /** {*/
     /*     @apply border-border;*/
     /*   }*/
