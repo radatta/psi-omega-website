@@ -202,16 +202,18 @@ export const alphaSigma = [
         major: 'Accounting & Information Systems',
         year: '2028',
     },
+    { name: 'Kashina Daceus', major: 'Political Science', year: '2028' },
     { name: 'Derek Lin', major: 'Finance', year: '2027' },
     { name: 'Audrey Bowes', major: 'English', year: '2028' },
     {
-        name: 'Rahul Datta',
-        major: 'Computer Science & Mathematics',
-        year: '2028',
-    },
-    {
         name: 'Sanjana Badami',
         major: 'Management Information Systems',
+        year: '2028',
+    },
+    { name: 'Ari Martin', major: 'Management', year: '2027' },
+    {
+        name: 'Clair Kim',
+        major: 'Political Science',
         year: '2028',
     },
     {
@@ -219,16 +221,14 @@ export const alphaSigma = [
         major: 'Management Information Systems',
         year: '2028',
     },
-    { name: 'Naila Ahsan', major: 'Economics', year: '2028' },
-    { name: 'Aidan Kwapisz', major: 'Economics & Mathematics', year: '2028' },
-    { name: 'Ari Martin', major: 'Management', year: '2027' },
-    { name: 'Kaiya Lu', major: 'Finance', year: '2028' },
     {
-        name: 'Clair Kim',
-        major: 'Political Science',
+        name: 'Rahul Datta',
+        major: 'Computer Science & Mathematics',
         year: '2028',
     },
-    { name: 'Kashina Daceus', major: 'Political Science', year: '2028' },
+    { name: 'Naila Ahsan', major: 'Economics', year: '2028' },
+    { name: 'Aidan Kwapisz', major: 'Economics & Mathematics', year: '2028' },
+    { name: 'Kaiya Lu', major: 'Finance', year: '2028' },
 ];
 
 // Chart data for StatisticsSection
