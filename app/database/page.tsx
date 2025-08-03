@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import Database from '@/components/database/Database';
 import { motion } from 'motion/react';
