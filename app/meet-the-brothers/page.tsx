@@ -1,3 +1,4 @@
+'use client';
 import { BrotherCard } from '@/components/brothers/BrotherCard';
 import {
     executiveCommittee,
@@ -10,6 +11,7 @@ import {
     alphaSigma,
 } from '@/lib/brothers_data';
 import Image from 'next/image';
+import { motion } from 'motion/react';
 
 export default function MeetTheBrotherhood() {
     return (
@@ -17,28 +19,56 @@ export default function MeetTheBrotherhood() {
             {/* Hero Section */}
             <section
                 id='rush-hero'
-                className='relative h-screen flex items-center justify-center text-white'
+                className='relative h-screen flex items-center justify-center text-white overflow-hidden'
             >
-                <Image
-                    src='/images/brothers-hero.jpg'
-                    alt='Rush Alpha Kappa Psi'
-                    fill
-                    className='object-cover'
-                    priority
-                />
+                <motion.div
+                    initial={{ scale: 1.1 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 1.5, ease: 'easeOut' }}
+                    className='absolute inset-0'
+                >
+                    <Image
+                        src='/images/brothers-hero.jpg'
+                        alt='Rush Alpha Kappa Psi'
+                        fill
+                        className='object-cover'
+                        priority
+                    />
+                    <div className='absolute inset-0 bg-black/50'></div>
+                </motion.div>
 
-                <div className='container z-10 text-center'>
-                    <h1 className='text-4xl md:text-6xl font-bold mb-4'>
+                <motion.div
+                    className='container z-10 text-center'
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                >
+                    <motion.h1
+                        className='text-4xl md:text-6xl font-bold mb-4'
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.8 }}
+                    >
                         MEET OUR BROTHERS
-                    </h1>
-                    <p className='text-lg max-w-3xl mx-auto'>
+                    </motion.h1>
+                    <motion.p
+                        className='text-lg max-w-3xl mx-auto'
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 1.1 }}
+                    >
                         &quot;If you want to go fast, go alone. If you want to
                         go far, go together.&quot;
-                    </p>
+                    </motion.p>
 
                     {/* Scroll indicator */}
-                    <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce'>
-                        <svg
+                    <motion.div
+                        className='absolute bottom-8 left-1/2 transform -translate-x-1/2'
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1, delay: 2 }}
+                    >
+                        <motion.svg
                             xmlns='http://www.w3.org/2000/svg'
                             width='24'
                             height='24'
@@ -49,22 +79,41 @@ export default function MeetTheBrotherhood() {
                             strokeLinecap='round'
                             strokeLinejoin='round'
                             className='text-white'
+                            animate={{ y: [0, 10, 0] }}
+                            transition={{ duration: 2, repeat: Infinity }}
                         >
                             <path d='M12 5v14M5 12l7 7 7-7' />
-                        </svg>
-                    </div>
-                </div>
+                        </motion.svg>
+                    </motion.div>
+                </motion.div>
             </section>
 
             {/* Executive Committee Section */}
             <section className='py-16 bg-white'>
                 <div className='container'>
-                    <h2 className='text-4xl font-bold text-center mb-12'>
+                    <motion.h2
+                        className='text-4xl font-bold text-center mb-12'
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true, margin: '-100px' }}
+                    >
                         EXECUTIVE COMMITTEE
-                    </h2>
+                    </motion.h2>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                         {executiveCommittee.map((member, index) => (
-                            <BrotherCard key={index} {...member} />
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.6,
+                                    delay: index * 0.1,
+                                }}
+                                viewport={{ once: true, margin: '-200px' }}
+                            >
+                                <BrotherCard {...member} />
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -73,14 +122,28 @@ export default function MeetTheBrotherhood() {
             {/* Committee Chairs Section */}
             <section className='py-16'>
                 <div className='container'>
-                    <h2 className='text-4xl font-bold text-center mb-12'>
+                    <motion.h2
+                        className='text-4xl font-bold text-center mb-12'
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true, margin: '-100px' }}
+                    >
                         COMMITTEE CHAIRS
-                    </h2>
+                    </motion.h2>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                         {committeeChairs.map((member, index) => (
-                            <div
+                            <motion.div
                                 key={index}
                                 className='flex flex-col items-center'
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.6,
+                                    delay: index * 0.1,
+                                }}
+                                viewport={{ once: true, margin: '-200px' }}
+                                whileHover={{ scale: 1.05 }}
                             >
                                 <p className='text-center text-xl font-bold '>
                                     {member.position}
@@ -88,7 +151,7 @@ export default function MeetTheBrotherhood() {
                                 <h3 className='text-center text-gray-700'>
                                     {member.name}
                                 </h3>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -97,12 +160,29 @@ export default function MeetTheBrotherhood() {
             {/* Alpha Nu | Fall 2022 */}
             <section className='py-16 bg-white'>
                 <div className='container'>
-                    <h2 className='text-4xl font-bold text-center mb-12'>
+                    <motion.h2
+                        className='text-4xl font-bold text-center mb-12'
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true, margin: '-100px' }}
+                    >
                         ALPHA NU | FALL 2022
-                    </h2>
+                    </motion.h2>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                         {alphaNu.map((member, index) => (
-                            <BrotherCard key={index} {...member} />
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.6,
+                                    delay: index * 0.1,
+                                }}
+                                viewport={{ once: true, margin: '-200px' }}
+                            >
+                                <BrotherCard {...member} />
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -111,12 +191,29 @@ export default function MeetTheBrotherhood() {
             {/* Alpha Xi | Winter 2023 */}
             <section className='py-16 bg-gray-50'>
                 <div className='container'>
-                    <h2 className='text-4xl font-bold text-center mb-12'>
+                    <motion.h2
+                        className='text-4xl font-bold text-center mb-12'
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true, margin: '-100px' }}
+                    >
                         ALPHA XI | WINTER 2023
-                    </h2>
+                    </motion.h2>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                         {alphaXi.map((member, index) => (
-                            <BrotherCard key={index} {...member} />
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.6,
+                                    delay: index * 0.1,
+                                }}
+                                viewport={{ once: true, margin: '-200px' }}
+                            >
+                                <BrotherCard {...member} />
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -125,12 +222,29 @@ export default function MeetTheBrotherhood() {
             {/* Alpha Omicron | Fall 2023 */}
             <section className='py-16 bg-white'>
                 <div className='container'>
-                    <h2 className='text-4xl font-bold text-center mb-12'>
+                    <motion.h2
+                        className='text-4xl font-bold text-center mb-12'
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true, margin: '-100px' }}
+                    >
                         ALPHA OMICRON | FALL 2023
-                    </h2>
+                    </motion.h2>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                         {alphaOmicron.map((member, index) => (
-                            <BrotherCard key={index} {...member} />
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.6,
+                                    delay: index * 0.1,
+                                }}
+                                viewport={{ once: true, margin: '-200px' }}
+                            >
+                                <BrotherCard {...member} />
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -139,12 +253,29 @@ export default function MeetTheBrotherhood() {
             {/* Alpha Pi | Winter 2024 */}
             <section className='py-16 bg-gray-50'>
                 <div className='container'>
-                    <h2 className='text-4xl font-bold text-center mb-12'>
+                    <motion.h2
+                        className='text-4xl font-bold text-center mb-12'
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true, margin: '-100px' }}
+                    >
                         ALPHA PI | WINTER 2024
-                    </h2>
+                    </motion.h2>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                         {alphaPi.map((member, index) => (
-                            <BrotherCard key={index} {...member} />
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.6,
+                                    delay: index * 0.1,
+                                }}
+                                viewport={{ once: true, margin: '-200px' }}
+                            >
+                                <BrotherCard {...member} />
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -153,12 +284,29 @@ export default function MeetTheBrotherhood() {
             {/* Alpha Rho | Fall 2024 */}
             <section className='py-16 bg-white'>
                 <div className='container'>
-                    <h2 className='text-4xl font-bold text-center mb-12'>
+                    <motion.h2
+                        className='text-4xl font-bold text-center mb-12'
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true, margin: '-100px' }}
+                    >
                         ALPHA RHO | FALL 2024
-                    </h2>
+                    </motion.h2>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                         {alphaRho.map((member, index) => (
-                            <BrotherCard key={index} {...member} />
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.6,
+                                    delay: index * 0.1,
+                                }}
+                                viewport={{ once: true, margin: '-200px' }}
+                            >
+                                <BrotherCard {...member} />
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -167,12 +315,29 @@ export default function MeetTheBrotherhood() {
             {/* Alpha Sigma | Winter 2025 */}
             <section className='py-16 bg-white'>
                 <div className='container'>
-                    <h2 className='text-4xl font-bold text-center mb-12'>
+                    <motion.h2
+                        className='text-4xl font-bold text-center mb-12'
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true, margin: '-100px' }}
+                    >
                         ALPHA SIGMA | WINTER 2025
-                    </h2>
+                    </motion.h2>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
                         {alphaSigma.map((member, index) => (
-                            <BrotherCard key={index} {...member} />
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.6,
+                                    delay: index * 0.1,
+                                }}
+                                viewport={{ once: true, margin: '-200px' }}
+                            >
+                                <BrotherCard {...member} />
+                            </motion.div>
                         ))}
                     </div>
                 </div>

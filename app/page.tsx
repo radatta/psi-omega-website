@@ -1,7 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
+import { motion } from 'motion/react';
 
 export default function Home() {
     return (
@@ -9,9 +12,14 @@ export default function Home() {
             {/* Hero Section */}
             <section
                 id='hero'
-                className='relative h-screen flex items-center justify-center text-white'
+                className='relative h-screen flex items-center justify-center text-white overflow-hidden'
             >
-                <div className='absolute inset-0 z-0'>
+                <motion.div
+                    className='absolute inset-0 z-0'
+                    initial={{ scale: 1.1 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 1.5, ease: 'easeOut' }}
+                >
                     <Link href='/'>
                         <Image
                             src='/images/hero-background.jpg'
@@ -22,45 +30,104 @@ export default function Home() {
                         />
                     </Link>
                     <div className='absolute inset-0 bg-black/50'></div>
-                </div>
-                <div className='container z-10 text-center'>
-                    <h1 className='text-4xl md:text-6xl font-bold mb-4'>
+                </motion.div>
+                <motion.div
+                    className='container z-10 text-center'
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                >
+                    <motion.h1
+                        className='text-4xl md:text-6xl font-bold mb-4'
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.8 }}
+                    >
                         SHAPING PEOPLE, SHAPING BUSINESS
-                    </h1>
-                    <h3 className='font-light text-xl md:text-2xl mb-8'>
+                    </motion.h1>
+                    <motion.h3
+                        className='font-light text-xl md:text-2xl mb-8'
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 1.1 }}
+                    >
                         Alpha Kappa Psi is recognized as the premier developer
                         of principled business leaders.
-                    </h3>
-                    <Button asChild variant={'link'} size={'lg'}>
-                        <Link href='/about-akpsi'>LEARN MORE</Link>
-                    </Button>
-                </div>
-                <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center'>
+                    </motion.h3>
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 1.4 }}
+                    >
+                        <Button asChild variant={'link'} size={'lg'}>
+                            <Link href='/about-akpsi'>LEARN MORE</Link>
+                        </Button>
+                    </motion.div>
+                </motion.div>
+                <motion.div
+                    className='absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 2 }}
+                >
                     <div className='text-sm mb-2'>Scroll</div>
                     <ChevronDownIcon className='mx-auto animate-bounce' />
-                </div>
+                </motion.div>
             </section>
 
             {/* President Letter Section */}
             <section id='letter-president' className='py-16 bg-white'>
                 <div className='container'>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-                        <div className='flex justify-center'>
-                            <div className='relative w-full max-w-md aspect-square'>
+                        <motion.div
+                            className='flex justify-center'
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8 }}
+                            viewport={{ once: true, margin: '-100px' }}
+                        >
+                            <motion.div
+                                className='relative w-full max-w-md aspect-square'
+                                whileHover={{ scale: 1.05 }}
+                                transition={{ duration: 0.3 }}
+                            >
                                 <Image
                                     src='/images/brothers/Fiona-Holdaway.jpg'
                                     alt='Chapter President'
                                     fill
                                     className='object-cover rounded-md'
                                 />
-                            </div>
-                        </div>
-                        <div>
-                            <h1 className='text-3xl md:text-4xl font-bold mb-4'>
+                            </motion.div>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            viewport={{ once: true, margin: '-100px' }}
+                        >
+                            <motion.h1
+                                className='text-3xl md:text-4xl font-bold mb-4'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.4 }}
+                                viewport={{ once: true }}
+                            >
                                 A LETTER FROM OUR PRESIDENT
-                            </h1>
-                            <div className='font-light'>
-                                <p className='mb-4'>
+                            </motion.h1>
+                            <motion.div
+                                className='font-light'
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                transition={{ duration: 0.8, delay: 0.6 }}
+                                viewport={{ once: true }}
+                            >
+                                <motion.p
+                                    className='mb-4'
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6, delay: 0.8 }}
+                                    viewport={{ once: true }}
+                                >
                                     On behalf of our chapter, I&apos;d like to
                                     welcome you to our official website. This
                                     platform offers a glimpse into who we are:
@@ -70,8 +137,14 @@ export default function Home() {
                                     mission, our far-reaching professional
                                     network, and the dynamic individuals who
                                     make up our brotherhood.
-                                </p>
-                                <p className='mb-4'>
+                                </motion.p>
+                                <motion.p
+                                    className='mb-4'
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6, delay: 1.0 }}
+                                    viewport={{ once: true }}
+                                >
                                     Alpha Kappa Psi is more than just a
                                     professional fraternity. We are a diverse
                                     and driven group of students who share a
@@ -81,8 +154,14 @@ export default function Home() {
                                     set, creating a collaborative environment
                                     where we challenge and uplift one another in
                                     both professional and personal pursuits.
-                                </p>
-                                <p className='mb-4'>
+                                </motion.p>
+                                <motion.p
+                                    className='mb-4'
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6, delay: 1.2 }}
+                                    viewport={{ once: true }}
+                                >
                                     I joined Alpha Kappa Psi during my freshman
                                     year at SCU, and it has been one of the most
                                     impactful experiences of my college journey.
@@ -93,14 +172,26 @@ export default function Home() {
                                     and I am incredibly honored to lead this
                                     inspiring and dedicated chapter in the
                                     upcoming academic year.
-                                </p>
-                                <p className='mb-4'>
+                                </motion.p>
+                                <motion.p
+                                    className='mb-4'
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6, delay: 1.4 }}
+                                    viewport={{ once: true }}
+                                >
                                     Alpha Kappa Psi has given me so much, and
                                     I&apos;m excited to give back to the
                                     organization and the people who have made it
                                     feel like home.
-                                </p>
-                                <div className='text-right'>
+                                </motion.p>
+                                <motion.div
+                                    className='text-right'
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6, delay: 1.6 }}
+                                    viewport={{ once: true }}
+                                >
                                     <p>Best,</p>
                                     <p>Fiona Holdaway </p>
                                     <p className='italic'>
@@ -109,9 +200,9 @@ export default function Home() {
                                     <p className='italic'>
                                         Santa Clara University &apos;26
                                     </p>
-                                </div>
-                            </div>
-                        </div>
+                                </motion.div>
+                            </motion.div>
+                        </motion.div>
                     </div>
                 </div>
             </section>
@@ -119,31 +210,67 @@ export default function Home() {
             {/* What is AKPsi Section */}
             <section
                 id='what-is-akpsi'
-                className='py-16 relative h-screen flex items-center justify-center text-white'
+                className='py-16 relative h-screen flex items-center justify-center text-white overflow-hidden'
             >
-                <div className='absolute inset-0'>
+                <motion.div
+                    className='absolute inset-0'
+                    initial={{ scale: 1.1 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ duration: 1.5 }}
+                    viewport={{ once: true }}
+                >
                     <Image
                         src='/images/brotherhood.jpg'
                         alt='Brotherhood'
                         fill
                         className='object-cover'
                     />
-                </div>
+                </motion.div>
                 <div className='absolute inset-0 bg-black/50' />
-                <div className='container relative z-10'>
+                <motion.div
+                    className='container relative z-10'
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                    viewport={{ once: true, margin: '-100px' }}
+                >
                     <div className='max-w-4xl mx-auto text-center'>
-                        <h1 className='text-3xl md:text-4xl font-bold mb-4'>
+                        <motion.h1
+                            className='text-3xl md:text-4xl font-bold mb-4'
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.3 }}
+                            viewport={{ once: true }}
+                        >
                             WHAT IS ALPHA KAPPA PSI?
-                        </h1>
-                        <div className='font-light'>
-                            <h3 className='text-xl mb-6'>
+                        </motion.h1>
+                        <motion.div
+                            className='font-light'
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            transition={{ duration: 0.8, delay: 0.5 }}
+                            viewport={{ once: true }}
+                        >
+                            <motion.h3
+                                className='text-xl mb-6'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.7 }}
+                                viewport={{ once: true }}
+                            >
                                 Alpha Kappa Psi is the nation&apos;s oldest and
                                 largest co-ed business fraternity. Since our
                                 founding in 1904, we have grown to 298,000
                                 initiated members, 219 active chapters in 4
                                 different countries.
-                            </h3>
-                            <h3 className='text-xl mb-8'>
+                            </motion.h3>
+                            <motion.h3
+                                className='text-xl mb-8'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.9 }}
+                                viewport={{ once: true }}
+                            >
                                 The Psi Omega chapter was founded at Santa Clara
                                 University in 2005 and includes over 90 active
                                 brothers across the College of Arts & Sciences,
@@ -151,35 +278,69 @@ export default function Home() {
                                 Engineering — making us the only professional
                                 business fraternity on campus to accept all
                                 majors.
-                            </h3>
-                            <Button asChild variant={'link'} size={'lg'}>
-                                <Link href='/about-akpsi'>Learn more</Link>
-                            </Button>
-                        </div>
+                            </motion.h3>
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 1.1 }}
+                                viewport={{ once: true }}
+                            >
+                                <Button asChild variant={'link'} size={'lg'}>
+                                    <Link href='/about-akpsi'>Learn more</Link>
+                                </Button>
+                            </motion.div>
+                        </motion.div>
                     </div>
-                </div>
+                </motion.div>
             </section>
 
             {/* Rush Section */}
             <section id='rush-akpsi' className='py-32 bg-white'>
-                <div className='container text-center'>
-                    <h1 className='text-3xl md:text-4xl font-bold mb-4'>
+                <motion.div
+                    className='container text-center'
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    viewport={{ once: true, margin: '-100px' }}
+                >
+                    <motion.h1
+                        className='text-3xl md:text-4xl font-bold mb-4'
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        viewport={{ once: true }}
+                    >
                         RUSH AKPSI
-                    </h1>
-                    <h3 className='text-xl max-w-3xl mx-auto mb-8'>
+                    </motion.h1>
+                    <motion.h3
+                        className='text-xl max-w-3xl mx-auto mb-8'
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                        viewport={{ once: true }}
+                    >
                         Take a chance and learn more about Alpha Kappa Psi and
                         how we can help you invest in your future and enhance
                         your college experience.
-                    </h3>
-                    <Button
-                        asChild
-                        variant={'link'}
-                        size={'lg'}
-                        className='border-black hover:bg-black hover:text-white'
+                    </motion.h3>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.6 }}
+                        viewport={{ once: true }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                     >
-                        <Link href='/rush-akpsi'>RUSH AKPSI</Link>
-                    </Button>
-                </div>
+                        <Button
+                            asChild
+                            variant={'link'}
+                            size={'lg'}
+                            className='border-black hover:bg-black hover:text-white transition-all duration-300'
+                        >
+                            <Link href='/rush-akpsi'>RUSH AKPSI</Link>
+                        </Button>
+                    </motion.div>
+                </motion.div>
             </section>
 
             {/* Sponsors Section */}
@@ -187,73 +348,89 @@ export default function Home() {
                 id='sponsors'
                 className='py-16 bg-black h-screen relative flex items-center justify-center text-white'
             >
-                <div className='container relative z-10'>
-                    <h1 className='text-3xl md:text-4xl font-bold mb-48 text-center'>
+                <motion.div
+                    className='container relative z-10'
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                    viewport={{ once: true, margin: '-100px' }}
+                >
+                    <motion.h1
+                        className='text-3xl md:text-4xl font-bold mb-48 text-center'
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        viewport={{ once: true }}
+                    >
                         THANK YOU TO OUR SPONSORS!!
-                    </h1>
+                    </motion.h1>
                     <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-                        <div className='flex flex-col items-center'>
-                            <div className='w-40 h-40 flex items-center justify-center mb-4'>
-                                <Image
-                                    src='/images/kpmg-logo.png'
-                                    alt='KPMG'
-                                    width={150}
-                                    height={150}
-                                    className='object-contain'
-                                />
-                            </div>
-                            <h3 className='text-xl font-bold'>
-                                <a
-                                    href='https://kpmg.com/xx/en/careers.html'
-                                    target='_blank'
-                                    rel='noopener noreferrer'
+                        {[
+                            {
+                                src: '/images/kpmg-logo.png',
+                                alt: 'KPMG',
+                                name: 'KPMG',
+                                href: 'https://kpmg.com/xx/en/careers.html',
+                                delay: 0.4,
+                            },
+                            {
+                                src: '/images/ey-logo.png',
+                                alt: 'EY',
+                                name: 'EY',
+                                href: 'https://www.ey.com/en_us/careers',
+                                delay: 0.6,
+                            },
+                            {
+                                src: '/images/deloitte-logo.png',
+                                alt: 'Deloitte',
+                                name: 'Deloitte',
+                                href: 'https://www2.deloitte.com/us/en/careers/careers.html',
+                                delay: 0.8,
+                            },
+                        ].map((sponsor) => (
+                            <motion.div
+                                key={sponsor.name}
+                                className='flex flex-col items-center'
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.6,
+                                    delay: sponsor.delay,
+                                }}
+                                viewport={{ once: true }}
+                                whileHover={{ scale: 1.1 }}
+                            >
+                                <motion.div
+                                    className='w-40 h-40 flex items-center justify-center mb-4'
+                                    whileHover={{ rotate: 5 }}
+                                    transition={{ duration: 0.3 }}
                                 >
-                                    KPMG
-                                </a>
-                            </h3>
-                        </div>
-                        <div className='flex flex-col items-center'>
-                            <div className='w-40 h-40 flex items-center justify-center mb-4'>
-                                <Image
-                                    src='/images/ey-logo.png'
-                                    alt='EY'
-                                    width={150}
-                                    height={150}
-                                    className='object-contain'
-                                />
-                            </div>
-                            <h3 className='text-xl font-bold'>
-                                <a
-                                    href='https://www.ey.com/en_us/careers'
-                                    target='_blank'
-                                    rel='noopener noreferrer'
+                                    <Image
+                                        src={sponsor.src}
+                                        alt={sponsor.alt}
+                                        width={150}
+                                        height={150}
+                                        className='object-contain'
+                                    />
+                                </motion.div>
+                                <motion.h3
+                                    className='text-xl font-bold'
+                                    whileHover={{ scale: 1.1 }}
+                                    transition={{ duration: 0.2 }}
                                 >
-                                    EY
-                                </a>
-                            </h3>
-                        </div>
-                        <div className='flex flex-col items-center'>
-                            <div className='w-40 h-40 flex items-center justify-center mb-4'>
-                                <Image
-                                    src='/images/deloitte-logo.png'
-                                    alt='Deloitte'
-                                    width={150}
-                                    height={150}
-                                    className='object-contain'
-                                />
-                            </div>
-                            <h3 className='text-xl font-bold'>
-                                <a
-                                    href='https://www2.deloitte.com/us/en/careers/careers.html'
-                                    target='_blank'
-                                    rel='noopener noreferrer'
-                                >
-                                    Deloitte
-                                </a>
-                            </h3>
-                        </div>
+                                    <a
+                                        href={sponsor.href}
+                                        target='_blank'
+                                        rel='noopener noreferrer'
+                                        className='hover:text-gray-300 transition-colors duration-300'
+                                    >
+                                        {sponsor.name}
+                                    </a>
+                                </motion.h3>
+                            </motion.div>
+                        ))}
                     </div>
-                </div>
+                </motion.div>
             </section>
         </main>
     );

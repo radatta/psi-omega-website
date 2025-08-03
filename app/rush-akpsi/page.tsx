@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Mail } from 'lucide-react';
 import RushFAQ from '@/components/rush/rush-faq';
+import { motion } from 'motion/react';
 
 export default function RushPage() {
     return (
@@ -12,39 +13,74 @@ export default function RushPage() {
             {/* Hero Section */}
             <section
                 id='rush-hero'
-                className='relative h-screen flex items-center justify-center text-white'
+                className='relative h-screen flex items-center justify-center text-white overflow-hidden'
             >
-                <Image
-                    src='/images/rush-hero.jpg'
-                    alt='Rush Alpha Kappa Psi'
-                    fill
-                    className='object-cover'
-                    priority
-                />
+                <motion.div
+                    initial={{ scale: 1.1 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 1.5, ease: 'easeOut' }}
+                    className='absolute inset-0'
+                >
+                    <Image
+                        src='/images/rush-hero.jpg'
+                        alt='Rush Alpha Kappa Psi'
+                        fill
+                        className='object-cover'
+                        priority
+                    />
+                    <div className='absolute inset-0 bg-black/50'></div>
+                </motion.div>
 
-                <div className='container z-10 text-center'>
-                    <h1 className='text-4xl md:text-6xl font-bold mb-4 animate-fade-in'>
+                <motion.div
+                    className='container z-10 text-center'
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                >
+                    <motion.h1
+                        className='text-4xl md:text-6xl font-bold mb-4'
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.8 }}
+                    >
                         RUSH ALPHA KAPPA PSI
-                    </h1>
-                    <p className='text-xl md:text-2xl animate-fade-in-delay'>
+                    </motion.h1>
+                    <motion.p
+                        className='text-xl md:text-2xl'
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 1.1 }}
+                    >
                         See yourself here? Take the first step toward your goals
                         and come out to rush!
-                    </p>
-                    <div className='mt-8 animate-fade-in-delay-longer'>
+                    </motion.p>
+                    <motion.div
+                        className='mt-8'
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 1.4 }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
                         <Button
                             asChild
                             size='lg'
                             variant='outline'
-                            className='bg-transparent text-white border-white hover:bg-white/20'
+                            className='bg-transparent text-white border-white hover:bg-white/20 transition-all duration-300'
                         >
                             <a href='#rush-info'>Learn More</a>
                         </Button>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
 
                 {/* Scroll indicator */}
-                <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce'>
-                    <svg
+                <motion.div
+                    className='absolute bottom-8 left-1/2 transform -translate-x-1/2'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 2 }}
+                >
+                    <motion.svg
                         xmlns='http://www.w3.org/2000/svg'
                         width='24'
                         height='24'
@@ -55,29 +91,62 @@ export default function RushPage() {
                         strokeLinecap='round'
                         strokeLinejoin='round'
                         className='text-white'
+                        animate={{ y: [0, 10, 0] }}
+                        transition={{ duration: 2, repeat: Infinity }}
                     >
                         <path d='M12 5v14M5 12l7 7 7-7' />
-                    </svg>
-                </div>
+                    </motion.svg>
+                </motion.div>
             </section>
 
             <div className='relative z-10 bg-white'>
                 {/* Rush Info Section */}
                 <section id='rush-info' className='py-16 bg-white'>
                     <div className='container'>
-                        <div className='text-center mb-8'>
-                            <h1 className='text-3xl md:text-4xl font-bold mb-4'>
+                        <motion.div
+                            className='text-center mb-8'
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                            viewport={{ once: true, margin: '-100px' }}
+                        >
+                            <motion.h1
+                                className='text-3xl md:text-4xl font-bold mb-4'
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.6, delay: 0.2 }}
+                                viewport={{ once: true }}
+                            >
                                 WINTER RUSH 2025
-                            </h1>
-                            <h2 className='text-xl md:text-2xl mb-2'>
+                            </motion.h1>
+                            <motion.h2
+                                className='text-xl md:text-2xl mb-2'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.4 }}
+                                viewport={{ once: true }}
+                            >
                                 January 13th - January 17th
-                            </h2>
-                            <h2 className='text-xl md:text-2xl mb-8'>
+                            </motion.h2>
+                            <motion.h2
+                                className='text-xl md:text-2xl mb-8'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.6 }}
+                                viewport={{ once: true }}
+                            >
                                 Week 2 of Winter Quarter.
-                            </h2>
-                        </div>
+                            </motion.h2>
+                        </motion.div>
 
-                        <div className='max-w-4xl mx-auto mb-8'>
+                        <motion.div
+                            className='max-w-4xl mx-auto mb-8'
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            viewport={{ once: true }}
+                            whileHover={{ scale: 1.02 }}
+                        >
                             <div className='relative aspect-[16/10] w-full'>
                                 <Image
                                     src='/images/rush-flyer.jpeg'
@@ -86,19 +155,35 @@ export default function RushPage() {
                                     className='object-contain rounded-lg'
                                 />
                             </div>
-                        </div>
+                        </motion.div>
 
-                        <div className='text-center mb-8'>
-                            <Link
-                                href='https://docs.google.com/forms/d/e/1FAIpQLSfn30kelbOHRGrevQ_jGyDSLr5sGsduVzPtnN5TFnToPEG1nQ/viewform?usp=sf_link'
-                                target='_blank'
-                                className='text-blue-600 hover:underline font-bold'
-                            >
-                                Join our Rush Mailing List!
-                            </Link>
-                        </div>
+                        <motion.div
+                            className='text-center mb-8'
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                            viewport={{ once: true }}
+                        >
+                            <motion.div whileHover={{ scale: 1.05 }}>
+                                <Link
+                                    href='https://docs.google.com/forms/d/e/1FAIpQLSfn30kelbOHRGrevQ_jGyDSLr5sGsduVzPtnN5TFnToPEG1nQ/viewform?usp=sf_link'
+                                    target='_blank'
+                                    className='text-blue-600 hover:underline font-bold transition-colors duration-300'
+                                >
+                                    Join our Rush Mailing List!
+                                </Link>
+                            </motion.div>
+                        </motion.div>
 
-                        <div className='flex justify-center mb-12'>
+                        <motion.div
+                            className='flex justify-center mb-12'
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.6 }}
+                            viewport={{ once: true }}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
                             <Button asChild size='lg'>
                                 <Link
                                     href='https://docs.google.com/forms/d/e/1FAIpQLScvQsk5zOUZ-18KYJc3D4XR5ATR6GkHzEQn-Ug5E1bZdIjHCA/viewform?usp=sf_link'
@@ -107,48 +192,97 @@ export default function RushPage() {
                                     Application Due 1/15 @ 5:00 PM
                                 </Link>
                             </Button>
-                        </div>
+                        </motion.div>
 
-                        <hr className='border-gray-300 mb-12' />
+                        <motion.hr
+                            className='border-gray-300 mb-12'
+                            initial={{ scaleX: 0 }}
+                            whileInView={{ scaleX: 1 }}
+                            transition={{ duration: 0.8 }}
+                            viewport={{ once: true }}
+                        />
 
-                        <div className='max-w-4xl mx-auto'>
-                            <h3 className='text-xl font-semibold mb-4 text-center'>
+                        <motion.div
+                            className='max-w-4xl mx-auto'
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                            viewport={{ once: true }}
+                        >
+                            <motion.h3
+                                className='text-xl font-semibold mb-4 text-center'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.2 }}
+                                viewport={{ once: true }}
+                            >
                                 Press play to see what Alpha Kappa Psi is all
                                 about!
-                            </h3>
-                            <div className='aspect-video w-full'>
+                            </motion.h3>
+                            <motion.div
+                                className='aspect-video w-full'
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.8, delay: 0.4 }}
+                                viewport={{ once: true }}
+                                whileHover={{ scale: 1.02 }}
+                            >
                                 <iframe
-                                    className='w-full h-full rounded-lg'
+                                    className='w-full h-full rounded-lg shadow-lg'
                                     src='https://www.youtube.com/embed/deYrnHClMUM'
                                     title='Alpha Kappa Psi Rush Video'
                                     allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
                                     allowFullScreen
                                 ></iframe>
-                            </div>
-                        </div>
+                            </motion.div>
+                        </motion.div>
                     </div>
                 </section>
 
                 {/* FAQ Section */}
                 <section id='faq' className='py-16 bg-gray-50'>
                     <div className='container'>
-                        <h1 className='text-3xl md:text-4xl font-bold text-center mb-4'>
+                        <motion.h1
+                            className='text-3xl md:text-4xl font-bold text-center mb-4'
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                            viewport={{ once: true, margin: '-100px' }}
+                        >
                             Frequently Asked Questions
-                        </h1>
-                        <hr className='border-gray-300 w-24 mx-auto mb-12' />
+                        </motion.h1>
+                        <motion.hr
+                            className='border-gray-300 w-24 mx-auto mb-12'
+                            initial={{ scaleX: 0 }}
+                            whileInView={{ scaleX: 1 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            viewport={{ once: true }}
+                        />
 
-                        <div className='max-w-4xl mx-auto'>
+                        <motion.div
+                            className='max-w-4xl mx-auto'
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.4 }}
+                            viewport={{ once: true }}
+                        >
                             <RushFAQ />
-                        </div>
+                        </motion.div>
                     </div>
                 </section>
 
                 {/* Contact Section */}
                 <section
                     id='contact'
-                    className='relative h-screen flex items-center justify-center text-white'
+                    className='relative h-screen flex items-center justify-center text-white overflow-hidden'
                 >
-                    <div className='absolute inset-0 z-0'>
+                    <motion.div
+                        className='absolute inset-0 z-0'
+                        initial={{ scale: 1.1 }}
+                        whileInView={{ scale: 1 }}
+                        transition={{ duration: 1.5 }}
+                        viewport={{ once: true }}
+                    >
                         <Image
                             src='/images/contact-bg.jpg'
                             alt='Contact Background'
@@ -156,25 +290,53 @@ export default function RushPage() {
                             className='object-cover'
                         />
                         <div className='absolute inset-0 bg-black/60'></div>
-                    </div>
-                    <div className='container relative z-10 text-center'>
-                        <h1 className='text-3xl md:text-5xl font-bold mb-4'>
+                    </motion.div>
+                    <motion.div
+                        className='container relative z-10 text-center'
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1 }}
+                        viewport={{ once: true, margin: '-100px' }}
+                    >
+                        <motion.h1
+                            className='text-3xl md:text-5xl font-bold mb-4'
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            viewport={{ once: true }}
+                        >
                             Contact Us
-                        </h1>
-                        <p className='text-xl mb-8'>
+                        </motion.h1>
+                        <motion.p
+                            className='text-xl mb-8'
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                            viewport={{ once: true }}
+                        >
                             For questions or concerns regarding Rush, please
                             email <strong>akpsi@scu.edu</strong>.
-                        </p>
-                        <Button
-                            asChild
-                            size='lg'
-                            className='bg-white text-black hover:bg-gray-200'
+                        </motion.p>
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.6 }}
+                            viewport={{ once: true }}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                         >
-                            <a href='mailto:akpsi@scu.edu'>
-                                <Mail className='mr-2 h-4 w-4' /> ASK ABOUT RUSH
-                            </a>
-                        </Button>
-                    </div>
+                            <Button
+                                asChild
+                                size='lg'
+                                className='bg-white text-black hover:bg-gray-200 transition-all duration-300'
+                            >
+                                <a href='mailto:akpsi@scu.edu'>
+                                    <Mail className='mr-2 h-4 w-4' /> ASK ABOUT
+                                    RUSH
+                                </a>
+                            </Button>
+                        </motion.div>
+                    </motion.div>
                 </section>
             </div>
         </main>
