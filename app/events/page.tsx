@@ -1,4 +1,6 @@
+'use client';
 import Image from 'next/image';
+import { motion } from 'motion/react';
 
 // Image data for the Brotherhood section
 const brotherhoodImages = [
@@ -55,9 +57,14 @@ export default function EventsPage() {
             {/* Hero Section */}
             <section
                 id='our-events'
-                className='relative h-screen flex items-center justify-center text-white'
+                className='relative h-screen flex items-center justify-center text-white overflow-hidden'
             >
-                <div className='absolute inset-0 z-0'>
+                <motion.div
+                    className='absolute inset-0 z-0'
+                    initial={{ scale: 1.1 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 1.5, ease: 'easeOut' }}
+                >
                     <Image
                         src='/images/Events-Hero.jpg'
                         alt='AKPsi Events'
@@ -66,16 +73,31 @@ export default function EventsPage() {
                         priority
                     />
                     <div className='absolute inset-0 bg-black/50'></div>
-                </div>
-                <div className='container z-10 text-center'>
-                    <h1 className='text-4xl md:text-6xl font-bold mb-4'>
+                </motion.div>
+                <motion.div
+                    className='container z-10 text-center'
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                >
+                    <motion.h1
+                        className='text-4xl md:text-6xl font-bold mb-4'
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.8 }}
+                    >
                         OUR EVENTS
-                    </h1>
-                    <p className='text-xl max-w-3xl mx-auto'>
+                    </motion.h1>
+                    <motion.p
+                        className='text-xl max-w-3xl mx-auto'
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 1.1 }}
+                    >
                         Check out what we&apos;ve done and stay updated with
                         what&apos;s next!
-                    </p>
-                </div>
+                    </motion.p>
+                </motion.div>
             </section>
 
             {/* Past Events Section */}
@@ -84,20 +106,51 @@ export default function EventsPage() {
                     {/* Brotherhood Section */}
                     <div className='flex flex-col md:flex-row items-start gap-12'>
                         {/* Text */}
-                        <div className='md:w-2/5 md:sticky md:top-8'>
-                            <h2 className='text-4xl font-bold mb-6 text-blue-900'>
+                        <motion.div
+                            className='md:w-2/5 md:sticky md:top-8'
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8 }}
+                            viewport={{ once: true, margin: '-100px' }}
+                        >
+                            <motion.h2
+                                className='text-4xl font-bold mb-6 text-blue-900'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.2 }}
+                                viewport={{ once: true }}
+                            >
                                 BROTHERHOOD
-                            </h2>
-                            <div className='w-16 h-1 bg-blue-600 mb-8'></div>
-                            <p className='text-lg leading-relaxed mb-8 text-gray-700'>
+                            </motion.h2>
+                            <motion.div
+                                className='w-16 h-1 bg-blue-600 mb-8'
+                                initial={{ scaleX: 0 }}
+                                whileInView={{ scaleX: 1 }}
+                                transition={{ duration: 0.8, delay: 0.4 }}
+                                viewport={{ once: true }}
+                            ></motion.div>
+                            <motion.p
+                                className='text-lg leading-relaxed mb-8 text-gray-700'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.6 }}
+                                viewport={{ once: true }}
+                            >
                                 From spontaneous beach trips to Tahoe
                                 brotherhood retreats, brotherhood has always
                                 been an essential part of Alpha Kappa Psi.
                                 Through our pledge process, brotherhood events,
                                 and casual hangouts, life-long friendships are
                                 formed.
-                            </p>
-                            <div className='bg-blue-50 p-6 rounded-lg'>
+                            </motion.p>
+                            <motion.div
+                                className='bg-blue-50 p-6 rounded-lg'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.8 }}
+                                viewport={{ once: true }}
+                                whileHover={{ scale: 1.02 }}
+                            >
                                 <h3 className='font-semibold text-blue-900 mb-2'>
                                     Recent Highlights
                                 </h3>
@@ -107,17 +160,39 @@ export default function EventsPage() {
                                     <li>• Game Night Gatherings</li>
                                     <li>• Brotherhood Dinners</li>
                                 </ul>
-                            </div>
-                        </div>
+                            </motion.div>
+                        </motion.div>
                         {/* Images - Masonry Layout */}
-                        <div className='md:w-3/5'>
+                        <motion.div
+                            className='md:w-3/5'
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            viewport={{ once: true, margin: '-100px' }}
+                        >
                             <div className='columns-2 md:columns-3 gap-4 space-y-4'>
                                 {brotherhoodImages.map((image, index) => (
-                                    <div
+                                    <motion.div
                                         key={index}
                                         className='break-inside-avoid mb-4'
+                                        initial={{ opacity: 0, y: 50 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{
+                                            duration: 0.6,
+                                            delay: index * 0.1,
+                                        }}
+                                        viewport={{
+                                            once: true,
+                                            margin: '-50px',
+                                        }}
                                     >
-                                        <div className='relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105'>
+                                        <motion.div
+                                            className='relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300'
+                                            whileHover={{
+                                                scale: 1.05,
+                                                rotate: 1,
+                                            }}
+                                        >
                                             <Image
                                                 src={
                                                     image.src ||
@@ -128,21 +203,37 @@ export default function EventsPage() {
                                                 height={300}
                                                 className='w-full h-auto object-cover'
                                             />
-                                        </div>
-                                    </div>
+                                        </motion.div>
+                                    </motion.div>
                                 ))}
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
 
                     {/* Professional Section */}
                     <div className='bg-gray-50 -mx-8 px-8 py-16 rounded-2xl'>
                         <div className='flex flex-col md:flex-row items-start gap-12'>
                             {/* Images - Featured Layout */}
-                            <div className='md:w-3/5 order-2 md:order-1'>
+                            <motion.div
+                                className='md:w-3/5 order-2 md:order-1'
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.8, delay: 0.2 }}
+                                viewport={{ once: true, margin: '-100px' }}
+                            >
                                 <div className='grid gap-4'>
                                     {/* Large featured image */}
-                                    <div className='relative aspect-[16/9] overflow-hidden rounded-xl shadow-lg'>
+                                    <motion.div
+                                        className='relative aspect-[16/9] overflow-hidden rounded-xl shadow-lg'
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        transition={{
+                                            duration: 0.8,
+                                            delay: 0.4,
+                                        }}
+                                        viewport={{ once: true }}
+                                        whileHover={{ scale: 1.02 }}
+                                    >
                                         <Image
                                             src={
                                                 professionalImages[0]?.src ||
@@ -155,15 +246,36 @@ export default function EventsPage() {
                                             fill
                                             className='object-cover'
                                         />
-                                    </div>
+                                    </motion.div>
                                     {/* Grid of smaller images */}
                                     <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
                                         {professionalImages
                                             .slice(1)
                                             .map((image, index) => (
-                                                <div
+                                                <motion.div
                                                     key={index + 1}
                                                     className='relative aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow'
+                                                    initial={{
+                                                        opacity: 0,
+                                                        y: 30,
+                                                    }}
+                                                    whileInView={{
+                                                        opacity: 1,
+                                                        y: 0,
+                                                    }}
+                                                    transition={{
+                                                        duration: 0.6,
+                                                        delay:
+                                                            0.6 + index * 0.1,
+                                                    }}
+                                                    viewport={{
+                                                        once: true,
+                                                        margin: '-50px',
+                                                    }}
+                                                    whileHover={{
+                                                        scale: 1.05,
+                                                        rotate: 1,
+                                                    }}
                                                 >
                                                     <Image
                                                         src={
@@ -174,18 +286,42 @@ export default function EventsPage() {
                                                         fill
                                                         className='object-cover hover:scale-110 transition-transform duration-300'
                                                     />
-                                                </div>
+                                                </motion.div>
                                             ))}
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                             {/* Text */}
-                            <div className='md:w-2/5 order-1 md:order-2'>
-                                <h2 className='text-4xl font-bold mb-6 text-green-900'>
+                            <motion.div
+                                className='md:w-2/5 order-1 md:order-2 md:sticky md:top-8'
+                                initial={{ opacity: 0, x: 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.8 }}
+                                viewport={{ once: true, margin: '-100px' }}
+                            >
+                                <motion.h2
+                                    className='text-4xl font-bold mb-6 text-green-900'
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6, delay: 0.2 }}
+                                    viewport={{ once: true }}
+                                >
                                     PROFESSIONAL
-                                </h2>
-                                <div className='w-16 h-1 bg-green-600 mb-8'></div>
-                                <p className='text-lg leading-relaxed mb-8 text-gray-700'>
+                                </motion.h2>
+                                <motion.div
+                                    className='w-16 h-1 bg-green-600 mb-8'
+                                    initial={{ scaleX: 0 }}
+                                    whileInView={{ scaleX: 1 }}
+                                    transition={{ duration: 0.8, delay: 0.4 }}
+                                    viewport={{ once: true }}
+                                ></motion.div>
+                                <motion.p
+                                    className='text-lg leading-relaxed mb-8 text-gray-700'
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6, delay: 0.6 }}
+                                    viewport={{ once: true }}
+                                >
                                     As a group of driven and passionate
                                     individuals, we take pride in our desire to
                                     learn and grow through professional
@@ -194,8 +330,15 @@ export default function EventsPage() {
                                     workshops, and guest speaker conferences, we
                                     are given an amazing opportunity to grow
                                     into principled leaders.
-                                </p>
-                                <div className='bg-green-50 p-6 rounded-lg'>
+                                </motion.p>
+                                <motion.div
+                                    className='bg-green-50 p-6 rounded-lg'
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6, delay: 0.8 }}
+                                    viewport={{ once: true }}
+                                    whileHover={{ scale: 1.02 }}
+                                >
                                     <h3 className='font-semibold text-green-900 mb-2'>
                                         Professional Development
                                     </h3>
@@ -205,28 +348,59 @@ export default function EventsPage() {
                                         <li>• Networking Events</li>
                                         <li>• Career Workshops</li>
                                     </ul>
-                                </div>
-                            </div>
+                                </motion.div>
+                            </motion.div>
                         </div>
                     </div>
 
                     {/* Service Section */}
                     <div className='flex flex-col md:flex-row items-start gap-12'>
                         {/* Text */}
-                        <div className='md:w-2/5'>
-                            <h2 className='text-4xl font-bold mb-6 text-red-900'>
+                        <motion.div
+                            className='md:w-2/5 md:sticky md:top-8'
+                            initial={{ opacity: 0, x: -50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8 }}
+                            viewport={{ once: true, margin: '-100px' }}
+                        >
+                            <motion.h2
+                                className='text-4xl font-bold mb-6 text-red-900'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.2 }}
+                                viewport={{ once: true }}
+                            >
                                 SERVICE
-                            </h2>
-                            <div className='w-16 h-1 bg-red-600 mb-8'></div>
-                            <p className='text-lg leading-relaxed mb-8 text-gray-700'>
+                            </motion.h2>
+                            <motion.div
+                                className='w-16 h-1 bg-red-600 mb-8'
+                                initial={{ scaleX: 0 }}
+                                whileInView={{ scaleX: 1 }}
+                                transition={{ duration: 0.8, delay: 0.4 }}
+                                viewport={{ once: true }}
+                            ></motion.div>
+                            <motion.p
+                                className='text-lg leading-relaxed mb-8 text-gray-700'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.6 }}
+                                viewport={{ once: true }}
+                            >
                                 Community service provides us the invaluable
                                 opportunity to become an active member of
                                 society. As a core value of Alpha Kappa Psi, we
                                 are incredibly fortunate to serve and engage
                                 with our community members who are in need of
                                 support, compassion, and love.
-                            </p>
-                            <div className='bg-red-50 p-6 rounded-lg'>
+                            </motion.p>
+                            <motion.div
+                                className='bg-red-50 p-6 rounded-lg'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.8 }}
+                                viewport={{ once: true }}
+                                whileHover={{ scale: 1.02 }}
+                            >
                                 <h3 className='font-semibold text-red-900 mb-2'>
                                     Community Impact
                                 </h3>
@@ -236,15 +410,32 @@ export default function EventsPage() {
                                     <li>• Community Outreach</li>
                                     <li>• Charity Fundraisers</li>
                                 </ul>
-                            </div>
-                        </div>
+                            </motion.div>
+                        </motion.div>
                         {/* Images - Card Layout */}
-                        <div className='md:w-3/5'>
+                        <motion.div
+                            className='md:w-3/5'
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            viewport={{ once: true, margin: '-100px' }}
+                        >
                             <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                                 {serviceImages.map((image, index) => (
-                                    <div
+                                    <motion.div
                                         key={index}
                                         className='group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300'
+                                        initial={{ opacity: 0, y: 50 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{
+                                            duration: 0.6,
+                                            delay: index * 0.1,
+                                        }}
+                                        viewport={{
+                                            once: true,
+                                            margin: '-50px',
+                                        }}
+                                        whileHover={{ scale: 1.05, rotate: 1 }}
                                     >
                                         <div className='relative aspect-[4/3]'>
                                             <Image
@@ -258,10 +449,10 @@ export default function EventsPage() {
                                             />
                                             <div className='absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 ))}
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </section>
