@@ -20,7 +20,7 @@ export default function MeetTheBrotherhood() {
                 className='relative h-screen flex items-center justify-center text-white'
             >
                 <Image
-                    src='/images/group-photo.jpg'
+                    src='/images/brothers-hero.jpg'
                     alt='Rush Alpha Kappa Psi'
                     fill
                     className='object-cover'

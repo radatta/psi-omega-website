@@ -15,7 +15,7 @@ export default function AboutPage() {
             >
                 <div className='absolute inset-0 z-0'>
                     <Image
-                        src='/images/about-hero.png'
+                        src='/images/about-hero.jpg'
                         alt='Psi Omega Chapter'
                         fill
                         className='object-cover'
