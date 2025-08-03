@@ -1,7 +1,6 @@
 import { PieChart } from '@/components/charts/pie-chart';
 import {
     schoolsCollegesData,
-    globalPopulationData,
     classDistributionData,
 } from '@/lib/brothers_data';
 
@@ -25,13 +24,6 @@ export default function StatisticsSection() {
                             Schools & Colleges
                         </h2>
                         <PieChart data={schoolsCollegesData} />
-                    </div>
-
-                    <div className='bg-white p-6 rounded-lg shadow-md'>
-                        <h2 className='text-xl font-bold mb-4 text-center'>
-                            Global Population
-                        </h2>
-                        <PieChart data={globalPopulationData} />
                     </div>
 
                     <div className='bg-white p-6 rounded-lg shadow-md'>
