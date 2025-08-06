@@ -96,7 +96,7 @@ export default function MeetTheBrotherhood() {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        viewport={{ once: true, margin: '-100px' }}
+                        viewport={{ once: true, margin: '100px' }}
                     >
                         EXECUTIVE COMMITTEE
                     </motion.h2>
@@ -110,7 +110,7 @@ export default function MeetTheBrotherhood() {
                                     duration: 0.6,
                                     delay: index * 0.1,
                                 }}
-                                viewport={{ once: true, margin: '-200px' }}
+                                viewport={{ once: true, margin: '200px' }}
                             >
                                 <BrotherCard {...member} />
                             </motion.div>
@@ -127,7 +127,7 @@ export default function MeetTheBrotherhood() {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        viewport={{ once: true, margin: '-100px' }}
+                        viewport={{ once: true, margin: '100px' }}
                     >
                         COMMITTEE CHAIRS
                     </motion.h2>
@@ -142,7 +142,7 @@ export default function MeetTheBrotherhood() {
                                     duration: 0.6,
                                     delay: index * 0.1,
                                 }}
-                                viewport={{ once: true, margin: '-200px' }}
+                                viewport={{ once: true, margin: '200px' }}
                                 whileHover={{ scale: 1.05 }}
                             >
                                 <p className='text-center text-xl font-bold '>
@@ -165,7 +165,7 @@ export default function MeetTheBrotherhood() {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        viewport={{ once: true, margin: '-100px' }}
+                        viewport={{ once: true, margin: '100px' }}
                     >
                         ALPHA NU | FALL 2022
                     </motion.h2>
@@ -179,7 +179,7 @@ export default function MeetTheBrotherhood() {
                                     duration: 0.6,
                                     delay: index * 0.1,
                                 }}
-                                viewport={{ once: true, margin: '-200px' }}
+                                viewport={{ once: true, margin: '200px' }}
                             >
                                 <BrotherCard {...member} />
                             </motion.div>
@@ -196,7 +196,7 @@ export default function MeetTheBrotherhood() {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        viewport={{ once: true, margin: '-100px' }}
+                        viewport={{ once: true, margin: '100px' }}
                     >
                         ALPHA XI | WINTER 2023
                     </motion.h2>
@@ -210,7 +210,7 @@ export default function MeetTheBrotherhood() {
                                     duration: 0.6,
                                     delay: index * 0.1,
                                 }}
-                                viewport={{ once: true, margin: '-200px' }}
+                                viewport={{ once: true, margin: '200px' }}
                             >
                                 <BrotherCard {...member} />
                             </motion.div>
@@ -227,7 +227,7 @@ export default function MeetTheBrotherhood() {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        viewport={{ once: true, margin: '-100px' }}
+                        viewport={{ once: true, margin: '100px' }}
                     >
                         ALPHA OMICRON | FALL 2023
                     </motion.h2>
@@ -241,7 +241,7 @@ export default function MeetTheBrotherhood() {
                                     duration: 0.6,
                                     delay: index * 0.1,
                                 }}
-                                viewport={{ once: true, margin: '-200px' }}
+                                viewport={{ once: true, margin: '200px' }}
                             >
                                 <BrotherCard {...member} />
                             </motion.div>
@@ -258,7 +258,7 @@ export default function MeetTheBrotherhood() {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        viewport={{ once: true, margin: '-100px' }}
+                        viewport={{ once: true, margin: '100px' }}
                     >
                         ALPHA PI | WINTER 2024
                     </motion.h2>
@@ -272,7 +272,7 @@ export default function MeetTheBrotherhood() {
                                     duration: 0.6,
                                     delay: index * 0.1,
                                 }}
-                                viewport={{ once: true, margin: '-200px' }}
+                                viewport={{ once: true, margin: '200px' }}
                             >
                                 <BrotherCard {...member} />
                             </motion.div>
@@ -289,7 +289,7 @@ export default function MeetTheBrotherhood() {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        viewport={{ once: true, margin: '-100px' }}
+                        viewport={{ once: true, margin: '100px' }}
                     >
                         ALPHA RHO | FALL 2024
                     </motion.h2>
@@ -303,7 +303,7 @@ export default function MeetTheBrotherhood() {
                                     duration: 0.6,
                                     delay: index * 0.1,
                                 }}
-                                viewport={{ once: true, margin: '-200px' }}
+                                viewport={{ once: true, margin: '200px' }}
                             >
                                 <BrotherCard {...member} />
                             </motion.div>
@@ -320,7 +320,7 @@ export default function MeetTheBrotherhood() {
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        viewport={{ once: true, margin: '-100px' }}
+                        viewport={{ once: true, margin: '100px' }}
                     >
                         ALPHA SIGMA | WINTER 2025
                     </motion.h2>
@@ -334,7 +334,7 @@ export default function MeetTheBrotherhood() {
                                     duration: 0.6,
                                     delay: index * 0.1,
                                 }}
-                                viewport={{ once: true, margin: '-200px' }}
+                                viewport={{ once: true, margin: '200px' }}
                             >
                                 <BrotherCard {...member} />
                             </motion.div>

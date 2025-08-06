@@ -111,7 +111,7 @@ export default function EventsPage() {
                             initial={{ opacity: 0, x: -50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
-                            viewport={{ once: true, margin: '-100px' }}
+                            viewport={{ once: true, margin: '100px' }}
                         >
                             <motion.h2
                                 className='text-4xl font-bold mb-6 text-blue-900'
@@ -168,7 +168,7 @@ export default function EventsPage() {
                             initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8, delay: 0.2 }}
-                            viewport={{ once: true, margin: '-100px' }}
+                            viewport={{ once: true, margin: '100px' }}
                         >
                             <div className='columns-2 md:columns-3 gap-4 space-y-4'>
                                 {brotherhoodImages.map((image, index) => (
@@ -219,7 +219,7 @@ export default function EventsPage() {
                                 initial={{ opacity: 0, x: -50 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
-                                viewport={{ once: true, margin: '-100px' }}
+                                viewport={{ once: true, margin: '100px' }}
                             >
                                 <div className='grid gap-4'>
                                     {/* Large featured image */}
@@ -297,7 +297,7 @@ export default function EventsPage() {
                                 initial={{ opacity: 0, x: 50 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.8 }}
-                                viewport={{ once: true, margin: '-100px' }}
+                                viewport={{ once: true, margin: '100px' }}
                             >
                                 <motion.h2
                                     className='text-4xl font-bold mb-6 text-green-900'
@@ -361,7 +361,7 @@ export default function EventsPage() {
                             initial={{ opacity: 0, x: -50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
-                            viewport={{ once: true, margin: '-100px' }}
+                            viewport={{ once: true, margin: '100px' }}
                         >
                             <motion.h2
                                 className='text-4xl font-bold mb-6 text-red-900'
@@ -418,7 +418,7 @@ export default function EventsPage() {
                             initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8, delay: 0.2 }}
-                            viewport={{ once: true, margin: '-100px' }}
+                            viewport={{ once: true, margin: '100px' }}
                         >
                             <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
                                 {serviceImages.map((image, index) => (
