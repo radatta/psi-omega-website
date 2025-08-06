@@ -18,86 +18,92 @@ export default function HistorySection() {
             <div className='container relative z-10'>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-12'>
                     {/* Fraternity History */}
-                    <div>
-                        <motion.h1
-                            className='text-4xl md:text-5xl font-bold mb-8'
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            viewport={{ once: true, margin: '-50px' }}
-                        >
-                            FRATERNITY HISTORY
-                        </motion.h1>
-                        <motion.hr
-                            className='border-gray-300 mb-8'
-                            initial={{ width: 0 }}
-                            whileInView={{ width: '100%' }}
-                            transition={{ duration: 0.8 }}
-                            viewport={{ once: true, margin: '-50px' }}
-                        />
-
-                        <motion.h2
-                            className='text-2xl font-semibold mb-4'
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            viewport={{ once: true, margin: '-50px' }}
-                        >
-                            BROOKLYN, NY | 1904
-                        </motion.h2>
-                        <motion.p
-                            className='mb-4'
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.3 }}
-                            viewport={{ once: true, margin: '-50px' }}
-                        >
-                            Alpha Kappa Psi is the oldest and largest co-ed
-                            professional business fraternity in the United
-                            States. Our history begins in the fall of 1902 when
-                            four men began attending evening business classes
-                            together at New York University. The Founders
-                            occupied the same seats five nights a week. They
-                            became acquainted with one another. The four men
-                            from Brooklyn (Bergen, Jefferson, Lane, Leach),
-                            later known as the Brooklyn Four, walked together
-                            over the Brooklyn Bridge from school.
-                        </motion.p>
-                        <motion.p
-                            className='mb-48'
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.4 }}
-                            viewport={{ once: true, margin: '-50px' }}
-                        >
-                            The spirit of the brotherhood grew so strong in the
-                            hearts and in the minds of the men from Brooklyn
-                            that they decided to suggest to the other members of
-                            their class that something be done to perpetuate it,
-                            and Alpha Kappa Psi, the first professional
-                            fraternity in business, was founded at an
-                            organization meeting held on October 5, 1904. Later,
-                            a formal application was made to the State of New
-                            York for a chapter of incorporation for Alpha Kappa
-                            Psi. The application was approved and the charter of
-                            incorporation was issued in the name of Alpha Kappa
-                            Psi on May 20, 1905.
-                        </motion.p>
-
-                        <motion.div
-                            className='relative pt-48 h-[calc(100vh-100px)] w-full rounded-lg overflow-hidden'
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.8, delay: 0.5 }}
-                            viewport={{ once: true, margin: '-50px' }}
-                        >
-                            <Image
-                                src='/images/fraternity-history.jpg'
-                                alt='Fraternity History'
-                                fill
-                                className='object-cover'
+                    <div className='flex flex-col'>
+                        <div className='order-2 md:order-1 mb-8'>
+                            <motion.h1
+                                className='text-4xl md:text-5xl font-bold mb-8'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6 }}
+                                viewport={{ once: true, margin: '-50px' }}
+                            >
+                                FRATERNITY HISTORY
+                            </motion.h1>
+                            <motion.hr
+                                className='border-gray-300 mb-8'
+                                initial={{ width: 0 }}
+                                whileInView={{ width: '100%' }}
+                                transition={{ duration: 0.8 }}
+                                viewport={{ once: true, margin: '-50px' }}
                             />
-                        </motion.div>
+
+                            <motion.h2
+                                className='text-2xl font-semibold mb-4'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.2 }}
+                                viewport={{ once: true, margin: '-50px' }}
+                            >
+                                BROOKLYN, NY | 1904
+                            </motion.h2>
+                            <motion.p
+                                className='mb-4'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.3 }}
+                                viewport={{ once: true, margin: '-50px' }}
+                            >
+                                Alpha Kappa Psi is the oldest and largest co-ed
+                                professional business fraternity in the United
+                                States. Our history begins in the fall of 1902
+                                when four men began attending evening business
+                                classes together at New York University. The
+                                Founders occupied the same seats five nights a
+                                week. They became acquainted with one another.
+                                The four men from Brooklyn (Bergen, Jefferson,
+                                Lane, Leach), later known as the Brooklyn Four,
+                                walked together over the Brooklyn Bridge from
+                                school.
+                            </motion.p>
+                            <motion.p
+                                className='mb-48'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.4 }}
+                                viewport={{ once: true, margin: '-50px' }}
+                            >
+                                The spirit of the brotherhood grew so strong in
+                                the hearts and in the minds of the men from
+                                Brooklyn that they decided to suggest to the
+                                other members of their class that something be
+                                done to perpetuate it, and Alpha Kappa Psi, the
+                                first professional fraternity in business, was
+                                founded at an organization meeting held on
+                                October 5, 1904. Later, a formal application was
+                                made to the State of New York for a chapter of
+                                incorporation for Alpha Kappa Psi. The
+                                application was approved and the charter of
+                                incorporation was issued in the name of Alpha
+                                Kappa Psi on May 20, 1905.
+                            </motion.p>
+                        </div>
+
+                        <div className='order-1 md:order-2 mb-8 md:mb-0'>
+                            <motion.div
+                                className='relative pt-48 h-[calc(100vh-100px)] w-full rounded-lg overflow-hidden'
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.8, delay: 0.5 }}
+                                viewport={{ once: true, margin: '-50px' }}
+                            >
+                                <Image
+                                    src='/images/fraternity-history.jpg'
+                                    alt='Fraternity History'
+                                    fill
+                                    className='object-cover'
+                                />
+                            </motion.div>
+                        </div>
                     </div>
 
                     {/* Chapter History */}
