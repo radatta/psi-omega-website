@@ -14,9 +14,10 @@ export default function Navbar() {
         { name: 'HOME', href: '/' },
         { name: 'ABOUT US', href: '/about-akpsi' },
         { name: 'MEET THE BROTHERS', href: '/meet-the-brothers' },
-        { name: 'RUSH AKPSI', href: '/rush-akpsi' },
+        { name: 'RUSH', href: '/rush-akpsi' },
         { name: 'LEGACY', href: '/legacy' },
         { name: 'EVENTS', href: '/events' },
+        { name: 'MEMORIES', href: '/memories' },
         { name: 'DATABASE', href: '/database' },
     ];
 
