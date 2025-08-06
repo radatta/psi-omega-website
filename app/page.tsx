@@ -5,8 +5,15 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { motion } from 'motion/react';
+import { TypewriterEffect } from '@/components/home/typewriter-effect';
 
 export default function Home() {
+    const taglineWords = [
+        { text: 'SHAPING' },
+        { text: 'PEOPLE,', pauseAfter: 1000 },
+        { text: 'SHAPING' },
+        { text: 'BUSINESS' },
+    ];
     return (
         <main className='min-h-screen'>
             {/* Hero Section */}
@@ -43,7 +50,12 @@ export default function Home() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.8 }}
                     >
-                        SHAPING PEOPLE, SHAPING BUSINESS
+                        <TypewriterEffect
+                            words={taglineWords}
+                            className='text-4xl md:text-6xl font-bold mb-4'
+                            cursorClassName='bg-white h-8 md:h-12'
+                            delay={2000}
+                        />
                     </motion.h1>
                     <motion.h3
                         className='font-light text-xl md:text-2xl mb-8'
