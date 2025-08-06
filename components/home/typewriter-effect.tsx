@@ -21,11 +21,13 @@ export const TypewriterEffect = ({
 }) => {
     // Create state to control display of text
     const [displayedText, setDisplayedText] = useState('');
+    const [hasAnimated, setHasAnimated] = useState(false);
     const [scope] = useAnimate();
     const isInView = useInView(scope);
 
     useEffect(() => {
-        if (isInView) {
+        // Only run the animation if it hasn't run before and is in view
+        if (isInView && !hasAnimated) {
             // Create a flat array of all characters and their metadata
             const characters: { char: string; pauseAfter?: number }[] = [];
 
@@ -67,6 +69,9 @@ export const TypewriterEffect = ({
                     } else {
                         timer = setTimeout(typeNextChar, 180); // standard delay
                     }
+                } else {
+                    // Mark as animated when complete
+                    setHasAnimated(true);
                 }
             };
 
@@ -77,7 +82,7 @@ export const TypewriterEffect = ({
 
             return () => clearTimeout(timer);
         }
-    }, [words, delay, isInView]);
+    }, [words, delay, isInView, hasAnimated]);
 
     // Render the displayed text with a cursor
     return (
@@ -173,6 +178,7 @@ export const TypewriterEffectSmooth = ({
                     ease: 'linear',
                     delay: delay / 1000 + 1, // Convert delay to seconds
                 }}
+                viewport={{ once: true }} // This ensures the animation only runs once
             >
                 <div
                     className='text-xs sm:text-base md:text-xl lg:text:3xl xl:text-5xl font-bold'
