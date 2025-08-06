@@ -5,6 +5,7 @@ import { Rubik } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
+import AnimatePage from '@/components/ui/animate-page';
 
 const cerapro = localFont({
     src: [
@@ -101,9 +102,11 @@ export default function RootLayout({
                     // enableSystem
                     disableTransitionOnChange
                 >
-                    <Navbar />
-                    {children}
-                    <Footer />
+                    <AnimatePage>
+                        <Navbar />
+                        {children}
+                        <Footer />
+                    </AnimatePage>
                 </ThemeProvider>
             </body>
         </html>
