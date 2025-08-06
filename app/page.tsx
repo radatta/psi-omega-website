@@ -96,7 +96,7 @@ export default function Home() {
                             initial={{ opacity: 0, x: -50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
-                            viewport={{ once: true, margin: '-100px' }}
+                            viewport={{ once: true, margin: '100px' }}
                         >
                             <motion.div
                                 className='relative w-full max-w-md aspect-square'
@@ -115,7 +115,7 @@ export default function Home() {
                             initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8, delay: 0.2 }}
-                            viewport={{ once: true, margin: '-100px' }}
+                            viewport={{ once: true, margin: '100px' }}
                         >
                             <motion.h1
                                 className='text-3xl md:text-4xl font-bold mb-4'
@@ -244,7 +244,7 @@ export default function Home() {
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
-                    viewport={{ once: true, margin: '-100px' }}
+                    viewport={{ once: true, margin: '100px' }}
                 >
                     <div className='max-w-4xl mx-auto text-center'>
                         <motion.h1
@@ -313,7 +313,7 @@ export default function Home() {
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    viewport={{ once: true, margin: '-100px' }}
+                    viewport={{ once: true, margin: '100px' }}
                 >
                     <motion.h1
                         className='text-3xl md:text-4xl font-bold mb-4'
@@ -365,7 +365,7 @@ export default function Home() {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 1 }}
-                    viewport={{ once: true, margin: '-100px' }}
+                    viewport={{ once: true, margin: '100px' }}
                 >
                     <motion.h1
                         className='text-3xl md:text-4xl font-bold mb-48 text-center'

@@ -69,7 +69,7 @@ export default function LegacyPage() {
                                     duration: 0.6,
                                     delay: index * 0.05,
                                 }}
-                                viewport={{ once: true, margin: '-50px' }}
+                                viewport={{ once: true, margin: '100px' }}
                                 whileHover={{ scale: 1.1, rotate: 2 }}
                             >
                                 <div className='flex items-center justify-center aspect-square w-24 h-24'>
