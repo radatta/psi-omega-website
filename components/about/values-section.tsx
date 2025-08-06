@@ -4,8 +4,19 @@ import { motion } from 'framer-motion';
 
 export default function ValuesSection() {
     return (
-        <section id='values' className='py-16 bg-white'>
-            <div className='container'>
+        <section
+            id='values'
+            className='py-16 bg-white relative overflow-hidden'
+        >
+            <motion.div
+                className='absolute inset-0 z-0'
+                initial={{ scale: 1.1 }}
+                whileInView={{ scale: 1 }}
+                transition={{ duration: 1.5 }}
+                viewport={{ once: true, margin: '100px' }}
+            ></motion.div>
+
+            <div className='container relative z-10'>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
                     <div>
                         <h1 className='text-4xl md:text-5xl font-bold mb-8'>

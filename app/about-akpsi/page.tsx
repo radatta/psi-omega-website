@@ -5,7 +5,7 @@ import ValuesSection from '@/components/about/values-section';
 import StatisticsSection from '@/components/about/statistics-section';
 import HistorySection from '@/components/about/history-section';
 import { EnvelopeClosedIcon } from '@radix-ui/react-icons';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 
 export default function AboutPage() {
     return (
@@ -74,7 +74,7 @@ export default function AboutPage() {
                     initial={{ scale: 1.1 }}
                     whileInView={{ scale: 1 }}
                     transition={{ duration: 1.5 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, margin: '100px' }}
                 >
                     <Image
                         src='/images/Got-A-Question.jpg'
