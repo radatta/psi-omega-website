@@ -29,10 +29,10 @@ const brotherhoodImages = [
 const serviceImages = [
     { src: '/images/events/Service-1.jpg', alt: 'Community service event' },
     { src: '/images/events/Service-2.jpg', alt: 'Volunteering' },
-    { src: '/images/events/Service-5.jpg', alt: 'Charity event' },
-    { src: '/images/events/Service-7.jpg', alt: 'Volunteer event' },
-    { src: '/images/events/Service-8.jpg', alt: 'Community service event' },
-    { src: '/images/events/Service-3.jpg', alt: 'Beach cleanup' },
+    { src: '/images/events/Service-3.jpg', alt: 'Charity event' },
+    { src: '/images/events/Service-4.jpg', alt: 'Volunteer event' },
+    { src: '/images/events/Service-5.jpg', alt: 'Community service event' },
+    { src: '/images/events/Service-6.jpg', alt: 'Beach cleanup' },
 ];
 
 // Image data for the Professional section
