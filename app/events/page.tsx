@@ -213,7 +213,7 @@ export default function EventsPage() {
                     {/* Professional Section */}
                     <div className='bg-gray-50 -mx-8 px-8 py-16 rounded-2xl'>
                         <div className='flex flex-col md:flex-row items-start gap-12'>
-                            {/* Images - Featured Layout */}
+                            {/* Images - Masonry Layout (same as Brotherhood) */}
                             <motion.div
                                 className='md:w-3/5 order-2 md:order-1'
                                 initial={{ opacity: 0, x: -50 }}
@@ -221,74 +221,42 @@ export default function EventsPage() {
                                 transition={{ duration: 0.8, delay: 0.2 }}
                                 viewport={{ once: true, margin: '100px' }}
                             >
-                                <div className='grid gap-4'>
-                                    {/* Large featured image */}
-                                    <motion.div
-                                        className='relative aspect-[16/9] overflow-hidden rounded-xl shadow-lg'
-                                        initial={{ opacity: 0, scale: 0.9 }}
-                                        whileInView={{ opacity: 1, scale: 1 }}
-                                        transition={{
-                                            duration: 0.8,
-                                            delay: 0.4,
-                                        }}
-                                        viewport={{ once: true }}
-                                        whileHover={{ scale: 1.02 }}
-                                    >
-                                        <Image
-                                            src={
-                                                professionalImages[0]?.src ||
-                                                '/placeholder.svg'
-                                            }
-                                            alt={
-                                                professionalImages[0]?.alt ||
-                                                'Professional event'
-                                            }
-                                            fill
-                                            className='object-cover'
-                                        />
-                                    </motion.div>
-                                    {/* Grid of smaller images */}
-                                    <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
-                                        {professionalImages
-                                            .slice(1)
-                                            .map((image, index) => (
-                                                <motion.div
-                                                    key={index + 1}
-                                                    className='relative aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow'
-                                                    initial={{
-                                                        opacity: 0,
-                                                        y: 30,
-                                                    }}
-                                                    whileInView={{
-                                                        opacity: 1,
-                                                        y: 0,
-                                                    }}
-                                                    transition={{
-                                                        duration: 0.6,
-                                                        delay:
-                                                            0.6 + index * 0.1,
-                                                    }}
-                                                    viewport={{
-                                                        once: true,
-                                                        margin: '-50px',
-                                                    }}
-                                                    whileHover={{
-                                                        scale: 1.05,
-                                                        rotate: 1,
-                                                    }}
-                                                >
-                                                    <Image
-                                                        src={
-                                                            image.src ||
-                                                            '/placeholder.svg'
-                                                        }
-                                                        alt={image.alt}
-                                                        fill
-                                                        className='object-cover hover:scale-110 transition-transform duration-300'
-                                                    />
-                                                </motion.div>
-                                            ))}
-                                    </div>
+                                <div className='columns-2 md:columns-3 gap-4 space-y-4'>
+                                    {professionalImages.map((image, index) => (
+                                        <motion.div
+                                            key={index}
+                                            className='break-inside-avoid mb-4'
+                                            initial={{ opacity: 0, y: 50 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            transition={{
+                                                duration: 0.6,
+                                                delay: index * 0.1,
+                                            }}
+                                            viewport={{
+                                                once: true,
+                                                margin: '-50px',
+                                            }}
+                                        >
+                                            <motion.div
+                                                className='relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300'
+                                                whileHover={{
+                                                    scale: 1.05,
+                                                    rotate: 1,
+                                                }}
+                                            >
+                                                <Image
+                                                    src={
+                                                        image.src ||
+                                                        '/placeholder.svg'
+                                                    }
+                                                    alt={image.alt}
+                                                    width={300}
+                                                    height={300}
+                                                    className='w-full h-auto object-cover'
+                                                />
+                                            </motion.div>
+                                        </motion.div>
+                                    ))}
                                 </div>
                             </motion.div>
                             {/* Text */}
@@ -412,7 +380,7 @@ export default function EventsPage() {
                                 </ul>
                             </motion.div>
                         </motion.div>
-                        {/* Images - Card Layout */}
+                        {/* Images - Masonry Layout (same as Brotherhood) */}
                         <motion.div
                             className='md:w-3/5'
                             initial={{ opacity: 0, x: 50 }}
@@ -420,11 +388,11 @@ export default function EventsPage() {
                             transition={{ duration: 0.8, delay: 0.2 }}
                             viewport={{ once: true, margin: '100px' }}
                         >
-                            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                            <div className='columns-2 md:columns-3 gap-4 space-y-4'>
                                 {serviceImages.map((image, index) => (
                                     <motion.div
                                         key={index}
-                                        className='group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300'
+                                        className='break-inside-avoid mb-4'
                                         initial={{ opacity: 0, y: 50 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         transition={{
@@ -435,20 +403,25 @@ export default function EventsPage() {
                                             once: true,
                                             margin: '-50px',
                                         }}
-                                        whileHover={{ scale: 1.05, rotate: 1 }}
                                     >
-                                        <div className='relative aspect-[4/3]'>
+                                        <motion.div
+                                            className='relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300'
+                                            whileHover={{
+                                                scale: 1.05,
+                                                rotate: 1,
+                                            }}
+                                        >
                                             <Image
                                                 src={
                                                     image.src ||
                                                     '/placeholder.svg'
                                                 }
                                                 alt={image.alt}
-                                                fill
-                                                className='object-cover group-hover:scale-110 transition-transform duration-500'
+                                                width={300}
+                                                height={300}
+                                                className='w-full h-auto object-cover'
                                             />
-                                            <div className='absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
-                                        </div>
+                                        </motion.div>
                                     </motion.div>
                                 ))}
                             </div>
