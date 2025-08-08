@@ -1,40 +1,64 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import Image from 'next/image';
 import { pastPhotos } from '@/lib/memories_data';
 
+const BLUR_DATA_URL =
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PC9zdmc+';
+
+type Photo = {
+    src: string;
+    alt: string;
+};
+
 export default function PhotoCollagePage() {
-    const containerRef = useRef(null);
+    const containerRef = useRef<HTMLElement | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ['start start', 'end end'],
     });
 
-    // break into rows of N photos
-    const N = 7;
+    // Detect mobile device on client side
+    useEffect(() => {
+        let resizeTimer: NodeJS.Timeout | null = null;
+
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        const debouncedResize = () => {
+            if (resizeTimer) clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(checkMobile, 150);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', debouncedResize);
+        return () => {
+            window.removeEventListener('resize', debouncedResize);
+            if (resizeTimer) clearTimeout(resizeTimer);
+        };
+    }, []);
+
+    // break into rows of N photos (fewer on mobile)
+    const N = isMobile ? 4 : 7;
+
+    // Limit number of images on mobile to improve performance
+    const limitedPhotos = isMobile
+        ? [...pastPhotos].slice(0, 50)
+        : [...pastPhotos];
+
     // Shuffle photos before breaking into rows
-    const shuffledPhotos = [...pastPhotos].sort(() => Math.random() - 0.5);
+    const shuffledPhotos = [...limitedPhotos].sort(() => Math.random() - 0.5);
 
-    // // Create circular rows by duplicating photos to ensure smooth looping
-    // const createCircularRow = (photos: typeof pastPhotos, rowSize: number) => {
-    //     // Duplicate the array to create a circular effect
-    //     const duplicated = [...photos, ...photos.slice(0, rowSize)];
-    //     return Array.from(
-    //         { length: Math.ceil(photos.length / rowSize) },
-    //         (_, i) => duplicated.slice(i * rowSize, (i + 1) * rowSize)
-    //     );
-    // };
-
-    // const photoRows = createCircularRow(shuffledPhotos, N);
-
-    const createInfiniteScrollRows = () => {
+    const createOptimizedRows = (): Photo[][] => {
         // Create base rows first
-        const baseRows = [];
+        const baseRows: Photo[][] = [];
         for (let i = 0; i < Math.ceil(shuffledPhotos.length / N); i++) {
             const startIdx = (i * N) % shuffledPhotos.length;
-            const rowPhotos = [];
+            const rowPhotos: Photo[] = [];
 
             // Fill each row with N photos, looping back to start if needed
             for (let j = 0; j < N; j++) {
@@ -45,63 +69,79 @@ export default function PhotoCollagePage() {
             baseRows.push(rowPhotos);
         }
 
-        // Now create the actual rows with many repetitions
+        // Create enough repetitions for scrolling without excessive DOM nodes
+        // Use fewer repetitions on mobile
+        const repetitions = isMobile ? 3 : 10;
+
         return baseRows.map((baseRow) => {
-            // Create an array with 100 copies of the base row flattened into a single array
-            // This ensures each row has enough photos to scroll for a very long time
-            return Array(100)
+            return Array(repetitions)
                 .fill(0)
                 .flatMap(() => [...baseRow]);
         });
     };
 
-    const infinitePhotoRows = createInfiniteScrollRows();
+    const optimizedPhotoRows = createOptimizedRows();
 
-    // Pre-define spring animations for each row
+    // Pre-define spring animations for each row - simplified for mobile
     const leftRowX = useSpring(
-        useTransform(scrollYProgress, [0, 1], [0, -1600]),
+        useTransform(scrollYProgress, [0, 1], [0, isMobile ? -800 : -1600]),
         {
-            stiffness: 100,
-            damping: 30,
+            stiffness: isMobile ? 50 : 100,
+            damping: isMobile ? 15 : 30,
             restDelta: 0.001,
         }
     );
     const rightRowX = useSpring(
-        useTransform(scrollYProgress, [0, 1], [0, 1600]),
+        useTransform(scrollYProgress, [0, 1], [0, isMobile ? 800 : 1600]),
         {
-            stiffness: 100,
-            damping: 30,
+            stiffness: isMobile ? 50 : 100,
+            damping: isMobile ? 15 : 30,
             restDelta: 0.001,
         }
     );
 
-    // Create variations for different rows with different speeds
+    // Create variations for different rows with different speeds - simplified for mobile
     const rowAnimations = [
-        useSpring(useTransform(scrollYProgress, [0, 1], [0, -1200]), {
-            stiffness: 90,
-            damping: 35,
-            restDelta: 0.001,
-        }),
-        useSpring(useTransform(scrollYProgress, [0, 1], [0, 1800]), {
-            stiffness: 85,
-            damping: 25,
-            restDelta: 0.001,
-        }),
-        useSpring(useTransform(scrollYProgress, [0, 1], [0, -1400]), {
-            stiffness: 110,
-            damping: 40,
-            restDelta: 0.001,
-        }),
-        useSpring(useTransform(scrollYProgress, [0, 1], [0, 1700]), {
-            stiffness: 95,
-            damping: 30,
-            restDelta: 0.001,
-        }),
-        useSpring(useTransform(scrollYProgress, [0, 1], [0, -1300]), {
-            stiffness: 105,
-            damping: 45,
-            restDelta: 0.001,
-        }),
+        useSpring(
+            useTransform(scrollYProgress, [0, 1], [0, isMobile ? -600 : -1200]),
+            {
+                stiffness: isMobile ? 45 : 90,
+                damping: isMobile ? 15 : 35,
+                restDelta: 0.001,
+            }
+        ),
+        useSpring(
+            useTransform(scrollYProgress, [0, 1], [0, isMobile ? 900 : 1800]),
+            {
+                stiffness: isMobile ? 40 : 85,
+                damping: isMobile ? 12 : 25,
+                restDelta: 0.001,
+            }
+        ),
+        useSpring(
+            useTransform(scrollYProgress, [0, 1], [0, isMobile ? -700 : -1400]),
+            {
+                stiffness: isMobile ? 55 : 110,
+                damping: isMobile ? 20 : 40,
+                restDelta: 0.001,
+            }
+        ),
+        useSpring(
+            useTransform(scrollYProgress, [0, 1], [0, isMobile ? 850 : 1700]),
+            {
+                stiffness: isMobile ? 48 : 95,
+                damping: isMobile ? 15 : 30,
+                restDelta: 0.001,
+            }
+        ),
+        useSpring(
+            useTransform(scrollYProgress, [0, 1], [0, isMobile ? -650 : -1300]),
+            {
+                stiffness: isMobile ? 52 : 105,
+                damping: isMobile ? 22 : 45,
+                restDelta: 0.001,
+            }
+        ),
     ];
 
     // Opacity transforms
@@ -161,7 +201,7 @@ export default function PhotoCollagePage() {
             <section className='relative min-h-screen flex flex-col justify-evenly overflow-hidden py-20 perspective-[1000px]'>
                 <div className='absolute inset-0 bg-gradient-to-r from-purple-900/20 to-blue-900/20' />
 
-                {infinitePhotoRows.map((row, rowIndex) => (
+                {optimizedPhotoRows.map((row, rowIndex) => (
                     <motion.div
                         key={rowIndex}
                         className={`relative flex space-x-8 my-6 ${rowIndex % 2 === 0 ? 'justify-start' : 'justify-end'}`}
@@ -179,23 +219,28 @@ export default function PhotoCollagePage() {
                                 key={photoIndex}
                                 className={`relative ${
                                     rowIndex % 3 === 0
-                                        ? 'w-80 h-60 rounded-2xl'
+                                        ? 'w-60 h-48 md:w-80 md:h-60 rounded-2xl'
                                         : rowIndex % 3 === 1
-                                          ? 'w-72 h-72 rounded-full'
-                                          : 'w-64 h-48 rounded-xl'
+                                          ? 'w-56 h-56 md:w-72 md:h-72 rounded-full'
+                                          : 'w-48 h-40 md:w-64 md:h-48 rounded-xl'
                                 } overflow-hidden shadow-2xl flex-shrink-0 transition-all duration-300`}
-                                whileHover={{
-                                    scale: 1.1,
-                                    zIndex: 10,
-                                    boxShadow:
-                                        '0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3)',
-                                    filter: 'brightness(1.1)',
-                                }}
+                                whileHover={
+                                    isMobile
+                                        ? {}
+                                        : {
+                                              scale: 1.1,
+                                              zIndex: 10,
+                                              boxShadow:
+                                                  '0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3)',
+                                              filter: 'brightness(1.1)',
+                                          }
+                                }
                                 style={{
-                                    rotate:
-                                        rowIndex % 2 === 0
-                                            ? Math.sin(photoIndex) * 5
-                                            : Math.cos(photoIndex) * 8,
+                                    rotate: isMobile
+                                        ? 0
+                                        : rowIndex % 2 === 0
+                                          ? Math.sin(photoIndex) * 5
+                                          : Math.cos(photoIndex) * 8,
                                 }}
                             >
                                 <Image
@@ -203,6 +248,15 @@ export default function PhotoCollagePage() {
                                     alt={photo.alt}
                                     fill
                                     className='object-cover'
+                                    sizes={
+                                        isMobile
+                                            ? '(max-width: 768px) 100vw, 33vw'
+                                            : '(max-width: 1200px) 50vw, 33vw'
+                                    }
+                                    quality={isMobile ? 60 : 80}
+                                    loading='lazy'
+                                    placeholder='blur'
+                                    blurDataURL={BLUR_DATA_URL}
                                 />
                             </motion.div>
                         ))}
