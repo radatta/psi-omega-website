@@ -1,6 +1,5 @@
 'use client';
 import Image from 'next/image';
-import AnimatedOverlaySection from '@/components/legacy/AnimatedOverlaySection';
 import { companies } from '@/lib/legacy_data';
 import { motion } from 'motion/react';
 
@@ -86,9 +85,6 @@ export default function LegacyPage() {
                     </div>
                 </div>
             </section>
-
-            {/* Campus Involvement Section (Animated Overlay) */}
-            <AnimatedOverlaySection />
         </main>
     );
 }
