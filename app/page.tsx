@@ -358,7 +358,7 @@ export default function Home() {
             {/* Sponsors Section */}
             <section
                 id='sponsors'
-                className='py-16 bg-black h-screen relative flex items-center justify-center text-white'
+                className='py-32 bg-black relative text-white md:h-screen md:flex md:items-center md:justify-center'
             >
                 <motion.div
                     className='container relative z-10'
@@ -368,7 +368,7 @@ export default function Home() {
                     viewport={{ once: true, margin: '100px' }}
                 >
                     <motion.h1
-                        className='text-3xl md:text-4xl font-bold mb-48 text-center'
+                        className='text-3xl md:text-4xl font-bold mb-12 md:mb-48 text-center'
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
