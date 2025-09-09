@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Mail } from 'lucide-react';
 import RushFAQ from '@/components/rush/rush-faq';
 import { motion } from 'motion/react';
+import { currentRushData } from '@/lib/rush_data';
 
 export default function RushPage() {
     return (
@@ -22,7 +23,7 @@ export default function RushPage() {
                     className='absolute inset-0'
                 >
                     <Image
-                        src='/images/rush-hero.jpg'
+                        src='/images/rush/rush-hero.jpg'
                         alt='Rush Alpha Kappa Psi'
                         fill
                         className='object-cover'
@@ -117,7 +118,7 @@ export default function RushPage() {
                                 transition={{ duration: 0.6, delay: 0.2 }}
                                 viewport={{ once: true }}
                             >
-                                WINTER RUSH 2025
+                                {currentRushData.rushName}
                             </motion.h1>
                             <motion.h2
                                 className='text-xl md:text-2xl mb-2'
@@ -126,7 +127,7 @@ export default function RushPage() {
                                 transition={{ duration: 0.6, delay: 0.4 }}
                                 viewport={{ once: true }}
                             >
-                                January 13th - January 17th
+                                {currentRushData.rushDate}
                             </motion.h2>
                             <motion.h2
                                 className='text-xl md:text-2xl mb-8'
@@ -135,7 +136,7 @@ export default function RushPage() {
                                 transition={{ duration: 0.6, delay: 0.6 }}
                                 viewport={{ once: true }}
                             >
-                                Week 2 of Winter Quarter.
+                                {currentRushData.rushWeek}
                             </motion.h2>
                         </motion.div>
 
@@ -149,8 +150,8 @@ export default function RushPage() {
                         >
                             <div className='relative aspect-[16/10] w-full'>
                                 <Image
-                                    src='/images/rush-flyer.jpeg'
-                                    alt='Winter Rush 2025 Flyer'
+                                    src={currentRushData.rushFlyer}
+                                    alt={currentRushData.rushName + ' Flyer'}
                                     fill
                                     className='object-contain rounded-lg'
                                 />
@@ -166,7 +167,7 @@ export default function RushPage() {
                         >
                             <motion.div whileHover={{ scale: 1.05 }}>
                                 <Link
-                                    href='https://docs.google.com/forms/d/e/1FAIpQLSfn30kelbOHRGrevQ_jGyDSLr5sGsduVzPtnN5TFnToPEG1nQ/viewform?usp=sf_link'
+                                    href={currentRushData.rushMailingList}
                                     target='_blank'
                                     className='text-blue-600 hover:underline font-bold transition-colors duration-300'
                                 >
@@ -186,10 +187,11 @@ export default function RushPage() {
                         >
                             <Button asChild size='lg'>
                                 <Link
-                                    href='https://docs.google.com/forms/d/e/1FAIpQLScvQsk5zOUZ-18KYJc3D4XR5ATR6GkHzEQn-Ug5E1bZdIjHCA/viewform?usp=sf_link'
+                                    href={currentRushData.rushApplication.link}
                                     target='_blank'
                                 >
-                                    Application Due 1/15 @ 5:00 PM
+                                    Application Due{' '}
+                                    {currentRushData.rushApplication.dueDate}
                                 </Link>
                             </Button>
                         </motion.div>
@@ -284,7 +286,7 @@ export default function RushPage() {
                         viewport={{ once: true }}
                     >
                         <Image
-                            src='/images/contact-bg.jpg'
+                            src='/images/rush/contact-us.jpg'
                             alt='Contact Background'
                             fill
                             className='object-cover'
