@@ -29,7 +29,7 @@ export default function Home() {
                 >
                     <Link href='/'>
                         <Image
-                            src='/images/hero-background.jpg'
+                            src='/images/hero.png'
                             alt='Alpha Kappa Psi Brotherhood'
                             fill
                             className='object-cover'
@@ -58,7 +58,7 @@ export default function Home() {
                         />
                     </motion.h1>
                     <motion.h3
-                        className='font-light text-xl md:text-2xl mb-8'
+                        className='text-xl md:text-2xl mb-8'
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 1.1 }}
@@ -358,7 +358,7 @@ export default function Home() {
             {/* Sponsors Section */}
             <section
                 id='sponsors'
-                className='py-32 bg-black relative text-white md:h-screen md:flex md:items-center md:justify-center'
+                className='py-32 bg-akpsi-blue relative text-white md:h-screen md:flex md:items-center md:justify-center'
             >
                 <motion.div
                     className='container relative z-10'
@@ -413,15 +413,15 @@ export default function Home() {
                                 whileHover={{ scale: 1.1 }}
                             >
                                 <motion.div
-                                    className='w-40 h-40 flex items-center justify-center mb-4'
+                                    className='w-64 h-52 flex items-center justify-center mb-4'
                                     whileHover={{ rotate: 5 }}
                                     transition={{ duration: 0.3 }}
                                 >
                                     <Image
                                         src={sponsor.src}
                                         alt={sponsor.alt}
-                                        width={150}
-                                        height={150}
+                                        width={250}
+                                        height={250}
                                         className='object-contain'
                                     />
                                 </motion.div>
