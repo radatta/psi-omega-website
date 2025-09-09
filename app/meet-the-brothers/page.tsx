@@ -44,7 +44,7 @@ export default function MeetTheBrotherhood() {
                     transition={{ duration: 1, delay: 0.5 }}
                 >
                     <motion.h1
-                        className='text-4xl md:text-6xl font-bold mb-4'
+                        className='text-4xl md:text-7xl font-bold mb-4'
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.8 }}
@@ -92,7 +92,7 @@ export default function MeetTheBrotherhood() {
             <section className='py-16 bg-white'>
                 <div className='container'>
                     <motion.h2
-                        className='text-4xl font-bold text-center mb-12'
+                        className='text-5xl font-bold text-center mb-12'
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
@@ -100,7 +100,7 @@ export default function MeetTheBrotherhood() {
                     >
                         EXECUTIVE COMMITTEE
                     </motion.h2>
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                         {executiveCommittee.map((member, index) => (
                             <motion.div
                                 key={index}
@@ -131,7 +131,7 @@ export default function MeetTheBrotherhood() {
                     >
                         COMMITTEE CHAIRS
                     </motion.h2>
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                         {committeeChairs.map((member, index) => (
                             <motion.div
                                 key={index}
@@ -169,7 +169,7 @@ export default function MeetTheBrotherhood() {
                     >
                         ALPHA NU | FALL 2022
                     </motion.h2>
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                         {alphaNu.map((member, index) => (
                             <motion.div
                                 key={index}
@@ -200,7 +200,7 @@ export default function MeetTheBrotherhood() {
                     >
                         ALPHA XI | WINTER 2023
                     </motion.h2>
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                         {alphaXi.map((member, index) => (
                             <motion.div
                                 key={index}
@@ -231,7 +231,7 @@ export default function MeetTheBrotherhood() {
                     >
                         ALPHA OMICRON | FALL 2023
                     </motion.h2>
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                         {alphaOmicron.map((member, index) => (
                             <motion.div
                                 key={index}
@@ -262,7 +262,7 @@ export default function MeetTheBrotherhood() {
                     >
                         ALPHA PI | WINTER 2024
                     </motion.h2>
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                         {alphaPi.map((member, index) => (
                             <motion.div
                                 key={index}
@@ -293,7 +293,7 @@ export default function MeetTheBrotherhood() {
                     >
                         ALPHA RHO | FALL 2024
                     </motion.h2>
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                         {alphaRho.map((member, index) => (
                             <motion.div
                                 key={index}
@@ -324,7 +324,7 @@ export default function MeetTheBrotherhood() {
                     >
                         ALPHA SIGMA | WINTER 2025
                     </motion.h2>
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                         {alphaSigma.map((member, index) => (
                             <motion.div
                                 key={index}
