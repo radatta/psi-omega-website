@@ -16,7 +16,7 @@ export function BrotherCard({ name, position, major, linkedin }: BrotherProps) {
         .join('-')}.jpg`;
     return (
         <div className='flex flex-col items-center'>
-            <div className='relative w-64 h-64 mb-4 rounded-full overflow-hidden'>
+            <div className='relative w-72 h-72 mb-4 overflow-hidden'>
                 <Image
                     src={imageUrl}
                     alt={name}
