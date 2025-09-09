@@ -47,7 +47,7 @@ export default function HistorySection() {
                                 BROOKLYN, NY | 1904
                             </motion.h2>
                             <motion.p
-                                className='mb-4'
+                                className='mb-4 text-lg'
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: 0.3 }}
@@ -66,7 +66,7 @@ export default function HistorySection() {
                                 school.
                             </motion.p>
                             <motion.p
-                                className='mb-48'
+                                className='mb-48 text-lg'
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: 0.4 }}
@@ -150,7 +150,7 @@ export default function HistorySection() {
                             SANTA CLARA, CA | 2005
                         </motion.h2>
                         <motion.p
-                            className='mb-4'
+                            className='mb-4 text-lg'
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.4 }}
@@ -170,7 +170,7 @@ export default function HistorySection() {
                             speaking, networking, etc.
                         </motion.p>
                         <motion.p
-                            className='mb-4'
+                            className='mb-4 text-lg'
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.5 }}
@@ -178,34 +178,16 @@ export default function HistorySection() {
                         >
                             We pride ourselves on selecting the highest quality
                             candidates who exhibit leadership behavior and
-                            potential within all majors and disciplines. Whether
-                            your interests are in Finance, Bioengineering, or
-                            Music, we look for students who exhibit drive,
-                            dedication, and passion in all they do. Our brothers
-                            are goal-oriented, focused, and dedicated to
-                            applying business principles to their careers no
-                            matter what path they choose. Because our brothers
-                            come from all majors and backgrounds, our chapter is
-                            able to offer countless opportunities for growth and
-                            learning.
-                        </motion.p>
-                        <motion.p
-                            className='mb-4'
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.6 }}
-                            viewport={{ once: true, margin: '-50px' }}
-                        >
-                            Our alumni network runs deep into Silicon Valley and
-                            extends into all industries and professions. Our
-                            connections in the Bay Area have led to many
-                            internships and full-time job offers for our
-                            brothers, allowing us to form strong relationships
-                            with these local companies. We invite you to join
-                            our brotherhood to learn, laugh and grow with
-                            individuals like you. So take the first steps to
-                            create these lasting memories and become a part of
-                            the lifelong experience of Alpha Kappa Psi.
+                            potential within all majors and disciplines. Our
+                            brothers come from diverse backgrounds and are
+                            goal-oriented, focused, and dedicated to applying
+                            business principles to their careers. Our alumni
+                            network runs deep into Silicon Valley and extends
+                            into all industries, leading to many internships and
+                            full-time job offers for our brothers. We invite you
+                            to join our brotherhood to learn, laugh and grow
+                            with individuals like you and become a part of the
+                            lifelong experience of Alpha Kappa Psi.
                         </motion.p>
                     </div>
                 </div>

@@ -107,7 +107,7 @@ export default function StatisticsSection() {
         <section
             id='statistics'
             ref={sectionRef}
-            className='py-20 md:py-24 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden'
+            className='py-20 md:py-24 bg-gradient-to-b relative overflow-hidden'
         >
             <motion.div
                 className='absolute inset-0 z-0'
@@ -117,16 +117,22 @@ export default function StatisticsSection() {
                 viewport={{ once: true, margin: '100px' }}
             ></motion.div>
 
-            <div className='container max-w-5xl mx-auto px-4 relative z-10'>
-                <h2 className='text-sm font-medium tracking-widest text-center text-gray-500 uppercase mb-12'>
-                    CHAPTER BY THE NUMBERS
-                </h2>
+            <div className='container relative z-10'>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+                    <div>
+                        <h1 className='text-3xl md:text-5xl font-bold mb-8 whitespace-nowrap'>
+                            CHAPTER BY THE NUMBERS
+                        </h1>
+                        <hr className='border-gray-300 mb-8' />
+                    </div>
+                    <div className='md:col-span-1'></div>
+                </div>
 
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8'>
                     {/* Members Stat */}
                     <StatItem
                         ref={setStatRef(0)}
-                        icon={<Users size={40} strokeWidth={1.5} />}
+                        icon={<Users strokeWidth={1.5} className='h-20 w-20' />}
                         number={totalMembers}
                         label='MEMBERS'
                         shouldStart={shouldStartCounters}
@@ -136,7 +142,12 @@ export default function StatisticsSection() {
                     {/* Majors Stat */}
                     <StatItem
                         ref={setStatRef(1)}
-                        icon={<GraduationCap size={40} strokeWidth={1.5} />}
+                        icon={
+                            <GraduationCap
+                                strokeWidth={1.5}
+                                className='h-20 w-20'
+                            />
+                        }
                         number={totalMajors}
                         label='MAJORS'
                         shouldStart={shouldStartCounters}
@@ -146,7 +157,9 @@ export default function StatisticsSection() {
                     {/* Alumni Stat */}
                     <StatItem
                         ref={setStatRef(2)}
-                        icon={<Building size={40} strokeWidth={1.5} />}
+                        icon={
+                            <Building strokeWidth={1.5} className='h-20 w-20' />
+                        }
                         number={totalAlumni}
                         label='ALUMNI'
                         shouldStart={shouldStartCounters}

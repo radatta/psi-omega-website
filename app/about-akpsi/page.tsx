@@ -55,11 +55,11 @@ export default function AboutPage() {
                 </motion.div>
             </section>
 
-            {/* Values Section */}
-            <ValuesSection />
-
             {/* Statistics Section */}
             <StatisticsSection />
+
+            {/* Values Section */}
+            <ValuesSection />
 
             {/* History Section */}
             <HistorySection />
@@ -98,7 +98,7 @@ export default function AboutPage() {
                         transition={{ duration: 0.8, delay: 0.2 }}
                         viewport={{ once: true }}
                     >
-                        GOT A QUESTION?
+                        QUESTIONS?
                     </motion.h1>
                     <motion.p
                         className='text-xl mb-8'
