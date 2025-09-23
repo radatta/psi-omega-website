@@ -7,6 +7,13 @@ import HistorySection from '@/components/about/history-section';
 import { EnvelopeClosedIcon } from '@radix-ui/react-icons';
 import { motion } from 'framer-motion';
 
+// export const metadata = {
+//     title: 'About AKPsi - Psi Omega Chapter',
+//     description:
+//         'Learn about the Psi Omega Chapter of Alpha Kappa Psi at Santa Clara University. Discover our history, values, and commitment to professional development and community service.',
+// };
+// put everything in a page and then metadata that
+
 export default function AboutPage() {
     return (
         <main className='min-h-screen'>
@@ -22,7 +29,7 @@ export default function AboutPage() {
                     transition={{ duration: 1.5, ease: 'easeOut' }}
                 >
                     <Image
-                        src='/images/about-hero.jpg'
+                        src='/images/about-hero.png'
                         alt='Psi Omega Chapter'
                         fill
                         className='object-cover'
