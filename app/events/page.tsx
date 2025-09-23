@@ -332,7 +332,7 @@ export default function EventsPage() {
                             viewport={{ once: true, margin: '100px' }}
                         >
                             <motion.h2
-                                className='text-4xl font-bold mb-6 text-red-900'
+                                className='text-4xl font-bold mb-6 text-pink-500'
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -341,7 +341,7 @@ export default function EventsPage() {
                                 SERVICE
                             </motion.h2>
                             <motion.div
-                                className='w-16 h-1 bg-red-600 mb-8'
+                                className='w-16 h-1 bg-pink-500 mb-8'
                                 initial={{ scaleX: 0 }}
                                 whileInView={{ scaleX: 1 }}
                                 transition={{ duration: 0.8, delay: 0.4 }}
@@ -362,17 +362,17 @@ export default function EventsPage() {
                                 support, compassion, and love.
                             </motion.p>
                             <motion.div
-                                className='bg-red-50 p-6 rounded-lg'
+                                className='bg-pink-50 p-6 rounded-lg'
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: 0.8 }}
                                 viewport={{ once: true }}
                                 whileHover={{ scale: 1.02 }}
                             >
-                                <h3 className='font-semibold text-red-900 mb-2'>
+                                <h3 className='font-semibold text-pink-600 mb-2'>
                                     Community Impact
                                 </h3>
-                                <ul className='text-sm text-red-800 space-y-1'>
+                                <ul className='text-sm text-pink-500 space-y-1'>
                                     <li>• Beach & Park Cleanups</li>
                                     <li>• Food Bank Volunteering</li>
                                     <li>• Community Outreach</li>

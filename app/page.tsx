@@ -402,7 +402,6 @@ export default function Home() {
                         ].map((sponsor) => (
                             <motion.div
                                 key={sponsor.name}
-                                className='flex flex-col items-center'
                                 initial={{ opacity: 0, y: 50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{
@@ -412,33 +411,32 @@ export default function Home() {
                                 viewport={{ once: true }}
                                 whileHover={{ scale: 1.1 }}
                             >
-                                <motion.div
-                                    className='w-64 h-52 flex items-center justify-center mb-4'
-                                    whileHover={{ rotate: 5 }}
-                                    transition={{ duration: 0.3 }}
+                                <Link
+                                    className='flex flex-col items-center hover:text-gray-300 transition-colors duration-300'
+                                    href={sponsor.href}
+                                    target='_blank'
                                 >
-                                    <Image
-                                        src={sponsor.src}
-                                        alt={sponsor.alt}
-                                        width={250}
-                                        height={250}
-                                        className='object-contain'
-                                    />
-                                </motion.div>
-                                <motion.h3
-                                    className='text-xl font-bold'
-                                    whileHover={{ scale: 1.1 }}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <a
-                                        href={sponsor.href}
-                                        target='_blank'
-                                        rel='noopener noreferrer'
-                                        className='hover:text-gray-300 transition-colors duration-300'
+                                    <motion.div
+                                        className='w-64 h-52 flex items-center justify-center mb-12'
+                                        whileHover={{ rotate: 5 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        <Image
+                                            src={sponsor.src}
+                                            alt={sponsor.alt}
+                                            width={250}
+                                            height={250}
+                                            className='object-contain'
+                                        />
+                                    </motion.div>
+                                    <motion.h3
+                                        className='text-4xl font-bold'
+                                        whileHover={{ scale: 1.1 }}
+                                        transition={{ duration: 0.2 }}
                                     >
                                         {sponsor.name}
-                                    </a>
-                                </motion.h3>
+                                    </motion.h3>
+                                </Link>
                             </motion.div>
                         ))}
                     </div>
