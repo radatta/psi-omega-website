@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import Image from 'next/image';
-import { pastPhotos } from '@/lib/memories_data';
+import { memoriesPhotosPaths } from '@/lib/memories_data';
 
 const BLUR_DATA_URL =
     'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PC9zdmc+';
@@ -47,8 +47,8 @@ export default function PhotoCollagePage() {
 
     // Limit number of images on mobile to improve performance
     const limitedPhotos = isMobile
-        ? [...pastPhotos].slice(0, 50)
-        : [...pastPhotos];
+        ? [...memoriesPhotosPaths].slice(0, 50)
+        : [...memoriesPhotosPaths];
 
     // Shuffle photos before breaking into rows
     const shuffledPhotos = [...limitedPhotos].sort(() => Math.random() - 0.5);
@@ -265,15 +265,15 @@ export default function PhotoCollagePage() {
 
                 {/* Center text */}
                 <motion.div
-                    className='absolute inset-0 flex items-center justify-center z-20'
+                    className='absolute inset-0 flex items-start justify-center z-20 pt-[150vh]'
                     style={{ opacity: opacity1 }}
                 >
                     <div className='text-center text-white'>
                         <h2 className='text-5xl md:text-7xl font-bold mb-4'>
                             BROTHERHOOD
                         </h2>
-                        <p className='text-xl opacity-80'>
-                            Bonds that last forever
+                        <p className='text-5xl opacity-80'>
+                            BONDS THAT LAST FOREVER
                         </p>
                     </div>
                 </motion.div>

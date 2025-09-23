@@ -66,7 +66,7 @@ export default function HistorySection() {
                                 school.
                             </motion.p>
                             <motion.p
-                                className='mb-48 text-lg'
+                                className='mb-8 md:mb-24 lg:mb-36 text-lg'
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: 0.4 }}
@@ -109,7 +109,7 @@ export default function HistorySection() {
                     {/* Chapter History */}
                     <div>
                         <motion.div
-                            className='relative h-[calc(100vh-100px)] w-full rounded-lg overflow-hidden mb-8'
+                            className='relative h-[calc(100vh-100px)] w-full rounded-lg overflow-hidden mb-8 lg:mb-38'
                             initial={{ opacity: 0, scale: 0.95 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.8 }}
