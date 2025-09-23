@@ -17,7 +17,7 @@ export const committeeChairs = [
     { name: 'Kyle Poon + Hyatt Tullu', position: 'Service' },
     { name: 'Naila Ahsan + Clair Kim', position: 'Brotherhood' },
 
-    { name: 'Aayush Kumbhare + Thomas Wickersham', position: 'STEAM' },
+    { name: 'Aayush Kumbhare', position: 'STEAM' },
     { name: 'Dzidzo Lassey + Kaardhika Nair', position: 'Wellness' },
 
     {
@@ -174,11 +174,6 @@ export const alphaRho = [
     {
         name: 'Aayush Kumbhare',
         major: 'Computer Science & Mathematics',
-        year: '2028',
-    },
-    {
-        name: 'Thomas Wickersham',
-        major: 'Electrical & Computer Engineering',
         year: '2028',
     },
     { name: 'Hyatt Tullu', major: 'Economics', year: '2027' },
