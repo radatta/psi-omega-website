@@ -18,7 +18,7 @@ export default function LegacyPage() {
                     transition={{ duration: 1.5, ease: 'easeOut' }}
                 >
                     <Image
-                        src='/images/legacy-hero.jpg'
+                        src='/images/legacy-hero.png'
                         alt='AKPsi Network'
                         fill
                         className='object-cover'
