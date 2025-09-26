@@ -1,6 +1,7 @@
+'use client';
 import Image from 'next/image';
-import AnimatedOverlaySection from '@/components/legacy/AnimatedOverlaySection';
 import { companies } from '@/lib/legacy_data';
+import { motion } from 'motion/react';
 
 export default function LegacyPage() {
     return (
@@ -8,29 +9,49 @@ export default function LegacyPage() {
             {/* Network Section */}
             <section
                 id='network'
-                className='relative h-screen flex items-center justify-center text-white'
+                className='relative h-screen flex items-center justify-center text-white overflow-hidden'
             >
-                <div className='absolute inset-0 z-0'>
+                <motion.div
+                    className='absolute inset-0 z-0'
+                    initial={{ scale: 1.1 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 1.5, ease: 'easeOut' }}
+                >
                     <Image
-                        src='/images/legacy-hero.jpg'
+                        src='/images/legacy-hero.png'
                         alt='AKPsi Network'
                         fill
                         className='object-cover'
                         priority
                     />
                     <div className='absolute inset-0 bg-black/50'></div>
-                </div>
-                <div className='container z-10 text-center'>
-                    <h1 className='text-4xl md:text-6xl font-bold mb-4'>
+                </motion.div>
+                <motion.div
+                    className='container z-10 text-center'
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                >
+                    <motion.h1
+                        className='text-4xl md:text-6xl font-bold mb-4'
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.8 }}
+                    >
                         OUR NETWORK
-                    </h1>
-                    <p className='text-xl max-w-3xl mx-auto'>
+                    </motion.h1>
+                    <motion.p
+                        className='text-xl max-w-3xl mx-auto'
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 1.1 }}
+                    >
                         From internships to full-time offers, our brothers have
                         secured positions spanning a variety of industries.
                         Check out this list to see some employers of our
                         brothers!
-                    </p>
-                </div>
+                    </motion.p>
+                </motion.div>
             </section>
 
             {/* Companies Section */}
@@ -38,9 +59,17 @@ export default function LegacyPage() {
                 <div className='container'>
                     <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8'>
                         {companies.map((company, index) => (
-                            <div
+                            <motion.div
                                 key={index}
                                 className='flex items-center justify-center p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow'
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.6,
+                                    delay: index * 0.05,
+                                }}
+                                viewport={{ once: true, margin: '100px' }}
+                                whileHover={{ scale: 1.1, rotate: 2 }}
                             >
                                 <div className='flex items-center justify-center aspect-square w-24 h-24'>
                                     <Image
@@ -51,14 +80,11 @@ export default function LegacyPage() {
                                         className='object-contain w-full h-full'
                                     />
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
-
-            {/* Campus Involvement Section (Animated Overlay) */}
-            <AnimatedOverlaySection />
         </main>
     );
 }
