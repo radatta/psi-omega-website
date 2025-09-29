@@ -6,7 +6,7 @@ export const currentRushData = {
     rushMailingList:
         'https://docs.google.com/forms/d/e/1FAIpQLSfLxr44WXiiPdT61TQfNnOZjFbItXcnBW3e0w4M2vPOJR_B6g/viewform',
     rushApplication: {
-        link: 'https://docs.google.com/forms/d/e/1FAIpQLScvQsk5zOUZ-18KYJc3D4XR5ATR6GkHzEQn-Ug5E1bZdIjHCA/viewform?usp=sf_link',
+        link: 'https://docs.google.com/forms/d/e/1FAIpQLSev_f8PILenVFxR_fe4vvNNr9vufGHaxYfirII9cOe7fTkP7g/viewform',
         dueDate: 'October 1st @ 5:00 PM',
     },
 };
