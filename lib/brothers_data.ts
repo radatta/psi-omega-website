@@ -190,6 +190,11 @@ export const alphaSigma = [
     { name: 'Hannah Yang', major: 'Marketing', year: '2028' },
     { name: 'Conan Xie', major: 'Accounting', year: '2027' },
     { name: 'Anna Brundage', major: 'Public Health', year: '2028' },
+    {
+        name: 'Satviki Gutta',
+        major: 'Management Information Systems',
+        year: '2028',
+    },
     { name: 'Leo Lin', major: 'Accounting', year: '2028' },
     { name: 'Sophia Mikkelson', major: 'Management', year: '2028' },
     {
