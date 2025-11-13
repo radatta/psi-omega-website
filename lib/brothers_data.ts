@@ -17,11 +17,11 @@ export const committeeChairs = [
     { name: 'Kyle Poon + Hyatt Tullu', position: 'Service' },
     { name: 'Naila Ahsan + Clair Kim', position: 'Brotherhood' },
 
-    { name: 'Aayush Kumbhare', position: 'STEAM' },
+    { name: 'Aayush Kumbhare + Megha Narumanchi', position: 'STEAM' },
     { name: 'Dzidzo Lassey + Kaardhika Nair', position: 'Wellness' },
 
     {
-        name: 'Jonathan Felix Saucedo + Juana Melgoza',
+        name: 'Juana Melgoza + Sabrina Amaro',
         position: 'Diversity, Equity, & Inclusion',
     },
     { name: 'Marcus Jackson + Youki Imai', position: 'Social' },
