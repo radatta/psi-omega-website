@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 import CountUp from 'react-countup';
 
 // Calculate the totals for our statistics
-const totalMembers = 80;
-const totalMajors = 20; // Using an estimated number
+const totalMembers = 86;
+const totalMajors = 26; // Using an estimated number
 const totalAlumni = 600; // Using an estimated number
 
 // StatItem component with forwardRef to get references for animations

@@ -231,15 +231,47 @@ export const alphaSigma = [
     { name: 'Kaiya Lu', major: 'Finance', year: '2028' },
 ];
 
+// Data for Alpha Tau | Fall 2025
+export const alphaTau = [
+    { name: 'Siri Venkatagiri', major: 'Finance', year: '2029' },
+    { name: 'Trina Yau', major: 'Economics', year: '2028' },
+    { name: 'Saahas Krishnamsetty', major: 'Economics', year: '2029' },
+    { name: 'Raegan Shum', major: 'Finance', year: '2029' },
+    {
+        name: 'Vignesh Gannavarapu',
+        major: 'Management Information Systems',
+        year: '2029',
+    },
+    { name: 'Christopher Sweeney', major: 'Finance', year: '2028' },
+    { name: 'Hana Chelemedos', major: 'Accounting', year: '2029' },
+    {
+        name: 'Ankith Srinivas',
+        major: 'Management Information Systems',
+        year: '2029',
+    },
+    {
+        name: 'Braden Auerbach',
+        major: 'Marketing',
+        year: '2029',
+    },
+    { name: 'Matthew Ikeda', major: 'Accounting', year: '2028' },
+    { name: 'Malia Aquino', major: 'Business Undeclared', year: '2029' },
+    { name: 'Joseph Bui', major: 'Finance', year: '2029' },
+    { name: 'Kathryn Kimyai', major: 'Psychology', year: '2029' },
+    { name: 'Max Lin', major: 'Finance', year: '2029' },
+    { name: 'Konstantine Mamoulelis', major: 'Finance', year: '2028' },
+];
+
 // Chart data for StatisticsSection
 export const schoolsCollegesData = [
-    { name: 'Leavey School of Business', value: 51 },
-    { name: 'School of Engineering', value: 11 },
-    { name: 'College of Arts and Sciences', value: 14 },
+    { name: 'Leavey School of Business', value: 61 },
+    { name: 'School of Engineering', value: 8 },
+    { name: 'College of Arts and Sciences', value: 19 },
 ];
 
 export const classDistributionData = [
-    { name: '2026', value: 25 },
-    { name: '2027', value: 29 },
-    { name: '2028', value: 22 },
+    { name: '2026', value: 24 },
+    { name: '2027', value: 27 },
+    { name: '2028', value: 26 },
+    { name: '2029', value: 11 },
 ];
