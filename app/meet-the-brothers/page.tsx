@@ -9,6 +9,7 @@ import {
     alphaPi,
     alphaRho,
     alphaSigma,
+    alphaTau,
 } from '@/lib/brothers_data';
 import Image from 'next/image';
 import { motion } from 'motion/react';
@@ -326,6 +327,37 @@ export default function MeetTheBrotherhood() {
                     </motion.h2>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
                         {alphaSigma.map((member, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.6,
+                                    delay: index * 0.1,
+                                }}
+                                viewport={{ once: true, margin: '200px' }}
+                            >
+                                <BrotherCard {...member} />
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Alpha Tau | Fall 2025 */}
+            <section className='py-16 bg-gray-50'>
+                <div className='container'>
+                    <motion.h2
+                        className='text-4xl font-bold text-center mb-12'
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        viewport={{ once: true, margin: '100px' }}
+                    >
+                        ALPHA TAU | FALL 2025
+                    </motion.h2>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+                        {alphaTau.map((member, index) => (
                             <motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 50 }}
