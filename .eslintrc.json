@@ -33,7 +33,7 @@
         "project": "./tsconfig.json"
     },
     "rules": {
-        "prettier/prettier": "error",
+        "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
         "react/react-in-jsx-scope": "off"
     },
     "settings": {

@@ -35,8 +35,8 @@ export default function Footer() {
 
                 <div className='text-center text-sm text-gray-400'>
                     <p>
-                        © {new Date().getFullYear()} Alpha Kappa Psi - Psi
-                        Omega Chapter
+                        © {new Date().getFullYear()} Alpha Kappa Psi - Psi Omega
+                        Chapter
                     </p>
                     <p>Santa Clara University</p>
                 </div>
