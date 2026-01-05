@@ -376,28 +376,35 @@ export default function Home() {
                     >
                         THANK YOU TO OUR SPONSORS!!
                     </motion.h1>
-                    <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
                         {[
                             {
-                                src: '/images/kpmg-logo.png',
+                                src: '/images/companies/deloitte.png',
+                                alt: 'Deloitte',
+                                name: 'Deloitte',
+                                href: 'https://www2.deloitte.com/us/en/careers/careers.html',
+                                delay: 0.2,
+                            },
+                            {
+                                src: '/images/companies/kpmg.png',
                                 alt: 'KPMG',
                                 name: 'KPMG',
                                 href: 'https://kpmg.com/xx/en/careers.html',
                                 delay: 0.4,
                             },
                             {
-                                src: '/images/ey-logo.png',
+                                src: '/images/companies/ey.png',
                                 alt: 'EY',
                                 name: 'EY',
                                 href: 'https://www.ey.com/en_us/careers',
                                 delay: 0.6,
                             },
                             {
-                                src: '/images/deloitte-logo.png',
-                                alt: 'Deloitte',
-                                name: 'Deloitte',
-                                href: 'https://www2.deloitte.com/us/en/careers/careers.html',
-                                delay: 0.8,
+                                src: '/images/companies/pwc.png',
+                                alt: 'PwC',
+                                name: 'PwC',
+                                href: 'https://www.pwc.com/us/en/careers.html',
+                                delay: 1.0,
                             },
                         ].map((sponsor) => (
                             <motion.div
@@ -424,8 +431,8 @@ export default function Home() {
                                         <Image
                                             src={sponsor.src}
                                             alt={sponsor.alt}
-                                            width={250}
-                                            height={250}
+                                            width={200}
+                                            height={200}
                                             className='object-contain'
                                         />
                                     </motion.div>
