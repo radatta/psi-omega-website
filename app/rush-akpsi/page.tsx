@@ -176,25 +176,46 @@ export default function RushPage() {
                             </motion.div>
                         </motion.div>
 
-                        <motion.div
-                            className='flex justify-center mb-12'
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.6 }}
-                            viewport={{ once: true }}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            <Button asChild size='lg'>
-                                <Link
-                                    href={currentRushData.rushApplication.link}
-                                    target='_blank'
-                                >
-                                    Application Due{' '}
-                                    {currentRushData.rushApplication.dueDate}
-                                </Link>
-                            </Button>
-                        </motion.div>
+                        {currentRushData.rushApplication.link ? (
+                            <motion.div
+                                className='flex justify-center mb-12'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.6 }}
+                                viewport={{ once: true }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                <Button asChild size='lg'>
+                                    <Link
+                                        href={
+                                            currentRushData.rushApplication.link
+                                        }
+                                        target='_blank'
+                                    >
+                                        Application Due{' '}
+                                        {
+                                            currentRushData.rushApplication
+                                                .dueDate
+                                        }
+                                    </Link>
+                                </Button>
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                className='flex justify-center mb-12'
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.6 }}
+                                viewport={{ once: true }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                <p className='text-xl font-semibold'>
+                                    Application will be next week!
+                                </p>
+                            </motion.div>
+                        )}
 
                         <motion.hr
                             className='border-gray-300 mb-12'
