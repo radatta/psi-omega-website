@@ -62,7 +62,9 @@ export const getColumns = (data: any[][]): ColumnDef<any, any>[] => {
                 <DataTableColumnHeader column={column} title={originalHeader} />
             );
             emailColumn = columnDef;
-            columnDef.maxSize = 150;
+            columnDef.size = 220;
+            columnDef.minSize = 120;
+            columnDef.maxSize = 400;
             return;
         }
 
