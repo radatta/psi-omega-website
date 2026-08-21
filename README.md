@@ -74,10 +74,13 @@ docs/         Everything above
 | `bun check-types` | TypeScript check           |
 | `bun lint`        | ESLint + Prettier          |
 | `bun format`      | Fix formatting             |
-| `bun build`       | Production build           |
+| `bun test`        | Data-integrity tests       |
+| `bun run build`   | Production build           |
 | `bun start`       | Serve the production build |
 
-`bun check-types` and `bun lint` also run automatically before every commit.
+`bun check-types`, `bun lint`, and `bun test` also run automatically before
+every commit. Note `bun run build`, not bare `bun build` — `build` is a bun
+builtin and would run bun's bundler instead of Next's.
 
 ## Contributing
 
@@ -95,8 +98,10 @@ Documented honestly so nobody rediscovers them the hard way:
 - **`/database` is not actually protected.** The password check is client-side
   and the API route behind it is unauthenticated, so the alumni sheet is
   effectively public. See [docs/database.md](docs/database.md). Fix in progress.
-- **No tests and no CI.** Verification is `bun check-types`, `bun lint`, and
-  looking at the page.
+- **Data-integrity tests only, and no CI.** `bun test` checks that every
+  referenced image exists, but there are no unit, component, or end-to-end
+  tests, and nothing runs on a PR. Verification is `bun check-types`,
+  `bun lint`, `bun test`, and looking at the page.
 - **No server components.** Every page is `'use client'`, so no page can export
   `metadata` and nothing is server-rendered.
 - **Dark mode is wired but unreachable** — the provider is pinned to light and

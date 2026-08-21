@@ -115,11 +115,14 @@ Where to get the key file, and how to grant it access to the spreadsheet, is in
 | `bun check-types` | Checks for TypeScript errors. Changes nothing.             |
 | `bun lint`        | Checks code style and formatting. Changes nothing.         |
 | `bun format`      | Fixes formatting automatically.                            |
-| `bun build`       | Builds the production version. Catches errors `dev` won't. |
+| `bun test`        | Checks every referenced image actually exists.             |
+| `bun run build`   | Builds the production version. Catches errors `dev` won't. |
 | `bun start`       | Serves the built version, also on 5174.                    |
 | `bun install`     | Installs or updates dependencies.                          |
 
-Note these are run bare — `bun lint`, not `bun run lint`.
+Note these are run bare — `bun lint`, not `bun run lint`. The exception is
+`bun run build`: `build` is a bun builtin, so bare `bun build` runs bun's own
+bundler and fails with "Missing entrypoints" instead of building the site.
 
 ## The pre-commit hook
 
@@ -132,9 +135,10 @@ That's [Husky](https://typicode.github.io/husky/), configured in
 ```bash
 bun check-types
 bun lint
+bun test
 ```
 
-If either fails, the commit is cancelled and nothing is saved. This is
+If any of them fails, the commit is cancelled and nothing is saved. This is
 deliberate — it stops a broken build from reaching the live site.
 
 **What to do when it blocks you:**
@@ -146,7 +150,11 @@ deliberate — it stops a broken build from reaching the live site.
 3. If it's a TypeScript error, it's usually a typo: a missing comma between
    roster entries, an unclosed quote, a `year: 2029` that should be
    `year: '2029'`.
-4. Run `bun check-types` yourself to re-check without attempting a commit.
+4. If it's a test failure listing a name — say `[ "Jane Doe" ]` — you added a
+   brother to a roster but not their photo. The file must be at
+   `public/images/brothers/Jane-Doe.jpg`, spelled exactly like the roster
+   `name`. See [content-updates.md](content-updates.md).
+5. Run `bun check-types` yourself to re-check without attempting a commit.
 
 Save yourself the surprise by running both commands before you commit.
 

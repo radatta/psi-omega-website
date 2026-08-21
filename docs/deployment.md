@@ -81,9 +81,10 @@ The usual causes, in order:
 1. **A TypeScript error.** The pre-commit hook catches these, so this mostly
    happens when someone bypassed it with `--no-verify`. Run `bun check-types`
    locally.
-2. **A build-only error.** `bun build` is stricter than `bun dev`. If a
-   deployment fails but the site runs fine locally, run `bun build` locally to
-   reproduce it.
+2. **A build-only error.** `bun run build` is stricter than `bun dev`. If a
+   deployment fails but the site runs fine locally, run `bun run build` locally
+   to reproduce it. (It must be `bun run build` — bare `bun build` invokes
+   bun's own bundler and never reaches `next build`.)
 3. **A missing environment variable.** The database route throws at startup if
    either variable is absent, which fails the whole build, not just that page.
 

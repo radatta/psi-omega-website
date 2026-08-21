@@ -26,11 +26,14 @@ Single Next.js 15 app (App Router), no monorepo:
 | `bun check-types` | `tsc --noEmit`                                 |
 | `bun lint`        | `next lint` (ESLint + Prettier as an error)    |
 | `bun format`      | Prettier write                                 |
-| `bun build`       | Production build                               |
+| `bun test`        | Data-integrity tests (bun's built-in runner)   |
+| `bun run build`   | Production build — **not** `bun build`         |
 | `bun start`       | Serve the production build on 5174             |
 | `bun install`     | Install dependencies                           |
 
-**Note the port: 5174, not Next's default 3000.** There is **no test suite and no test runner** — verification is `bun check-types` + `bun lint`, then the `run-app` skill to look at the rendered page. Don't claim a change is verified on types and lint alone if it changes anything visual.
+**`build` is the one exception to bare invocation.** `build` is a bun builtin, so `bun build` runs bun's own bundler and fails with "Missing entrypoints" — it never reaches `next build`. Use `bun run build`.
+
+**Note the port: 5174, not Next's default 3000.** The test suite is `tests/data-integrity.test.ts` on bun's built-in runner — it asserts that every image path the data references exists on disk, and vice versa. There are **no unit or component tests** yet. `.husky/pre-commit` runs `bun check-types` + `bun lint` + `bun test`; after that, use the `run-app` skill to look at the rendered page. Don't claim a change is verified on types, lint, and tests alone if it changes anything visual.
 
 ## Conventions (hard rules — these override defaults)
 
@@ -38,7 +41,7 @@ Single Next.js 15 app (App Router), no monorepo:
 - **No secrets or credentials in source, ever.** This repo is **public on GitHub**. Secrets go in `.env` locally and Vercel project env in prod. `google-service-account.json` is gitignored — keep it that way.
 - **PII discipline.** This is a public site carrying real people's names, majors, employers, and emails. Roster names/majors are established practice; anything more exposed on a public page needs a deliberate reason. Never put a brother's or alumni's personal data in a commit message, an issue, or a log line.
 - **`/database` is not currently protected.** The password gate is client-side only and `GET /database/api/sheet` is unauthenticated, so the alumni sheet is world-readable today. Treat it as public until that's fixed; never add data to it assuming the gate protects anything.
-- **Animation is `motion/react`** — never bare `framer-motion`. Several older files still import `framer-motion`, which resolves only as a transitive dep of `motion` and is not in `package.json`; convert them when you touch them.
+- **Animation is `motion/react`** — never bare `framer-motion`. `framer-motion` is not in `package.json` and resolves only as a transitive dep of `motion`. Every file now uses `motion/react`; keep it that way.
 - **Design tokens live in `app/globals.css`** (`@theme` + the light/`.dark` HSL sets). This is Tailwind **v4**. `tailwind.config.ts` is a leftover v3-style config with no `@config` directive — it is **never loaded**, so editing it does nothing.
 - **`cn` imports from `@/lib/utils/cn`** — not the shadcn default `@/lib/utils`. `components.json` still points at the old path, so `shadcn add` generates broken imports; fix them by hand.
 - **Dependency discipline.** This is a small static site. Default to rolling our own. Only propose a dependency when EITHER (A) it's substantial hard-to-own logic, OR (B) it's security-critical / subtle-correctness / hard cross-platform edges. Justify against A/B explicitly and state the roll-our-own alternative. **"It's popular" is not a reason.** Never add a browser driver (Playwright etc.) to `package.json` — install it in the scratchpad.

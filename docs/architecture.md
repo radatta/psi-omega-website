@@ -260,9 +260,13 @@ doesn't exist. Ignore all of them and use `@/`.
 - **ESLint + Prettier**, with Prettier violations reported as lint _errors_ —
   formatting is enforced, not suggested. 4-space indent, single quotes,
   semicolons, 80 columns. Run `bun format` rather than fixing by hand.
-- **Husky** runs `bun check-types` and `bun lint` before every commit.
-- **No test suite and no test runner.** Verification is types, lint, and looking
-  at the page.
+- **Husky** runs `bun check-types`, `bun lint`, and `bun test` before every
+  commit.
+- **Tests are data-integrity only**, in `tests/data-integrity.test.ts`, on bun's
+  built-in runner (no test framework in `package.json`). They assert that every
+  image path referenced by `lib/*_data.ts` and by any `/images/...` literal in
+  source resolves to a real file, and that no brother photo is orphaned. There
+  are no unit or component tests — for anything visual, still look at the page.
 
 ## Known rough edges
 
@@ -271,12 +275,7 @@ Things that are true today and will confuse you if you don't know them:
 - Every page is `'use client'`; no page can export `metadata`.
 - `tailwind.config.ts` is inert.
 - `components.json` and four `tsconfig.json` aliases are stale.
-- `framer-motion` is imported but not declared as a dependency.
 - Dark mode is wired but unreachable.
-- `components/charts/pie-chart.tsx` and its data are dead; `chart.js` is in
-  `package.json` solely for them.
-- `components/database/DataTable.tsx` is dead, and differs from the live
-  `data-table.tsx` only by filename case.
 - `components/about/statistics-section.tsx` hardcodes `totalMembers = 86` while
   the roster data contains 90.
 - No `not-found.tsx`, `error.tsx`, `sitemap.ts`, or `robots.ts`.
