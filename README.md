@@ -95,9 +95,11 @@ deliberate about what personal information goes on a public page.
 
 Documented honestly so nobody rediscovers them the hard way:
 
-- **`/database` is not actually protected.** The password check is client-side
-  and the API route behind it is unauthenticated, so the alumni sheet is
-  effectively public. See [docs/database.md](docs/database.md). Fix in progress.
+- **`/database`'s old password is in git history.** The gate itself is now
+  enforced server-side — signed HttpOnly cookie, 401 on the sheet route — but
+  the password that was hardcoded in source before that fix cannot be unpublished
+  from a public repo. Rotate `DATABASE_PASSWORD` before relying on the gate. See
+  [docs/database.md](docs/database.md).
 - **Data-integrity tests only, and no CI.** `bun test` checks that every
   referenced image exists, but there are no unit, component, or end-to-end
   tests, and nothing runs on a PR. Verification is `bun check-types`,

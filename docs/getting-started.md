@@ -69,12 +69,18 @@ Only one feature needs configuration: the `/database` page, which reads the
 alumni spreadsheet from Google Sheets. Everything else is plain files in the
 repo and works with no setup.
 
+Without these the site still builds and runs — only `/database` fails, and it
+fails closed rather than exposing anything.
+
 Create a file called `.env` in the project root:
 
 ```bash
+DATABASE_PASSWORD=the-shared-password-for-the-page
 GOOGLE_SHEET_ID=the-long-id-from-the-spreadsheet-url
 GOOGLE_APPLICATION_CREDENTIALS={"type":"service_account","project_id":"..."}
 ```
+
+There is a `.env.example` in the repo root you can copy as a starting point.
 
 ### The trap in `GOOGLE_APPLICATION_CREDENTIALS`
 

@@ -50,14 +50,15 @@ Loose convention, no enforcement: `feat/`, `fix/`, `refactor/`, `docs/`,
 
 ## Environment variables
 
-The two variables from [getting-started.md](getting-started.md) must **also** be
-set in Vercel. Your local `.env` is not deployed — it's gitignored and never
+The three variables from [getting-started.md](getting-started.md) must **also**
+be set in Vercel. Your local `.env` is not deployed — it's gitignored and never
 leaves your machine.
 
 In the Vercel dashboard: **Project → Settings → Environment Variables**.
 
 | Variable                         | Value                                    |
 | -------------------------------- | ---------------------------------------- |
+| `DATABASE_PASSWORD`              | The shared password for `/database`      |
 | `GOOGLE_SHEET_ID`                | The spreadsheet id                       |
 | `GOOGLE_APPLICATION_CREDENTIALS` | The whole service-account JSON, one line |
 
@@ -85,8 +86,9 @@ The usual causes, in order:
    deployment fails but the site runs fine locally, run `bun run build` locally
    to reproduce it. (It must be `bun run build` — bare `bun build` invokes
    bun's own bundler and never reaches `next build`.)
-3. **A missing environment variable.** The database route throws at startup if
-   either variable is absent, which fails the whole build, not just that page.
+3. **A missing environment variable.** This no longer fails the build — the
+   database route checks its variables per-request and returns 503 — but
+   `/database` will be broken in the deployed site.
 
 A failed deployment does **not** take the live site down. Vercel keeps serving
 the last successful build.

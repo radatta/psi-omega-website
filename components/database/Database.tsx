@@ -19,29 +19,41 @@ export default function Database() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ password }),
         });
-        const dataRes = await res.json();
-        if (dataRes.success) {
+        if (res.ok) {
+            setPassword('');
             setUnlocked(true);
+        } else if (res.status === 503) {
+            setError('The database is not configured. Contact an admin.');
         } else {
             setError('Incorrect password');
         }
     }
 
     useEffect(() => {
-        if (unlocked) {
-            fetch('/database/api/sheet')
-                .then((res) => res.json())
-                .then((fetchedData) => {
-                    if (fetchedData && Array.isArray(fetchedData)) {
-                        const filtered = fetchedData.filter(
-                            (row: any, idx: number) =>
-                                idx === 0 ||
-                                (row && row[4] && String(row[4]).trim() !== '')
-                        );
-                        setRawData(filtered);
-                    }
-                });
-        }
+        if (!unlocked) return;
+        fetch('/database/api/sheet')
+            .then((res) => {
+                // The session cookie is the real gate; if it is missing or
+                // expired the server says so and we drop back to the form.
+                if (res.status === 401) {
+                    setUnlocked(false);
+                    setError('Your session expired. Please log in again.');
+                    return null;
+                }
+                if (!res.ok) throw new Error(`sheet request ${res.status}`);
+                return res.json();
+            })
+            .then((fetchedData) => {
+                if (fetchedData && Array.isArray(fetchedData)) {
+                    const filtered = fetchedData.filter(
+                        (row: any, idx: number) =>
+                            idx === 0 ||
+                            (row && row[4] && String(row[4]).trim() !== '')
+                    );
+                    setRawData(filtered);
+                }
+            })
+            .catch(() => setError('Could not load the database.'));
     }, [unlocked]);
 
     // Transform rawData (arrays) into data suitable for TanStack Table (array of objects)

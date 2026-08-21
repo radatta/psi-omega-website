@@ -8,26 +8,49 @@ Because it's the only moving part, it's also the only thing that breaks on its
 own. This doc covers how it works, how to set it up, and the ways it fails
 quietly.
 
-## Read this first: the page is not actually protected
+## Read this first: rotate the password
 
-The `/database` page shows a password box. **It does not protect anything.**
+The gate is now enforced on the server (see [Access control](#access-control)),
+but **the old password `inU&I` is still in this repository's git history**, and
+was live in `app/database/api/check-password/route.ts` from the day the feature
+shipped until it was moved to an environment variable.
 
-- The password check happens in the browser. A visitor who declines to type a
-  password can still read the data.
-- The API route that returns the spreadsheet, `GET /database/api/sheet`, has
-  **no authentication at all**. Anyone who knows the URL can fetch the entire
-  alumni sheet as JSON, from anywhere, with no password.
-- The password itself is written literally in the source code, in
-  `app/database/api/check-password/route.ts`. This repository is **public on
-  GitHub**, so the password is public too, and has been since the feature
-  shipped.
+Removing it from the source does not unpublish it. Anyone who cloned or browsed
+the public repo has it.
 
-**Treat everything in that spreadsheet as world-readable.** Do not add anything
-to it — home addresses, phone numbers, personal notes about alumni — on the
-assumption that the password gate is keeping it private. It isn't.
+**Set `DATABASE_PASSWORD` to a new value** in `.env` and in Vercel before
+treating the page as protected. Until you do, assume the sheet is readable by
+anyone who has read the repo.
 
-Fixing this is tracked work, not a hypothetical. When it lands, this section
-gets rewritten and the setup below gains a third environment variable.
+Separately: the spreadsheet has been effectively public for the life of the
+feature, so audit what's in it. If anything sensitive was added on the
+assumption that the gate worked — home addresses, phone numbers, private notes
+— treat it as already disclosed.
+
+## Access control
+
+Both halves of the gate are server-side.
+
+- `POST /database/api/check-password` compares the submitted password against
+  `DATABASE_PASSWORD` with a constant-time comparison, and on success sets an
+  **HttpOnly** session cookie. JavaScript in the page cannot read it.
+- `GET /database/api/sheet` verifies that cookie and returns **401** without it.
+  There is no path to the spreadsheet that skips this check.
+- The cookie holds an expiry plus an HMAC-SHA256 signature over that expiry. The
+  signing key is derived from `DATABASE_PASSWORD`, so **changing the password
+  invalidates every outstanding session**. Sessions last 12 hours.
+- Responses from the sheet route are sent `Cache-Control: no-store`, so no CDN
+  or browser keeps a copy of alumni contact details.
+- **It fails closed.** If `DATABASE_PASSWORD` is unset, every login is refused
+  and the sheet route returns 503 — it never falls back to a default password.
+
+The signing and verification live in `lib/utils/session.ts` and are covered by
+`tests/session.test.ts` (forged signatures, extended expiries, tampered tokens,
+malformed input).
+
+What this is _not_: there are no individual user accounts, and no audit trail of
+who looked at what. It is one shared password for the whole chapter. Anyone who
+has it, and anyone they forward it to, can read the whole sheet.
 
 ## How it works
 
@@ -38,9 +61,11 @@ Browser  ──>  /database/api/sheet  ──>  Google Sheets API  ──>  the 
 ```
 
 1. The visitor types a password. The browser posts it to
-   `/database/api/check-password`, which compares it and returns
-   `{ success: true }`.
-2. On success, the browser fetches `/database/api/sheet`.
+   `/database/api/check-password`, which compares it against
+   `DATABASE_PASSWORD` and, on a match, sets a signed HttpOnly session cookie.
+2. The browser fetches `/database/api/sheet`. The cookie rides along
+   automatically; without a valid one the route returns 401 and the page drops
+   back to the password form.
 3. That route authenticates to Google as a **service account** — a robot Google
    account with its own credentials — and reads the sheet.
 4. The rows come back as a plain grid of strings, and the table is built from
@@ -49,19 +74,21 @@ Browser  ──>  /database/api/sheet  ──>  Google Sheets API  ──>  the 
 The service account has **read-only** access. Nothing the site does can modify
 the spreadsheet.
 
-Four files are involved:
+Five files are involved:
 
 | File                                       | Job                                      |
 | ------------------------------------------ | ---------------------------------------- |
-| `app/database/api/sheet/route.ts`          | Talks to Google, returns the rows        |
-| `app/database/api/check-password/route.ts` | The password check                       |
+| `app/database/api/sheet/route.ts`          | Checks the session, talks to Google      |
+| `app/database/api/check-password/route.ts` | Checks the password, issues the session  |
+| `lib/utils/session.ts`                     | Signs and verifies the session cookie    |
 | `components/database/Database.tsx`         | Password form, fetch, row transformation |
 | `components/database/columns.tsx`          | Turns sheet headers into table columns   |
 
 ## Setting it up
 
 You need two things: a Google service account with a key, and that key in your
-`.env`.
+`.env`. Start from `.env.example` in the repo root — it lists all three
+variables with notes.
 
 ### 1. Create the service account
 
@@ -91,9 +118,15 @@ genuinely has not been given access to the file.
 ### 3. Put it in `.env`
 
 ```bash
+DATABASE_PASSWORD=whatever-the-chapter-is-using
 GOOGLE_SHEET_ID=1AbC...
 GOOGLE_APPLICATION_CREDENTIALS={"type":"service_account",...}
 ```
+
+**`DATABASE_PASSWORD`** is the shared password for the page. Any non-empty
+string. If it is missing the page fails closed — every login is refused. See
+[the rotation note](#read-this-first-rotate-the-password) above before reusing
+the old one.
 
 **`GOOGLE_SHEET_ID`** is the long id from the spreadsheet URL:
 

@@ -40,7 +40,7 @@ Single Next.js 15 app (App Router), no monorepo:
 - **bun only.** `bun install`, `bun add`. The tracked lockfile is `bun.lock`; `bun.lockb` is gitignored legacy.
 - **No secrets or credentials in source, ever.** This repo is **public on GitHub**. Secrets go in `.env` locally and Vercel project env in prod. `google-service-account.json` is gitignored — keep it that way.
 - **PII discipline.** This is a public site carrying real people's names, majors, employers, and emails. Roster names/majors are established practice; anything more exposed on a public page needs a deliberate reason. Never put a brother's or alumni's personal data in a commit message, an issue, or a log line.
-- **`/database` is not currently protected.** The password gate is client-side only and `GET /database/api/sheet` is unauthenticated, so the alumni sheet is world-readable today. Treat it as public until that's fixed; never add data to it assuming the gate protects anything.
+- **`/database` is server-gated, but the old password leaked.** `POST /database/api/check-password` checks `DATABASE_PASSWORD` in constant time and issues a signed HttpOnly session cookie; `GET /database/api/sheet` returns 401 without it and sends `Cache-Control: no-store`. It fails closed when the env var is unset. **The pre-fix password `inU&I` is still in git history**, so the sheet stays effectively public until Rahul rotates `DATABASE_PASSWORD` in `.env` and Vercel. Signing lives in `lib/utils/session.ts`; don't reimplement it inline.
 - **Animation is `motion/react`** — never bare `framer-motion`. `framer-motion` is not in `package.json` and resolves only as a transitive dep of `motion`. Every file now uses `motion/react`; keep it that way.
 - **Design tokens live in `app/globals.css`** (`@theme` + the light/`.dark` HSL sets). This is Tailwind **v4**. `tailwind.config.ts` is a leftover v3-style config with no `@config` directive — it is **never loaded**, so editing it does nothing.
 - **`cn` imports from `@/lib/utils/cn`** — not the shadcn default `@/lib/utils`. `components.json` still points at the old path, so `shadcn add` generates broken imports; fix them by hand.
@@ -74,10 +74,13 @@ Next.js App Router (Vercel) ── /database/api/sheet ──> Google Sheets API
 
 Static pages rendered from `lib/` data; the one runtime dependency is the Sheets read. Every page is currently `'use client'` (there are no server components yet), so `motion` animations and hooks work anywhere but nothing benefits from server rendering — don't assume a file is a server component because it lacks a directive.
 
-Two env vars, both used only by `app/database/api/sheet/route.ts`:
+Three env vars, all used only by the two `/database` API routes (see `.env.example`):
 
+- `DATABASE_PASSWORD` — the shared password for `/database`. Also derives the session-cookie signing key, so rotating it logs everyone out. Unset means the page fails closed.
 - `GOOGLE_SHEET_ID` — the spreadsheet id.
 - `GOOGLE_APPLICATION_CREDENTIALS` — **the entire service-account JSON as a string**, not a file path. This is the opposite of the Google SDK convention and the most common setup mistake here.
+
+All three are checked per-request, not at module scope, so a missing variable breaks `/database` instead of failing the whole build.
 
 ## Git workflow
 
