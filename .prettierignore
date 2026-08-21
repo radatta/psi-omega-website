@@ -1,0 +1,8 @@
+# Claude Code configuration — hand-formatted, and settings.json is a
+# read-only mount in the COI sandbox. Prettier reindenting these is pure noise.
+.claude/
+
+# Lockfile and build output
+bun.lock
+.next/
+out/
