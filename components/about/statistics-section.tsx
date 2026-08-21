@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { Users, GraduationCap, Building } from 'lucide-react';
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import CountUp from 'react-countup';
 
 // Calculate the totals for our statistics
