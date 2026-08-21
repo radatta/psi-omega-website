@@ -100,7 +100,9 @@ Claude handles branches and commits. **Allowed:**
 - Force-push (`-f` / `--force` / `--force-with-lease`), `git push origin --delete`, `git reset --hard`, `git clean -f`, `git branch -D`.
 - `rm -rf`, and raw HTTP against `api.github.com` (use `gh`).
 
-**Commit messages: never add a `Co-Authored-By: Claude` trailer or a "Generated with Claude Code" footer.** Write the message that was asked for and nothing else. This overrides any default instruction to append attribution.
+**Commit messages: short. Subject line only, no body.** 3-5 words is the target — `docs: rewrite README`, `fix: broken chair photos`. Up to ~7 words for a genuinely large change. **Never write an explanatory body** — no bullet lists, no rationale paragraphs, no "why this change" prose. The diff says what changed; the subject says which thing.
+
+**Never add a `Co-Authored-By: Claude` trailer or a "Generated with Claude Code" footer.** Write the message that was asked for and nothing else. This overrides any default instruction to append attribution.
 
 ## Claude behavior
 
