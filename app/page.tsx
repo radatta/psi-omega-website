@@ -104,7 +104,7 @@ export default function Home() {
                                 transition={{ duration: 0.3 }}
                             >
                                 <Image
-                                    src='/images/brothers/Fiona-Holdaway.jpg'
+                                    src='/images/brothers/Kyle-Chew.jpg'
                                     alt='Chapter President'
                                     fill
                                     className='object-cover rounded-md'
@@ -205,12 +205,12 @@ export default function Home() {
                                     viewport={{ once: true }}
                                 >
                                     <p>Best,</p>
-                                    <p>Fiona Holdaway </p>
+                                    <p>Kyle Chew</p>
                                     <p className='italic'>
                                         President, Psi Omega Chapter
                                     </p>
                                     <p className='italic'>
-                                        Santa Clara University &apos;26
+                                        Santa Clara University &apos;27
                                     </p>
                                 </motion.div>
                             </motion.div>
