@@ -3,10 +3,11 @@ import {
     SESSION_MAX_AGE,
     createSessionToken,
     safeEqual,
+    sessionConfig,
     verifySessionToken,
-} from '@/lib/utils/session';
+} from '@/lib/server/session';
 
-const PASSWORD = 'correct-horse-battery-staple';
+const CONFIG = { password: 'correct-horse-battery-staple', secret: 'secret-a' };
 const NOW = 1_700_000_000_000;
 
 describe('safeEqual', () => {
@@ -24,42 +25,123 @@ describe('safeEqual', () => {
     });
 });
 
-describe('session tokens', () => {
-    test('a freshly issued token verifies', () => {
-        const token = createSessionToken(PASSWORD, NOW);
-        expect(verifySessionToken(token, PASSWORD, NOW)).toBe(true);
+describe('sessionConfig', () => {
+    const withEnv = (
+        vars: Record<string, string | undefined>,
+        run: () => void
+    ) => {
+        const saved = { ...process.env };
+        Object.assign(process.env, vars);
+        for (const [k, v] of Object.entries(vars)) {
+            if (v === undefined) delete process.env[k];
+        }
+        try {
+            run();
+        } finally {
+            process.env = saved;
+        }
+    };
+
+    test('is null unless both variables are set', () => {
+        withEnv(
+            {
+                DATABASE_PASSWORD: undefined,
+                DATABASE_SESSION_SECRET: undefined,
+            },
+            () => expect(sessionConfig()).toBeNull()
+        );
+        withEnv(
+            { DATABASE_PASSWORD: 'p', DATABASE_SESSION_SECRET: undefined },
+            () => expect(sessionConfig()).toBeNull()
+        );
+        withEnv(
+            { DATABASE_PASSWORD: undefined, DATABASE_SESSION_SECRET: 's' },
+            () => expect(sessionConfig()).toBeNull()
+        );
     });
 
-    test('a token issued for one password fails under another', () => {
-        const token = createSessionToken(PASSWORD, NOW);
-        expect(verifySessionToken(token, 'some-other-password', NOW)).toBe(
-            false
+    test('treats an empty string as unset', () => {
+        withEnv({ DATABASE_PASSWORD: '', DATABASE_SESSION_SECRET: 's' }, () =>
+            expect(sessionConfig()).toBeNull()
         );
+    });
+
+    test('returns both values when set', () => {
+        withEnv({ DATABASE_PASSWORD: 'p', DATABASE_SESSION_SECRET: 's' }, () =>
+            expect(sessionConfig()).toEqual({ password: 'p', secret: 's' })
+        );
+    });
+});
+
+describe('session tokens', () => {
+    test('a freshly issued token verifies', () => {
+        const token = createSessionToken(CONFIG, NOW);
+        expect(verifySessionToken(token, CONFIG, NOW)).toBe(true);
+    });
+
+    test('a token does not survive a password change', () => {
+        const token = createSessionToken(CONFIG, NOW);
+        const rotated = { ...CONFIG, password: 'a-new-password' };
+        expect(verifySessionToken(token, rotated, NOW)).toBe(false);
+    });
+
+    test('a token issued under one secret fails under another', () => {
+        const token = createSessionToken(CONFIG, NOW);
+        const other = { ...CONFIG, secret: 'secret-b' };
+        expect(verifySessionToken(token, other, NOW)).toBe(false);
     });
 
     test('a token expires', () => {
-        const token = createSessionToken(PASSWORD, NOW);
-        const justBefore = NOW + SESSION_MAX_AGE * 1000 - 1;
-        const justAfter = NOW + SESSION_MAX_AGE * 1000 + 1;
-        expect(verifySessionToken(token, PASSWORD, justBefore)).toBe(true);
-        expect(verifySessionToken(token, PASSWORD, justAfter)).toBe(false);
+        const token = createSessionToken(CONFIG, NOW);
+        expect(
+            verifySessionToken(token, CONFIG, NOW + SESSION_MAX_AGE * 1000 - 1)
+        ).toBe(true);
+        expect(
+            verifySessionToken(token, CONFIG, NOW + SESSION_MAX_AGE * 1000 + 1)
+        ).toBe(false);
     });
 
     test('the expiry cannot be extended without resigning', () => {
-        const token = createSessionToken(PASSWORD, NOW);
-        const signature = token.slice(token.indexOf('.') + 1);
-        const forged = `${NOW + 10 ** 12}.${signature}`;
-        expect(verifySessionToken(forged, PASSWORD, NOW)).toBe(false);
+        const [, fingerprint, signature] = createSessionToken(
+            CONFIG,
+            NOW
+        ).split('.');
+        const forged = `${NOW + 10 ** 12}.${fingerprint}.${signature}`;
+        expect(verifySessionToken(forged, CONFIG, NOW)).toBe(false);
     });
 
     test('a tampered signature is rejected', () => {
-        const token = createSessionToken(PASSWORD, NOW);
-        const [expiry, signature] = token.split('.');
+        const [expiry, fingerprint, signature] = createSessionToken(
+            CONFIG,
+            NOW
+        ).split('.');
         const flipped =
             signature.slice(0, -1) + (signature.endsWith('a') ? 'b' : 'a');
-        expect(verifySessionToken(`${expiry}.${flipped}`, PASSWORD, NOW)).toBe(
-            false
-        );
+        expect(
+            verifySessionToken(
+                `${expiry}.${fingerprint}.${flipped}`,
+                CONFIG,
+                NOW
+            )
+        ).toBe(false);
+    });
+
+    test('a tampered fingerprint is rejected', () => {
+        const [expiry, fingerprint, signature] = createSessionToken(
+            CONFIG,
+            NOW
+        ).split('.');
+        const flipped =
+            fingerprint.slice(0, -1) + (fingerprint.endsWith('a') ? 'b' : 'a');
+        expect(
+            verifySessionToken(`${expiry}.${flipped}.${signature}`, CONFIG, NOW)
+        ).toBe(false);
+    });
+
+    test('the cookie does not contain the password', () => {
+        const token = createSessionToken(CONFIG, NOW);
+        expect(token).not.toContain(CONFIG.password);
+        expect(token).not.toContain(CONFIG.secret);
     });
 
     test('malformed tokens are rejected rather than throwing', () => {
@@ -67,12 +149,14 @@ describe('session tokens', () => {
             undefined,
             '',
             '.',
+            '..',
             'nodot',
+            'one.two',
+            'a.b.c.d',
             '.onlysignature',
-            'onlyexpiry.',
-            'not-a-number.deadbeef',
+            'not-a-number.deadbeef.deadbeef',
         ]) {
-            expect(verifySessionToken(bad, PASSWORD, NOW)).toBe(false);
+            expect(verifySessionToken(bad, CONFIG, NOW)).toBe(false);
         }
     });
 });

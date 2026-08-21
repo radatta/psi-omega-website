@@ -75,7 +75,8 @@ fails closed rather than exposing anything.
 Create a file called `.env` in the project root:
 
 ```bash
-DATABASE_PASSWORD=the-shared-password-for-the-page
+DATABASE_PASSWORD=a-long-random-passphrase
+DATABASE_SESSION_SECRET=64-hex-chars-from-openssl-rand-hex-32
 GOOGLE_SHEET_ID=the-long-id-from-the-spreadsheet-url
 GOOGLE_APPLICATION_CREDENTIALS={"type":"service_account","project_id":"..."}
 ```

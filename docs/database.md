@@ -11,9 +11,10 @@ quietly.
 ## Read this first: rotate the password
 
 The gate is now enforced on the server (see [Access control](#access-control)),
-but **the old password `inU&I` is still in this repository's git history**, and
-was live in `app/database/api/check-password/route.ts` from the day the feature
-shipped until it was moved to an environment variable.
+but **the password that preceded this fix is still in this repository's git
+history**. It was written literally in
+`app/database/api/check-password/route.ts` from the day the feature shipped
+until it was moved to an environment variable.
 
 Removing it from the source does not unpublish it. Anyone who cloned or browsed
 the public repo has it.
@@ -33,20 +34,38 @@ Both halves of the gate are server-side.
 
 - `POST /database/api/check-password` compares the submitted password against
   `DATABASE_PASSWORD` with a constant-time comparison, and on success sets an
-  **HttpOnly** session cookie. JavaScript in the page cannot read it.
+  **HttpOnly** session cookie scoped to `/database`. JavaScript in the page
+  cannot read it.
 - `GET /database/api/sheet` verifies that cookie and returns **401** without it.
-  There is no path to the spreadsheet that skips this check.
-- The cookie holds an expiry plus an HMAC-SHA256 signature over that expiry. The
-  signing key is derived from `DATABASE_PASSWORD`, so **changing the password
-  invalidates every outstanding session**. Sessions last 12 hours.
+- The cookie is `expiry.fingerprint.signature`, signed with HMAC-SHA256 under
+  **`DATABASE_SESSION_SECRET`** — a random value, separate from the password.
+  This matters: if the cookie were signed with a key derived from the password,
+  a stolen cookie could be used to brute-force the password offline. It can't.
+- The `fingerprint` is an HMAC of the password under the same secret, so
+  **changing `DATABASE_PASSWORD` invalidates every outstanding session** without
+  the cookie ever being a crackable function of the password.
+- Sessions last 12 hours.
+- Failed logins are rate limited per client IP (10 per 15 minutes), then 429.
+  See the caveat in `lib/server/rate-limit.ts`: the counter is per serverless
+  instance, so it raises the cost of online guessing rather than capping it
+  absolutely.
 - Responses from the sheet route are sent `Cache-Control: no-store`, so no CDN
   or browser keeps a copy of alumni contact details.
-- **It fails closed.** If `DATABASE_PASSWORD` is unset, every login is refused
-  and the sheet route returns 503 — it never falls back to a default password.
+- **It fails closed.** If either `DATABASE_PASSWORD` or
+  `DATABASE_SESSION_SECRET` is unset, every login is refused and the sheet route
+  returns 503 — it never falls back to a default.
 
-The signing and verification live in `lib/utils/session.ts` and are covered by
-`tests/session.test.ts` (forged signatures, extended expiries, tampered tokens,
-malformed input).
+Signing and verification live in `lib/server/session.ts` — under `lib/server/`,
+not `lib/utils/`, so a stray import can't pull `node:crypto` and this logic into
+a client bundle. Two test files cover it: `tests/session.test.ts` for the token
+scheme (forged signatures, tampered fingerprints, extended expiries, malformed
+input) and `tests/database-routes.test.ts`, which calls the real route handlers
+and asserts the sheet route 401s without a valid cookie. That second file is the
+one that would catch someone deleting the check from the route.
+
+**There is no logout.** A session ends when it expires after 12 hours, or when
+the password is rotated. If a laptop with an open session goes missing, rotating
+`DATABASE_PASSWORD` is the way to revoke it.
 
 What this is _not_: there are no individual user accounts, and no audit trail of
 who looked at what. It is one shared password for the whole chapter. Anyone who
@@ -74,13 +93,14 @@ Browser  ──>  /database/api/sheet  ──>  Google Sheets API  ──>  the 
 The service account has **read-only** access. Nothing the site does can modify
 the spreadsheet.
 
-Five files are involved:
+Six files are involved:
 
 | File                                       | Job                                      |
 | ------------------------------------------ | ---------------------------------------- |
 | `app/database/api/sheet/route.ts`          | Checks the session, talks to Google      |
 | `app/database/api/check-password/route.ts` | Checks the password, issues the session  |
-| `lib/utils/session.ts`                     | Signs and verifies the session cookie    |
+| `lib/server/session.ts`                    | Signs and verifies the session cookie    |
+| `lib/server/rate-limit.ts`                 | Throttles repeated failed logins         |
 | `components/database/Database.tsx`         | Password form, fetch, row transformation |
 | `components/database/columns.tsx`          | Turns sheet headers into table columns   |
 
@@ -118,15 +138,22 @@ genuinely has not been given access to the file.
 ### 3. Put it in `.env`
 
 ```bash
-DATABASE_PASSWORD=whatever-the-chapter-is-using
+DATABASE_PASSWORD=a-long-random-passphrase
+DATABASE_SESSION_SECRET=64-hex-characters-from-openssl-rand
 GOOGLE_SHEET_ID=1AbC...
 GOOGLE_APPLICATION_CREDENTIALS={"type":"service_account",...}
 ```
 
-**`DATABASE_PASSWORD`** is the shared password for the page. Any non-empty
-string. If it is missing the page fails closed — every login is refused. See
+**`DATABASE_PASSWORD`** is the shared password for the page. Make it a long
+random passphrase rather than a word — it is the only thing between the public
+and the alumni sheet, and it gets forwarded around by hand. See
 [the rotation note](#read-this-first-rotate-the-password) above before reusing
 the old one.
+
+**`DATABASE_SESSION_SECRET`** signs the session cookie. It must be random, and
+must not be the password. Generate one with `openssl rand -hex 32`.
+
+Both are required — missing either makes the page fail closed.
 
 **`GOOGLE_SHEET_ID`** is the long id from the spreadsheet URL:
 

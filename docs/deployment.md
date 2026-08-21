@@ -50,17 +50,18 @@ Loose convention, no enforcement: `feat/`, `fix/`, `refactor/`, `docs/`,
 
 ## Environment variables
 
-The three variables from [getting-started.md](getting-started.md) must **also**
+The four variables from [getting-started.md](getting-started.md) must **also**
 be set in Vercel. Your local `.env` is not deployed — it's gitignored and never
 leaves your machine.
 
 In the Vercel dashboard: **Project → Settings → Environment Variables**.
 
-| Variable                         | Value                                    |
-| -------------------------------- | ---------------------------------------- |
-| `DATABASE_PASSWORD`              | The shared password for `/database`      |
-| `GOOGLE_SHEET_ID`                | The spreadsheet id                       |
-| `GOOGLE_APPLICATION_CREDENTIALS` | The whole service-account JSON, one line |
+| Variable                         | Value                                       |
+| -------------------------------- | ------------------------------------------- |
+| `DATABASE_PASSWORD`              | The shared password for `/database`         |
+| `DATABASE_SESSION_SECRET`        | Random cookie signing key, not the password |
+| `GOOGLE_SHEET_ID`                | The spreadsheet id                          |
+| `GOOGLE_APPLICATION_CREDENTIALS` | The whole service-account JSON, one line    |
 
 Same trap as locally: `GOOGLE_APPLICATION_CREDENTIALS` is the **contents** of
 the JSON key file, not a path.

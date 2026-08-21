@@ -40,7 +40,7 @@ Single Next.js 15 app (App Router), no monorepo:
 - **bun only.** `bun install`, `bun add`. The tracked lockfile is `bun.lock`; `bun.lockb` is gitignored legacy.
 - **No secrets or credentials in source, ever.** This repo is **public on GitHub**. Secrets go in `.env` locally and Vercel project env in prod. `google-service-account.json` is gitignored — keep it that way.
 - **PII discipline.** This is a public site carrying real people's names, majors, employers, and emails. Roster names/majors are established practice; anything more exposed on a public page needs a deliberate reason. Never put a brother's or alumni's personal data in a commit message, an issue, or a log line.
-- **`/database` is server-gated, but the old password leaked.** `POST /database/api/check-password` checks `DATABASE_PASSWORD` in constant time and issues a signed HttpOnly session cookie; `GET /database/api/sheet` returns 401 without it and sends `Cache-Control: no-store`. It fails closed when the env var is unset. **The pre-fix password `inU&I` is still in git history**, so the sheet stays effectively public until Rahul rotates `DATABASE_PASSWORD` in `.env` and Vercel. Signing lives in `lib/utils/session.ts`; don't reimplement it inline.
+- **`/database` is server-gated, but the old password leaked.** `POST /database/api/check-password` checks `DATABASE_PASSWORD` in constant time and issues a signed HttpOnly session cookie; `GET /database/api/sheet` returns 401 without it and sends `Cache-Control: no-store`. It fails closed when the env var is unset. **The pre-fix password is still in git history**, so the sheet stays effectively public until Rahul rotates `DATABASE_PASSWORD` in `.env` and Vercel. Signing lives in `lib/server/session.ts` (under `lib/server/`, not `lib/utils/`, so it can't reach a client bundle); don't reimplement it inline.
 - **Animation is `motion/react`** — never bare `framer-motion`. `framer-motion` is not in `package.json` and resolves only as a transitive dep of `motion`. Every file now uses `motion/react`; keep it that way.
 - **Design tokens live in `app/globals.css`** (`@theme` + the light/`.dark` HSL sets). This is Tailwind **v4**. There is deliberately no `tailwind.config.ts` — v4 only reads one behind a `@config` directive, and nothing points at one. Don't reintroduce it.
 - **`cn` imports from `@/lib/utils/cn`** — not the shadcn default `@/lib/utils`. `components.json`'s `utils` alias points there too, so `shadcn add` generates the correct import.
@@ -74,9 +74,10 @@ Next.js App Router (Vercel) ── /database/api/sheet ──> Google Sheets API
 
 Static pages rendered from `lib/` data; the one runtime dependency is the Sheets read. Every page is currently `'use client'` (there are no server components yet), so `motion` animations and hooks work anywhere but nothing benefits from server rendering — don't assume a file is a server component because it lacks a directive.
 
-Three env vars, all used only by the two `/database` API routes (see `.env.example`):
+Four env vars, all used only by the two `/database` API routes (see `.env.example`):
 
-- `DATABASE_PASSWORD` — the shared password for `/database`. Also derives the session-cookie signing key, so rotating it logs everyone out. Unset means the page fails closed.
+- `DATABASE_PASSWORD` — the shared password for `/database`. Unset means the page fails closed.
+- `DATABASE_SESSION_SECRET` — random key signing the session cookie (`openssl rand -hex 32`). **Must not be the password** — deriving it from the password would turn every cookie into an offline password-cracking oracle. Rotating the password still invalidates sessions, via a fingerprint in the cookie payload.
 - `GOOGLE_SHEET_ID` — the spreadsheet id.
 - `GOOGLE_APPLICATION_CREDENTIALS` — **the entire service-account JSON as a string**, not a file path. This is the opposite of the Google SDK convention and the most common setup mistake here.
 
