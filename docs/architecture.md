@@ -40,10 +40,11 @@ Plus two API routes under `app/database/api/`, covered in
 
 `app/layout.tsx` wraps every page with the navbar, footer, and fonts. Alongside
 it are the App Router's special files: `not-found.tsx` (404), `error.tsx` (the
-error boundary — it must be a client component), and `sitemap.ts` / `robots.ts`,
-which Next serves as `/sitemap.xml` and `/robots.txt`. Both of those exclude
-`/database`, and both need an absolute origin, which comes from
-`lib/utils/site-url.ts`.
+per-page error boundary — it must be a client component), `global-error.tsx`
+(which catches throws from the root layout itself, since `error.tsx` renders
+inside it), and `sitemap.ts` / `robots.ts`, which Next serves as `/sitemap.xml`
+and `/robots.txt`. Both of those exclude `/database`, and both need an absolute
+origin, which comes from `lib/utils/site-url.ts`.
 
 There is no `loading.tsx`. Every page is statically prerendered, so there is no
 loading state to show — adding one would only introduce a flash.
@@ -52,8 +53,8 @@ loading state to show — adding one would only introduce a flash.
 
 **All eight pages start with `'use client'`.** The server components are
 `app/layout.tsx` — which is why it is the only file that can export `metadata` —
-plus `app/not-found.tsx`, `app/sitemap.ts` and `app/robots.ts`. None of the last
-three is a page you navigate to.
+plus `app/not-found.tsx`, `app/sitemap.ts` and `app/robots.ts`. None of them is
+a `page.tsx`, though `not-found.tsx` does render for any unmatched URL.
 
 This matters more than it sounds:
 
@@ -278,13 +279,21 @@ existed. They were removed. Use `@/`.
 - **Husky** runs `bun check-types`, `bun lint`, and `bun test` before every
   commit.
 - **Tests** run on bun's built-in runner — no test framework in `package.json`.
-  `tests/data-integrity.test.ts` asserts that every image path referenced by
-  `lib/*_data.ts` or by any `/images/...` literal in source resolves to a real
-  file, and that no brother photo is orphaned. `roster.test.ts` checks the
-  derived member counts against the photos on disk, `site-routes.test.ts` checks
-  the sitemap covers every page, and `session.test.ts` / `rate-limit.test.ts` /
-  `database-routes.test.ts` cover the `/database` gate. There are **no component
-  tests** — for anything visual, still look at the page.
+  Nine files:
+
+    | File                       | Covers                                           |
+    | -------------------------- | ------------------------------------------------ |
+    | `data-integrity.test.ts`   | Every `/images/...` path resolves, no orphans    |
+    | `roster.test.ts`           | Derived member counts vs photos on disk          |
+    | `site-routes.test.ts`      | The sitemap covers every page                    |
+    | `site-url.test.ts`         | The origin is always a parseable URL             |
+    | `session.test.ts`          | Session token signing and verification           |
+    | `rate-limit.test.ts`       | Login throttling                                 |
+    | `database-routes.test.ts`  | The `/database` gate, via the real handlers      |
+    | `database-sheet.test.ts`   | Sheet grid → rows, and header → column decisions |
+    | `database-columns.test.ts` | Column sizes, sorting flags and cell renderers   |
+
+    There are **no component tests** — for anything visual, still look at the page.
 
 ## Known rough edges
 

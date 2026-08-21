@@ -95,22 +95,22 @@ the spreadsheet.
 
 Eight files are involved:
 
-| File                                       | Job                                     |
-| ------------------------------------------ | --------------------------------------- |
-| `app/database/api/sheet/route.ts`          | Checks the session, talks to Google     |
-| `app/database/api/check-password/route.ts` | Checks the password, issues the session |
-| `lib/server/session.ts`                    | Signs and verifies the session cookie   |
-| `lib/server/rate-limit.ts`                 | Throttles repeated failed logins        |
-| `lib/database/sheet.ts`                    | Turns the sheet grid into row objects   |
-| `lib/database/column-spec.ts`              | Decides what each sheet header becomes  |
-| `components/database/Database.tsx`         | Password form and fetch                 |
-| `components/database/columns.tsx`          | Turns sheet headers into table columns  |
+| File                                       | Job                                      |
+| ------------------------------------------ | ---------------------------------------- |
+| `app/database/api/sheet/route.ts`          | Checks the session, talks to Google      |
+| `app/database/api/check-password/route.ts` | Checks the password, issues the session  |
+| `lib/server/session.ts`                    | Signs and verifies the session cookie    |
+| `lib/server/rate-limit.ts`                 | Throttles repeated failed logins         |
+| `lib/database/sheet.ts`                    | Turns the sheet grid into row objects    |
+| `lib/database/column-spec.ts`              | Decides what each sheet header becomes   |
+| `components/database/Database.tsx`         | Password form and fetch                  |
+| `components/database/columns.tsx`          | Renders those decisions as table columns |
 
 ## Setting it up
 
 You need two things: a Google service account with a key, and that key in your
-`.env`. Start from `.env.example` in the repo root — it lists all three
-variables with notes.
+`.env`. Start from `.env.example` in the repo root — it lists every variable
+with notes.
 
 ### 1. Create the service account
 
@@ -223,7 +223,8 @@ column E of their row.
 
 ### Header names are matched exactly
 
-`components/database/columns.tsx` special-cases specific header strings.
+`lib/database/column-spec.ts` special-cases specific header strings, and
+`components/database/columns.tsx` renders what it decides.
 **Renaming any of these in the spreadsheet silently removes its formatting** —
 the column still appears, but as plain unstyled text.
 
@@ -242,30 +243,45 @@ These are sortable, matched case-insensitively:
 
 Anything else becomes a plain, unsortable text column.
 
-Two details worth knowing:
+Three details worth knowing:
 
 - The two `Open to ...?` headers are matched **case-sensitively**, including the
   question mark. `Open To Coffee Chats?` does not match.
 - Cell values for those columns are compared in lowercase, so `Yes`, `yes`, and
   `YES` all work. Anything that isn't `yes`, `no`, or `maybe` is shown as raw
-  text, and an empty cell shows `-`.
+  text (lowercased), and an empty cell shows `-`.
+- Surrounding whitespace is ignored when matching, so the sheet's actual
+  `YEAR + PC ` (with a trailing space) still works. The column _key_ keeps the
+  raw header, spaces and all.
 
 **Before renaming a column in the spreadsheet, check this table.** If you must
-rename one, update `columns.tsx` in the same change.
+rename one, update `lib/database/column-spec.ts` in the same change — and
+`tests/database-sheet.test.ts` will tell you if you miss it.
 
 ## When it breaks
 
 **"Loading data or no data available..." forever** — the fetch failed or came
 back empty. Open your browser's developer console (F12) and look at the Network
-tab for `/database/api/sheet`. The response body usually names the problem.
+tab for `/database/api/sheet` and check its status code:
 
-**The app won't start at all** — if either environment variable is missing, the
-route throws at module load and takes the whole server down, not just the
-database page. Check `.env` exists and has both keys.
+| Status | Meaning                                                           |
+| ------ | ----------------------------------------------------------------- |
+| 401    | No valid session — log in again                                   |
+| 503    | A required environment variable is missing                        |
+| 502    | The Google call failed (bad credentials, no access, or an outage) |
 
-**`Unexpected token . in JSON`** or similar on startup —
+The response body is deliberately a bare code (`not_configured`,
+`unauthorized`, `upstream_failure`) rather than a description — the real reason
+is written to the **server** log, so it never leaks to a visitor. Look there,
+or in Vercel's function logs, for the detail.
+
+**A missing environment variable no longer stops the site.** It used to throw at
+module load and fail the whole build; now only `/database` breaks, with a 503.
+
+**`Unexpected token . in JSON`** or similar in the server log —
 `GOOGLE_APPLICATION_CREDENTIALS` is set to a file path instead of the file's
-contents. See above.
+contents. That surfaces as a 502 when someone loads the page, not at startup.
+See above.
 
 **403 from Google** — the spreadsheet hasn't been shared with the service
 account's `client_email`. See step 2.

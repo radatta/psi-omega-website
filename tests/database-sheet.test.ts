@@ -158,6 +158,21 @@ describe('buildColumnSpecs', () => {
         expect(new Set(ids).size).toBe(ids.length);
     });
 
+    test('matches special headers despite stray whitespace', () => {
+        // The real sheet has 'YEAR + PC ' with a trailing space.
+        expect(describeColumn('YEAR + PC ', 3).sortableHeader).toBe(true);
+        expect(describeColumn(' LINKEDIN ', 4).kind).toBe('link');
+        expect(describeColumn('Open to coffee chats? ', 5).kind).toBe('yesNo');
+        // ...but the id keeps the raw header, because it is the data key.
+        expect(describeColumn('YEAR + PC ', 3).id).toBe('YEAR + PC ');
+    });
+
+    test('keeps only one EMAIL column however it is spelled', () => {
+        const specs = buildColumnSpecs(['EMAIL', 'LAST', 'Email']);
+        expect(specs.filter((s) => s.kind === 'email')).toHaveLength(1);
+        expect(specs.map((s) => s.id)).toEqual(['EMAIL', 'LAST']);
+    });
+
     test('collapses any repeated header, not just EMAIL', () => {
         const ids = buildColumnSpecs(['', 'ROLE', 'LAST', 'ROLE']).map(
             (spec) => spec.id

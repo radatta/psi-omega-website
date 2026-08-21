@@ -48,10 +48,61 @@ describe('siteUrl', () => {
         expect(siteUrl()).toBe('http://localhost:5174');
     });
 
-    test('never throws on a malformed value', () => {
-        for (const bad of ['http://', ' ', ':::', 'https://:99999']) {
-            withEnv({ NEXT_PUBLIC_SITE_URL: bad });
-            expect(() => siteUrl()).not.toThrow();
+    test('adds a scheme to a bare Vercel host too', () => {
+        withEnv({ VERCEL_PROJECT_PRODUCTION_URL: 'https://already.example' });
+        expect(siteUrl()).toBe('https://already.example');
+    });
+
+    test('a malformed explicit value falls through to Vercel', () => {
+        withEnv({
+            NEXT_PUBLIC_SITE_URL: ':::',
+            VERCEL_PROJECT_PRODUCTION_URL: 'psi-omega.vercel.app',
+        });
+        expect(siteUrl()).toBe('https://psi-omega.vercel.app');
+    });
+
+    // app/layout.tsx does `new URL(siteUrl())` at module scope, so a value this
+    // function cannot handle would fail the build and break every route. Both
+    // env vars are attacker-adjacent config, so both get fuzzed, not just the
+    // one that was hardened first.
+    const MALFORMED = [
+        'http://',
+        ' ',
+        '\t\n',
+        ':::',
+        'https://:99999',
+        'https://[',
+        'https://%',
+        'a b.com',
+        '[',
+        'a.com:99999',
+        'https://https://x',
+        '//example.com',
+        'ftp://x',
+        'blob:whatever',
+        'data:text/plain,x',
+        'x'.repeat(100000),
+    ];
+
+    test('never returns an unparseable URL, whichever var is malformed', () => {
+        for (const bad of MALFORMED) {
+            for (const key of [
+                'NEXT_PUBLIC_SITE_URL',
+                'VERCEL_PROJECT_PRODUCTION_URL',
+            ]) {
+                withEnv({ [key]: bad });
+                expect(() => siteUrl()).not.toThrow();
+                expect(() => new URL(siteUrl())).not.toThrow();
+            }
+        }
+    });
+
+    test('never returns an unparseable URL when both are malformed', () => {
+        for (const bad of MALFORMED) {
+            withEnv({
+                NEXT_PUBLIC_SITE_URL: bad,
+                VERCEL_PROJECT_PRODUCTION_URL: bad,
+            });
             expect(() => new URL(siteUrl())).not.toThrow();
         }
     });

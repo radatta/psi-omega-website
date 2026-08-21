@@ -31,11 +31,29 @@ const sheetRequest = (cookie?: string) =>
         headers: cookie ? { cookie } : {},
     });
 
-const loginRequest = (password: unknown, ip = '203.0.113.9') =>
+const loginRequest = (
+    password: unknown,
+    ip = '203.0.113.9',
+    headerName = 'x-forwarded-for'
+) =>
     new NextRequest('http://localhost:5174/database/api/check-password', {
         method: 'POST',
-        headers: { 'content-type': 'application/json', 'x-forwarded-for': ip },
+        headers: { 'content-type': 'application/json', [headerName]: ip },
         body: JSON.stringify({ password }),
+    });
+
+// x-forwarded-for's leftmost value is client-supplied, so an attacker could
+// rotate it to get a fresh rate-limit bucket per attempt. x-real-ip is set by
+// the proxy and must win.
+const spoofedRequest = (attempt: number) =>
+    new NextRequest('http://localhost:5174/database/api/check-password', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'x-real-ip': '198.51.100.77',
+            'x-forwarded-for': `10.0.0.${attempt}`,
+        },
+        body: JSON.stringify({ password: 'wrong' }),
     });
 
 beforeEach(() => {
@@ -126,6 +144,33 @@ describe('POST /database/api/check-password', () => {
         // test from passing on an unrelated 500 or 503.
         const res = await GET(sheetRequest(`${SESSION_COOKIE}=${token}`));
         expect(res.status).toBe(502);
+    });
+
+    test('rate limits by x-real-ip even when x-forwarded-for rotates', async () => {
+        let blockedAt = -1;
+        for (let i = 0; i < 20; i++) {
+            const res = await POST(spoofedRequest(i));
+            if (res.status === 429) {
+                blockedAt = i;
+                break;
+            }
+        }
+        expect(blockedAt).toBeGreaterThan(-1);
+    });
+
+    test('prefers x-real-ip over x-forwarded-for for the bucket', async () => {
+        for (let i = 0; i < 12; i++) {
+            await POST(loginRequest('wrong', '192.0.2.50', 'x-real-ip'));
+        }
+        expect(
+            (await POST(loginRequest('wrong', '192.0.2.50', 'x-real-ip')))
+                .status
+        ).toBe(429);
+        // A different real IP is unaffected.
+        expect(
+            (await POST(loginRequest('wrong', '192.0.2.51', 'x-real-ip')))
+                .status
+        ).toBe(401);
     });
 
     test('rate limits repeated failures from one client', async () => {

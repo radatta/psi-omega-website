@@ -75,6 +75,13 @@ describe('getColumns', () => {
         }
     });
 
+    // The live sheet's header is 'YEAR + PC ' with a trailing space, which used
+    // to miss the sortable-header control while every neighbour had one.
+    test('a header with stray whitespace still matches', () => {
+        expect(byId('YEAR + PC ')).toBeDefined();
+        expect(byId('YEAR + PC ')?.id).toBe('YEAR + PC ');
+    });
+
     test('pins which columns can be sorted', () => {
         const sortable = columns
             .filter((column) => column.enableSorting)

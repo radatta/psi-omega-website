@@ -64,7 +64,7 @@ The thing that actually gets edited every term. All of it is plain TypeScript �
 Two contracts to respect:
 
 - **Brother photos are name-derived.** `BrotherCard` builds the path from the roster `name`, so a brother named `Jane Doe` requires exactly `public/images/brothers/Jane-Doe.jpg`. Add the data entry and the photo in the same change or the card 404s. Photos get downscaled to ~100KB / max 1600px before landing there — see `docs/content-updates.md`.
-- **The alumni table is coupled to the Google Sheet's header strings.** `components/database/columns.tsx` special-cases exact headers (`EMAIL`, `LINKEDIN`, `Open to coffee chats?`, and a sortable-column list). Renaming a column in the spreadsheet silently degrades the table — no error, just lost formatting.
+- **The alumni table is coupled to the Google Sheet's header strings.** `lib/database/column-spec.ts` special-cases exact headers (`EMAIL`, `LINKEDIN`, `Open to coffee chats?`, and a sortable-column list); `components/database/columns.tsx` only renders what it decides. Matching ignores surrounding whitespace, but nothing else — renaming a column in the spreadsheet silently degrades the table, no error, just lost formatting.
 
 ## Architecture
 

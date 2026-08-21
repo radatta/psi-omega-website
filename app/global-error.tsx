@@ -2,10 +2,14 @@
 
 import { useEffect } from 'react';
 
-// Catches throws from the root layout itself — Navbar, Footer, AnimatePage and
-// metadataBase — which app/error.tsx cannot, because it renders *inside* that
-// layout. It must supply its own <html> and <body>, and it deliberately uses
-// inline styles: a layout failure may mean the stylesheet never loaded.
+// Catches throws from the root layout itself — Navbar, Footer, AnimatePage —
+// which app/error.tsx cannot, because it renders *inside* that layout. It must
+// supply its own <html> and <body>, and it deliberately uses inline styles: a
+// layout failure may mean the stylesheet never loaded.
+//
+// Not covered: `metadata` is a module-scope const evaluated at build time, so a
+// bad metadataBase fails the build rather than reaching any boundary. That is
+// what the validation in lib/utils/site-url.ts is for.
 export default function GlobalError({
     error,
     reset,

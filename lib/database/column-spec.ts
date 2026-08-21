@@ -41,8 +41,13 @@ const SORTABLE_HEADERS = [
 ];
 
 export function describeColumn(header: string, index: number): ColumnSpec {
+    // The id must use the RAW header — it is the key the row objects are built
+    // with, so trimming it here would stop cells resolving. Matching, though,
+    // ignores surrounding whitespace: the live sheet's 'YEAR + PC ' has a
+    // trailing space and was silently missing its sortable header control.
     const id = columnKey(header, index);
-    const upper = header.toUpperCase();
+    const trimmed = header.trim();
+    const upper = trimmed.toUpperCase();
 
     if (id === '_col_0') {
         return {
@@ -67,7 +72,7 @@ export function describeColumn(header: string, index: number): ColumnSpec {
         };
     }
 
-    if (header === 'GRAD YEAR') {
+    if (trimmed === 'GRAD YEAR') {
         return {
             id,
             header,
@@ -79,8 +84,8 @@ export function describeColumn(header: string, index: number): ColumnSpec {
     }
 
     if (
-        header === 'Open to coffee chats?' ||
-        header === 'Open to alumni panel?'
+        trimmed === 'Open to coffee chats?' ||
+        trimmed === 'Open to alumni panel?'
     ) {
         return {
             id,
@@ -89,15 +94,15 @@ export function describeColumn(header: string, index: number): ColumnSpec {
             sortable: false,
             sortableHeader: false,
             label:
-                header === 'Open to coffee chats?'
+                trimmed === 'Open to coffee chats?'
                     ? 'Coffee Chats'
                     : 'Alumni Panel',
-            icon: header === 'Open to coffee chats?' ? 'coffee' : 'users',
+            icon: trimmed === 'Open to coffee chats?' ? 'coffee' : 'users',
             size: { size: 100, minSize: 80, maxSize: 180 },
         };
     }
 
-    if (header === 'LINKEDIN') {
+    if (trimmed === 'LINKEDIN') {
         return {
             id,
             header,
@@ -130,9 +135,11 @@ export function buildColumnSpecs(headers: string[]): ColumnSpec[] {
         return true;
     });
 
+    // Only one EMAIL column survives, even if the sheet spells a second one
+    // differently ('EMAIL' and 'Email' are distinct ids but the same column).
     const email = specs.find((spec) => spec.kind === 'email');
     if (!email) return specs;
-    return [email, ...specs.filter((spec) => spec !== email)];
+    return [email, ...specs.filter((spec) => spec.kind !== 'email')];
 }
 
 // Normalises a yes/no/maybe cell. Anything else renders as-is.
