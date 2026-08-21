@@ -96,6 +96,40 @@ describe('getColumns', () => {
         );
     });
 
+    // Round 1 caught the yes/no cells losing their lowercasing; nothing tested
+    // the cell renderers, so the fix had no cover. These call them directly.
+    const renderCell = (id: string, value: unknown): unknown => {
+        const cell = byId(id)?.cell;
+        if (typeof cell !== 'function') throw new Error(`no cell for ${id}`);
+        return cell({
+            getValue: () => value,
+            row: { id: '0' },
+        } as never);
+    };
+
+    // Cells that render an element rather than a bare string.
+    const childrenOf = (node: unknown) =>
+        (node as { props?: { children?: unknown } })?.props?.children;
+
+    test('yes/no cells lowercase an unrecognised answer', () => {
+        expect(childrenOf(renderCell('Open to coffee chats?', 'DEPENDS'))).toBe(
+            'depends'
+        );
+    });
+
+    test('yes/no cells fall back to a dash when empty', () => {
+        expect(childrenOf(renderCell('Open to coffee chats?', ''))).toBe('-');
+    });
+
+    test('the row-number cell is one-based', () => {
+        expect(renderCell('_col_0', 'ignored')).toBe('1');
+    });
+
+    test('a plain cell stringifies its value', () => {
+        expect(renderCell('COMPANY', 'Acme')).toBe('Acme');
+        expect(renderCell('COMPANY', null)).toBe('');
+    });
+
     test('every column is resizable and hideable', () => {
         for (const column of columns) {
             expect(column.enableResizing).toBe(true);

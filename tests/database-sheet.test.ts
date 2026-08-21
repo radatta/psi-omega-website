@@ -158,6 +158,13 @@ describe('buildColumnSpecs', () => {
         expect(new Set(ids).size).toBe(ids.length);
     });
 
+    test('collapses any repeated header, not just EMAIL', () => {
+        const ids = buildColumnSpecs(['', 'ROLE', 'LAST', 'ROLE']).map(
+            (spec) => spec.id
+        );
+        expect(ids).toEqual(['_col_0', 'ROLE', 'LAST']);
+    });
+
     test('leaves order alone when there is no EMAIL column', () => {
         const ids = buildColumnSpecs(['LAST', 'FIRST']).map((spec) => spec.id);
         expect(ids).toEqual(['LAST', 'FIRST']);

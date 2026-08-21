@@ -5,7 +5,7 @@ import Link from 'next/link';
 // top padding that clears the bar.
 export default function NotFound() {
     return (
-        <main className='flex min-h-screen items-center justify-center bg-akpsi-blue px-4 pt-40 pb-24'>
+        <main className='flex min-h-[calc(100vh-16rem)] items-center justify-center bg-akpsi-blue px-4 pt-40 pb-24'>
             <div className='max-w-lg text-center'>
                 <p className='text-sm font-semibold tracking-widest text-akpsi-yellow'>
                     404

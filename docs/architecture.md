@@ -50,9 +50,10 @@ loading state to show — adding one would only introduce a flash.
 
 ## Every page is a client component
 
-**All eight pages start with `'use client'`.** The only server components are
-`app/not-found.tsx`, `app/sitemap.ts` and `app/robots.ts` — none of which is a
-page you navigate to.
+**All eight pages start with `'use client'`.** The server components are
+`app/layout.tsx` — which is why it is the only file that can export `metadata` —
+plus `app/not-found.tsx`, `app/sitemap.ts` and `app/robots.ts`. None of the last
+three is a page you navigate to.
 
 This matters more than it sounds:
 

@@ -13,8 +13,12 @@ import {
     sessionConfig,
 } from '@/lib/server/session';
 
+// x-real-ip is set by the proxy and not forwarded from the client, so prefer it
+// over x-forwarded-for, whose leftmost value is client-supplied.
 const clientKey = (request: NextRequest) =>
-    request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+    request.headers.get('x-real-ip')?.trim() ||
+    request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+    'unknown';
 
 export async function POST(request: NextRequest) {
     const config = sessionConfig();

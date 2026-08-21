@@ -109,9 +109,7 @@ export default function Database() {
                     </div>
                 ) : (
                     <div>
-                        {/* <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">Alumni Database</h2> */}
                         {processedData.length > 0 && columns.length > 0 ? (
-                            // Replace with ShadcnDataTable once it's created
                             <ShadcnDataTable
                                 columns={columns}
                                 data={processedData}
@@ -121,7 +119,6 @@ export default function Database() {
                                 <p className='text-gray-600 text-xl'>
                                     Loading data or no data available...
                                 </p>
-                                {/* Optional: Add a spinner here */}
                             </div>
                         )}
                     </div>

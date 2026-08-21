@@ -17,7 +17,7 @@ export default function Error({
     }, [error]);
 
     return (
-        <main className='flex min-h-screen items-center justify-center bg-akpsi-blue px-4 pt-40 pb-24'>
+        <main className='flex min-h-[calc(100vh-16rem)] items-center justify-center bg-akpsi-blue px-4 pt-40 pb-24'>
             <div className='max-w-lg text-center'>
                 <h1 className='text-4xl font-bold text-white sm:text-5xl'>
                     Something went wrong
