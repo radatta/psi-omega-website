@@ -94,8 +94,12 @@ extension (not `.jpeg`, not `.png`). A mismatch gives you a broken image and no
 error.
 
 Names with hyphens, apostrophes, or three parts follow the same rule: only
-spaces become hyphens, everything else is kept as-is. `'Mary-Kate O'Brien'`
-needs `Mary-Kate-O'Brien.jpg`.
+spaces become hyphens, everything else is kept as-is. `"Mary-Kate O'Brien"`
+needs `Mary-Kate-O'Brien.jpg` — note the double quotes, since a name containing
+an apostrophe can't sit in a single-quoted string.
+
+> The shell audit at the end of this doc can't handle apostrophes in names and
+> will quietly skip them. `bun test` parses the data properly and does not.
 
 Photos need resizing before they go in — see
 [the photo pipeline](#the-photo-pipeline) below.
@@ -119,11 +123,14 @@ import {
 ```
 
 Then scroll to the very bottom of the file, to the last `</section>` before
-`</main>`. Copy the whole `<section>` block above it and paste it after, then
-change exactly three things: the background class, the array name, and the
-heading text.
+`</main>`. Copy the whole block above it — including the `{/* ... */}` comment that
+labels it — and paste it after, then change four things: the comment, the
+background class, the array name, and the heading text.
 
 ```tsx
+{
+    /* Alpha Phi | Fall 2026 */
+}
 <section className='py-16 bg-gray-50'>
     <div className='container'>
         <motion.h2
@@ -152,7 +159,7 @@ heading text.
             ))}
         </div>
     </div>
-</section>
+</section>;
 ```
 
 The `className` on the section alternates `py-16 bg-white` and
