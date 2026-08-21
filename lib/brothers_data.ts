@@ -28,68 +28,6 @@ export const committeeChairs = [
     { name: 'Shayla Bansal + Anna Brundage', position: 'Content' },
 ];
 
-// Data for Alpha Nu | Fall 2022
-export const alphaNu = [
-    { name: 'Dylan Patel', major: 'Finance', year: '2026' },
-    {
-        name: 'Kristy Chereath',
-        major: 'Finance & Computer Science',
-        year: '2026',
-    },
-    {
-        name: 'Kayla Huffman',
-        major: 'Computer Science & Engineering',
-        year: '2026',
-    },
-    { name: 'Fiona Holdaway', major: 'Accounting', year: '2026' },
-    {
-        name: 'Saanvi Agrawal',
-        major: 'Management Information Systems',
-        year: '2026',
-    },
-    {
-        name: 'Luke Ponssen',
-        major: 'Computer Science & Engineering',
-        year: '2026',
-    },
-    { name: 'Jenson Hart', major: 'Finance', year: '2026' },
-    {
-        name: 'Ashlyn Wang',
-        major: 'Accounting & Information Systems',
-        year: '2026',
-    },
-    { name: 'Sofia Spiga', major: 'Biology', year: '2026' },
-    { name: 'Dzidzo Lassey', major: 'Accounting', year: '2026' },
-    { name: 'Blake Tretter', major: 'Marketing & Economics', year: '2026' },
-    {
-        name: 'Jonathan Kimyai',
-        major: 'Management Information Systems',
-        year: '2026',
-    },
-];
-
-// Data for Alpha Xi | Winter 2023
-export const alphaXi = [
-    { name: 'Natalie Tun', major: 'Finance', year: '2026' },
-    {
-        name: 'Jonathan Preiss',
-        major: 'Computer Science & Engineering',
-        year: '2026',
-    },
-    {
-        name: 'Sanjita Maram',
-        major: 'Computer Science & Engineering',
-        year: '2026',
-    },
-    {
-        name: 'Riley Heike',
-        major: 'Computer Science & Engineering',
-        year: '2026',
-    },
-    { name: 'An Ton', major: 'Management', year: '2026' },
-    { name: 'Ananth Menon', major: 'Finance', year: '2026' },
-];
-
 // Data for Alpha Omicron | Fall 2023
 export const alphaOmicron = [
     { name: 'Maggie Bowes', major: 'Management', year: '2026' },
