@@ -93,16 +93,18 @@ Browser  ──>  /database/api/sheet  ──>  Google Sheets API  ──>  the 
 The service account has **read-only** access. Nothing the site does can modify
 the spreadsheet.
 
-Six files are involved:
+Eight files are involved:
 
-| File                                       | Job                                      |
-| ------------------------------------------ | ---------------------------------------- |
-| `app/database/api/sheet/route.ts`          | Checks the session, talks to Google      |
-| `app/database/api/check-password/route.ts` | Checks the password, issues the session  |
-| `lib/server/session.ts`                    | Signs and verifies the session cookie    |
-| `lib/server/rate-limit.ts`                 | Throttles repeated failed logins         |
-| `components/database/Database.tsx`         | Password form, fetch, row transformation |
-| `components/database/columns.tsx`          | Turns sheet headers into table columns   |
+| File                                       | Job                                     |
+| ------------------------------------------ | --------------------------------------- |
+| `app/database/api/sheet/route.ts`          | Checks the session, talks to Google     |
+| `app/database/api/check-password/route.ts` | Checks the password, issues the session |
+| `lib/server/session.ts`                    | Signs and verifies the session cookie   |
+| `lib/server/rate-limit.ts`                 | Throttles repeated failed logins        |
+| `lib/database/sheet.ts`                    | Turns the sheet grid into row objects   |
+| `lib/database/column-spec.ts`              | Decides what each sheet header becomes  |
+| `components/database/Database.tsx`         | Password form and fetch                 |
+| `components/database/columns.tsx`          | Turns sheet headers into table columns  |
 
 ## Setting it up
 
@@ -281,6 +283,9 @@ spreadsheet. Compare against the table above.
 
 If you're changing these files, two things to know:
 
-- The database components are typed as `any` throughout, with file-level
-  `eslint-disable` comments. That's existing debt — don't copy the pattern into
-  new files.
+- The transformation logic is pure and lives in `lib/database/`, covered by
+  `tests/database-sheet.test.ts`. Put new logic there rather than inside the
+  components, and add a test — it's much cheaper than checking by eye.
+- `components/database/data-table.tsx` is still typed loosely with a file-level
+  `eslint-disable`. That's existing debt — don't copy the pattern into new
+  files.

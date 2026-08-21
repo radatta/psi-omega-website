@@ -1,191 +1,100 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { ColumnDef, Column } from '@tanstack/react-table';
 import { CheckCircle2, XCircle, HelpCircle, Coffee, Users } from 'lucide-react';
 import React from 'react';
 import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
+import {
+    ColumnSpec,
+    buildColumnSpecs,
+    linkHref,
+    yesNoValue,
+} from '@/lib/database/column-spec';
+import type { SheetGrid, SheetRow } from '@/lib/database/sheet';
 
-// Define a type for your row data if you have one, otherwise use `any` for now.
-// export type YourDataType = { ... };
+type Row = SheetRow;
+type Def = ColumnDef<Row, unknown>;
 
-export const getColumns = (data: any[][]): ColumnDef<any, any>[] => {
-    if (!data || data.length < 1 || !data[0]) return [];
-    const headers = data[0] as string[];
+const yesNoIcon = (value: unknown) => {
+    switch (yesNoValue(value)) {
+        case 'yes':
+            return <CheckCircle2 className='h-5 w-5 text-green-500 mx-auto' />;
+        case 'no':
+            return <XCircle className='h-5 w-5 text-red-500 mx-auto' />;
+        case 'maybe':
+            return <HelpCircle className='h-5 w-5 text-yellow-500 mx-auto' />;
+        default:
+            return (
+                <span className='block text-center'>
+                    {String(value) || '-'}
+                </span>
+            );
+    }
+};
 
-    let emailColumn: ColumnDef<any, any> | undefined;
-    const otherColumns: ColumnDef<any, any>[] = [];
+const iconFor = (icon: ColumnSpec['icon']) =>
+    icon === 'coffee' ? (
+        <Coffee className='h-6 w-6 mr-1' />
+    ) : (
+        <Users className='h-4 w-4 mr-1' />
+    );
 
-    headers.forEach((originalHeader: string, i: number) => {
-        const accessor = originalHeader || `_col_${i}`;
+function toColumnDef(spec: ColumnSpec): Def {
+    const def: Def = {
+        id: spec.id,
+        accessorKey: spec.id,
+        header: () => spec.label ?? spec.header,
+        cell: (info) => {
+            const value = info.getValue();
+            return value !== undefined && value !== null ? String(value) : '';
+        },
+        enableResizing: true,
+        enableSorting: spec.sortable,
+        enableHiding: true,
+        ...spec.size,
+    };
 
-        const columnDef: ColumnDef<any, any> = {
-            id: accessor,
-            accessorKey: accessor,
-            header: () => {
-                return originalHeader;
-            },
-            cell: (info: any) => {
+    if (spec.sortableHeader) {
+        def.header = ({ column }: { column: Column<Row, unknown> }) => (
+            <DataTableColumnHeader column={column} title={spec.header} />
+        );
+    }
+
+    switch (spec.kind) {
+        case 'rowNumber':
+            def.cell = (info) => String(parseInt(info.row.id) + 1);
+            break;
+        case 'yesNo':
+            def.header = () => (
+                <div className='flex items-center'>
+                    {iconFor(spec.icon)} {spec.label}
+                </div>
+            );
+            def.cell = (info) => yesNoIcon(info.getValue());
+            break;
+        case 'link':
+            def.cell = (info) => {
                 const value = info.getValue();
-                return value !== undefined && value !== null
-                    ? String(value)
-                    : '';
-            },
-            enableResizing: true,
-            enableSorting: true,
-            enableHiding: true,
-        };
-
-        if (accessor === '_col_0') {
-            columnDef.header = () => '#';
-            columnDef.cell = (info: any) => String(parseInt(info.row.id) + 1);
-            columnDef.size = 60;
-            columnDef.minSize = 40;
-            columnDef.maxSize = 100;
-            columnDef.enableSorting = false;
-        }
-
-        const standardSortableHeaders = [
-            'LAST',
-            'FIRST',
-            'YEAR + PC',
-            'MAJOR',
-            'MINORS',
-            'COMPANY',
-            'LOCATION',
-            'INDUSTRY',
-            'ROLE',
-        ];
-
-        if (originalHeader.toUpperCase() === 'EMAIL') {
-            columnDef.header = ({ column }: { column: Column<any, any> }) => (
-                <DataTableColumnHeader column={column} title={originalHeader} />
-            );
-            emailColumn = columnDef;
-            columnDef.size = 220;
-            columnDef.minSize = 120;
-            columnDef.maxSize = 400;
-            return;
-        }
-
-        if (standardSortableHeaders.includes(originalHeader.toUpperCase())) {
-            columnDef.header = ({ column }: { column: Column<any, any> }) => (
-                <DataTableColumnHeader column={column} title={originalHeader} />
-            );
-        }
-
-        if (originalHeader === 'GRAD YEAR') {
-            columnDef.header = ({ column }: { column: Column<any, any> }) => (
-                <DataTableColumnHeader column={column} title={originalHeader} />
-            );
-            columnDef.size = 100;
-            columnDef.minSize = 70;
-            columnDef.maxSize = 150;
-        }
-
-        if (originalHeader === 'Open to coffee chats?') {
-            columnDef.header = () => (
-                <div className='flex items-center'>
-                    <Coffee className='h-6 w-6 mr-1' /> Coffee Chats
-                </div>
-            );
-            columnDef.cell = (info: any) => {
-                const value = String(info.getValue()).toLowerCase();
-                switch (value) {
-                    case 'yes':
-                        return (
-                            <CheckCircle2 className='h-5 w-5 text-green-500 mx-auto' />
-                        );
-                    case 'no':
-                        return (
-                            <XCircle className='h-5 w-5 text-red-500 mx-auto' />
-                        );
-                    case 'maybe':
-                        return (
-                            <HelpCircle className='h-5 w-5 text-yellow-500 mx-auto' />
-                        );
-                    default:
-                        return (
-                            <span className='block text-center'>
-                                {value || '-'}
-                            </span>
-                        );
-                }
+                const href = linkHref(value);
+                if (!href) return String(value);
+                return (
+                    <a
+                        href={href}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='text-blue-600 hover:text-blue-800 underline'
+                    >
+                        {String(value)}
+                    </a>
+                );
             };
-            columnDef.size = 100;
-            columnDef.minSize = 80;
-            columnDef.maxSize = 180;
-            columnDef.enableSorting = false;
-        }
+            break;
+    }
 
-        if (originalHeader === 'Open to alumni panel?') {
-            columnDef.header = () => (
-                <div className='flex items-center'>
-                    <Users className='h-4 w-4 mr-1' /> Alumni Panel
-                </div>
-            );
-            columnDef.cell = (info: any) => {
-                const value = String(info.getValue()).toLowerCase();
-                switch (value) {
-                    case 'yes':
-                        return (
-                            <CheckCircle2 className='h-5 w-5 text-green-500 mx-auto' />
-                        );
-                    case 'no':
-                        return (
-                            <XCircle className='h-5 w-5 text-red-500 mx-auto' />
-                        );
-                    case 'maybe':
-                        return (
-                            <HelpCircle className='h-5 w-5 text-yellow-500 mx-auto' />
-                        );
-                    default:
-                        return (
-                            <span className='block text-center'>
-                                {value || '-'}
-                            </span>
-                        );
-                }
-            };
-            columnDef.size = 100;
-            columnDef.minSize = 80;
-            columnDef.maxSize = 180;
-            columnDef.enableSorting = false;
-        }
+    return def;
+}
 
-        if (originalHeader === 'LINKEDIN') {
-            columnDef.header = () => 'LinkedIn';
-            columnDef.cell = (info: any) => {
-                const url = String(info.getValue());
-                if (url && (url.startsWith('http') || url.startsWith('www.'))) {
-                    return (
-                        <a
-                            href={
-                                url.startsWith('www.') ? `https://${url}` : url
-                            }
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='text-blue-600 hover:text-blue-800 underline'
-                        >
-                            {url}
-                        </a>
-                    );
-                }
-                return url;
-            };
-            columnDef.enableSorting = false;
-        }
-
-        if (originalHeader.toUpperCase() === 'ROLE') {
-            columnDef.header = ({ column }: { column: Column<any, any> }) => (
-                <DataTableColumnHeader column={column} title={originalHeader} />
-            );
-        }
-
-        if (originalHeader.toUpperCase() !== 'EMAIL') {
-            otherColumns.push(columnDef);
-        }
-    });
-
-    return emailColumn ? [emailColumn, ...otherColumns] : otherColumns;
+export const getColumns = (data: SheetGrid): Def[] => {
+    if (!data || data.length < 1 || !data[0]) return [];
+    return buildColumnSpecs(data[0] as string[]).map(toColumnDef);
 };

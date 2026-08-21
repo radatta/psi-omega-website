@@ -1,15 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { getColumns } from './columns';
 import { DataTable as ShadcnDataTable } from '@/components/database/data-table';
+import {
+    SheetGrid,
+    filterPopulatedRows,
+    toRowObjects,
+} from '@/lib/database/sheet';
 
 export default function Database() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [unlocked, setUnlocked] = useState(false); // For testing, default to true
-    const [rawData, setRawData] = useState<any[][]>([]); // Renamed to rawData
+    const [unlocked, setUnlocked] = useState(false);
+    const [rawData, setRawData] = useState<SheetGrid>([]);
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -45,31 +49,13 @@ export default function Database() {
             })
             .then((fetchedData) => {
                 if (fetchedData && Array.isArray(fetchedData)) {
-                    const filtered = fetchedData.filter(
-                        (row: any, idx: number) =>
-                            idx === 0 ||
-                            (row && row[4] && String(row[4]).trim() !== '')
-                    );
-                    setRawData(filtered);
+                    setRawData(filterPopulatedRows(fetchedData));
                 }
             })
             .catch(() => setError('Could not load the database.'));
     }, [unlocked]);
 
-    // Transform rawData (arrays) into data suitable for TanStack Table (array of objects)
-    const processedData = useMemo(() => {
-        if (!rawData || rawData.length < 1 || !rawData[0]) return [];
-        const headers = rawData[0] as string[];
-        return rawData.slice(1).map((row: any[]) => {
-            const obj: Record<string, any> = {};
-            headers.forEach((header: string, i: number) => {
-                const key = header || `_col_${i}`;
-                obj[key] =
-                    row[i] !== undefined && row[i] !== null ? row[i] : '';
-            });
-            return obj;
-        });
-    }, [rawData]);
+    const processedData = useMemo(() => toRowObjects(rawData), [rawData]);
 
     const columns = useMemo(() => getColumns(rawData), [rawData]);
 
