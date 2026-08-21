@@ -188,10 +188,10 @@ completely different.
 Plus light and dark HSL variable sets further down the same file. That's the
 whole theme — chapter colours, and the shadcn palette.
 
-> **`tailwind.config.ts` in the repo root is never loaded.** It's a leftover
-> v3-style config, and Tailwind v4 only reads such a file when a `@config`
-> directive points at it. Nothing does. Editing that file has no effect
-> whatsoever — a genuine trap. Change `app/globals.css` instead.
+> **There is no `tailwind.config.ts`, and there shouldn't be.** Tailwind v4
+> only reads one when a `@config` directive points at it, and nothing here
+> does. A v3-style config file used to sit in the repo root doing nothing at
+> all; it was deleted. Change `app/globals.css` instead.
 
 ### Fonts
 
@@ -241,18 +241,19 @@ The common pattern is a fade-and-rise on scroll:
 import { cn } from '@/lib/utils/cn';
 ```
 
-> `components.json` still points shadcn at the default `@/lib/utils`, so
-> `shadcn add` generates imports from the wrong path. Fix them by hand after
-> adding a component.
+> `components.json` points shadcn's `utils` alias at `@/lib/utils/cn`, so
+> `shadcn add` now generates the right import. It used to point at the default
+> `@/lib/utils`, which produced imports that didn't resolve.
 
 ## Path aliases
 
 `@/` maps to the project root — `@/lib/rush_data`, `@/components/navbar`. It's
 the only alias in real use.
 
-`tsconfig.json` declares four more (`@components/*`, `@hooks/*`, `@lib/*`,
-`@utils/*`, `@ui/*`) that nothing imports. `@ui/*` points at `./lib/ui/*`, which
-doesn't exist. Ignore all of them and use `@/`.
+It is also the only alias declared. `tsconfig.json` used to carry five more
+(`@components/*`, `@hooks/*`, `@lib/*`, `@utils/*`, `@ui/*`) that nothing
+imported — one of them pointing at a `lib/ui/` directory that has never
+existed. They were removed. Use `@/`.
 
 ## Tooling
 
@@ -273,11 +274,7 @@ doesn't exist. Ignore all of them and use `@/`.
 Things that are true today and will confuse you if you don't know them:
 
 - Every page is `'use client'`; no page can export `metadata`.
-- `tailwind.config.ts` is inert.
-- `components.json` and four `tsconfig.json` aliases are stale.
 - Dark mode is wired but unreachable.
-- `components/about/statistics-section.tsx` hardcodes `totalMembers = 86` while
-  the roster data contains 90.
-- No `not-found.tsx`, `error.tsx`, `sitemap.ts`, or `robots.ts`.
-- `eslint` sits in `dependencies` rather than `devDependencies`, and
-  `eslint-config-next` is pinned a patch behind `next`.
+- `eslint-config-next` is pinned a patch behind `next` (15.2.4 vs 15.2.8).
+- ESLint still uses the legacy `.eslintrc.json` format under Next 15, which
+  defaults to flat config. It works; migrating needs ESLint 9.
