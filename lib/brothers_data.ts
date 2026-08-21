@@ -261,3 +261,45 @@ export const alphaTau = [
     { name: 'Max Lin', major: 'Finance', year: '2029' },
     { name: 'Konstantine Mamoulelis', major: 'Finance', year: '2028' },
 ];
+
+// Data for Alpha Upsilon | Winter 2026
+export const alphaUpsilon = [
+    {
+        name: 'Justin Shao',
+        major: 'Electrical & Computer Engineering',
+        year: '2028',
+    },
+    {
+        name: 'Julian Trotzenberg',
+        major: 'Mechanical Engineering',
+        year: '2029',
+    },
+    { name: 'Yuvraj Sanghera', major: 'Finance', year: '2029' },
+    {
+        name: 'Khai Rizkalla',
+        major: 'Electrical & Computer Engineering',
+        year: '2029',
+    },
+    { name: 'Taylor Takeda', major: 'Marketing', year: '2028' },
+    { name: 'Camden Ogawa', major: 'Economics', year: '2029' },
+    { name: 'Minh Than', major: 'Accounting & Finance', year: '2029' },
+    { name: 'Kingsten Cambra', major: 'Economics', year: '2029' },
+    { name: 'Ethan Park', major: 'Accounting', year: '2029' },
+    {
+        name: 'Ananya Lal',
+        major: 'Management Information Systems',
+        year: '2029',
+    },
+    {
+        name: 'Viraj Vagicherla',
+        major: 'Management Information Systems',
+        year: '2029',
+    },
+    { name: 'Luke Durfee', major: 'Finance', year: '2029' },
+    { name: 'Nolan Vo', major: 'Finance', year: '2029' },
+    { name: 'Anisa Taymuree', major: 'Finance', year: '2029' },
+    { name: 'Brighton Kahng', major: 'Accounting', year: '2029' },
+    { name: 'Erica Tjandrasuwita', major: 'Accounting', year: '2029' },
+    { name: 'Elisha Hom', major: 'Marketing', year: '2029' },
+    { name: 'Adam Lee', major: 'Business Undeclared', year: '2029' },
+];
