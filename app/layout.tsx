@@ -1,4 +1,5 @@
 import type React from 'react';
+import type { Metadata } from 'next';
 import './globals.css';
 import localFont from 'next/font/local';
 import { Rubik } from 'next/font/google';
@@ -6,6 +7,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import AnimatePage from '@/components/ui/animate-page';
+import { siteUrl } from '@/lib/utils/site-url';
 
 const cerapro = localFont({
     src: [
@@ -78,7 +80,8 @@ const rubik = Rubik({
     variable: '--font-rubik',
 });
 
-export const metadata = {
+export const metadata: Metadata = {
+    metadataBase: new URL(siteUrl()),
     title: 'SCU AKΨ | Alpha Kappa Psi at Santa Clara University',
     description:
         'Alpha Kappa Psi is the premier developer of principled business leaders at Santa Clara University.',

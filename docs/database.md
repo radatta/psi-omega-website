@@ -284,6 +284,3 @@ If you're changing these files, two things to know:
 - The database components are typed as `any` throughout, with file-level
   `eslint-disable` comments. That's existing debt — don't copy the pattern into
   new files.
-- `components/database/DataTable.tsx` is dead code, superseded by
-  `data-table.tsx`. The two differ only in the capitalisation of the filename,
-  which is a genuine hazard on macOS. Don't edit the wrong one.

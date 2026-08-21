@@ -38,7 +38,15 @@ One directory per page under `app/`, each containing a `page.tsx`.
 Plus two API routes under `app/database/api/`, covered in
 [database.md](database.md).
 
-`app/layout.tsx` wraps every page with the navbar, footer, and fonts.
+`app/layout.tsx` wraps every page with the navbar, footer, and fonts. Alongside
+it are the App Router's special files: `not-found.tsx` (404), `error.tsx` (the
+error boundary — it must be a client component), and `sitemap.ts` / `robots.ts`,
+which Next serves as `/sitemap.xml` and `/robots.txt`. Both of those exclude
+`/database`, and both need an absolute origin, which comes from
+`lib/utils/site-url.ts`.
+
+There is no `loading.tsx`. Every page is statically prerendered, so there is no
+loading state to show — adding one would only introduce a flash.
 
 ## Everything is a client component
 
@@ -100,14 +108,6 @@ memoriesPhotosPaths: { src, alt }[]  // src is a full path from /
 Note the inconsistency between `legacy_data` (bare filename, page prepends the
 directory) and `memories_data` (full path). Match whichever file you're editing.
 
-### Dead data
-
-`lib/brothers_data.ts` also exports `schoolsCollegesData` and
-`classDistributionData` at the bottom. Nothing imports them. They fed
-`components/charts/pie-chart.tsx`, which nothing imports either. Ignore them —
-they're the reason a name-vs-photo audit turns up entries like
-`Leavey-School-of-Business.jpg`.
-
 ## Components
 
 ```
@@ -144,8 +144,8 @@ mismatch renders a blank box.
 This is the most important contract in the codebase because it's the one that
 gets broken every term. See [content-updates.md](content-updates.md).
 
-The card accepts a `linkedin` prop that no data file supplies, and ignores the
-`year` field that every pledge-class entry has. Both are harmless.
+The card ignores the `year` field that every pledge-class entry has. Harmless —
+pages spread `{...member}` and the card takes only what it renders.
 
 ## Images
 
@@ -235,6 +235,18 @@ The common pattern is a fade-and-rise on scroll:
 
 ## Utilities
 
+Three small modules live in `lib/utils/`:
+
+| Module        | What it does                                                     |
+| ------------- | ---------------------------------------------------------------- |
+| `cn.ts`       | Merges Tailwind class names                                      |
+| `roster.ts`   | Derives member and major counts from the pledge-class rosters    |
+| `site-url.ts` | Resolves the absolute site origin for `sitemap.ts` / `robots.ts` |
+
+Server-only code lives in `lib/server/` instead — currently the `/database`
+session signing and login rate limiter. Keeping it out of `lib/utils/` means a
+stray import can't drag `node:crypto` into a client bundle.
+
 `cn()` merges Tailwind class names. It lives at **`lib/utils/cn.ts`**:
 
 ```ts
@@ -263,11 +275,14 @@ existed. They were removed. Use `@/`.
   semicolons, 80 columns. Run `bun format` rather than fixing by hand.
 - **Husky** runs `bun check-types`, `bun lint`, and `bun test` before every
   commit.
-- **Tests are data-integrity only**, in `tests/data-integrity.test.ts`, on bun's
-  built-in runner (no test framework in `package.json`). They assert that every
-  image path referenced by `lib/*_data.ts` and by any `/images/...` literal in
-  source resolves to a real file, and that no brother photo is orphaned. There
-  are no unit or component tests — for anything visual, still look at the page.
+- **Tests** run on bun's built-in runner — no test framework in `package.json`.
+  `tests/data-integrity.test.ts` asserts that every image path referenced by
+  `lib/*_data.ts` or by any `/images/...` literal in source resolves to a real
+  file, and that no brother photo is orphaned. `roster.test.ts` checks the
+  derived member counts against the photos on disk, `site-routes.test.ts` checks
+  the sitemap covers every page, and `session.test.ts` / `rate-limit.test.ts` /
+  `database-routes.test.ts` cover the `/database` gate. There are **no component
+  tests** — for anything visual, still look at the page.
 
 ## Known rough edges
 

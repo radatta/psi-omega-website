@@ -36,7 +36,7 @@ export const companies = [
     { name: 'JP Morgan Chase', logo: 'JP-Morgan-Chase-Emblem.jpg' },
     { name: 'Juniper', logo: 'juniper.jpg' },
     { name: 'KPMG', logo: 'kpmg.png' },
-    { name: 'Lexi"s AI', logo: 'LexisAI.svg' },
+    { name: "Lexi's AI", logo: 'LexisAI.svg' },
     { name: 'Liberty Mutual', logo: 'LibertyMutual.png' },
     { name: 'LinkedIn', logo: 'linkedin.jpg' },
     { name: 'Mercedes-Benz', logo: 'Mercedes-Benz.jpg' },

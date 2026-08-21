@@ -3,11 +3,12 @@ import { Users, GraduationCap, Building } from 'lucide-react';
 import React from 'react';
 import { motion } from 'motion/react';
 import CountUp from 'react-countup';
+import { totalMajors, totalMembers } from '@/lib/utils/roster';
 
-// Calculate the totals for our statistics
-const totalMembers = 86;
-const totalMajors = 26; // Using an estimated number
-const totalAlumni = 600; // Using an estimated number
+// Members and majors are derived from the pledge-class rosters, so adding a
+// class updates them. Alumni is a genuine estimate — the chapter has no
+// complete alumni list in this repo.
+const totalAlumni = 600;
 
 // StatItem component with forwardRef to get references for animations
 interface StatItemProps {

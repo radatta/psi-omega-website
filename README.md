@@ -100,10 +100,10 @@ Documented honestly so nobody rediscovers them the hard way:
   the password that was hardcoded in source before that fix cannot be unpublished
   from a public repo. Rotate `DATABASE_PASSWORD` before relying on the gate. See
   [docs/database.md](docs/database.md).
-- **Data-integrity tests only, and no CI.** `bun test` checks that every
-  referenced image exists, but there are no unit, component, or end-to-end
-  tests, and nothing runs on a PR. Verification is `bun check-types`,
-  `bun lint`, `bun test`, and looking at the page.
+- **No CI.** Nothing runs on a PR. `bun test` covers image/data integrity, the
+  derived roster counts, the sitemap, and the `/database` gate, but there are no
+  component or end-to-end tests. Verification is `bun check-types`, `bun lint`,
+  `bun test`, and looking at the page.
 - **No server components.** Every page is `'use client'`, so no page can export
   `metadata` and nothing is server-rendered.
 - **Dark mode is wired but unreachable** — the provider is pinned to light and
