@@ -28,7 +28,7 @@ One directory per page under `app/`, each containing a `page.tsx`.
 | -------------------- | -------------------------------- | ---------------------------------- |
 | `/`                  | `app/page.tsx`                   | Hero, president's letter, sponsors |
 | `/about-akpsi`       | `app/about-akpsi/page.tsx`       | Values, history, statistics        |
-| `/meet-the-brothers` | `app/meet-the-brothers/page.tsx` | Exec, chairs, 7 pledge classes     |
+| `/meet-the-brothers` | `app/meet-the-brothers/page.tsx` | Exec, chairs, 6 pledge classes     |
 | `/rush-akpsi`        | `app/rush-akpsi/page.tsx`        | Rush dates, flyer, application     |
 | `/events`            | `app/events/page.tsx`            | Three photo galleries              |
 | `/memories`          | `app/memories/page.tsx`          | Shuffled photo wall                |
