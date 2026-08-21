@@ -2,9 +2,8 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-// import { DataTable } from './DataTable'; // Old DataTable, will be replaced
-import { getColumns } from './columns'; // Import from new columns.tsx
-import { DataTable as ShadcnDataTable } from '@/components/database/data-table'; // New shadcn data-table component (to be created)
+import { getColumns } from './columns';
+import { DataTable as ShadcnDataTable } from '@/components/database/data-table';
 
 export default function Database() {
     const [password, setPassword] = useState('');
