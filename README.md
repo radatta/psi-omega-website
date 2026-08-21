@@ -104,8 +104,9 @@ Documented honestly so nobody rediscovers them the hard way:
   derived roster counts, the sitemap, and the `/database` gate, but there are no
   component or end-to-end tests. Verification is `bun check-types`, `bun lint`,
   `bun test`, and looking at the page.
-- **No server components.** Every page is `'use client'`, so no page can export
-  `metadata` and nothing is server-rendered.
+- **Every _page_ is `'use client'`,** so no page can export `metadata` and none
+  is server-rendered. (`not-found.tsx`, `sitemap.ts` and `robots.ts` are server
+  components; the eight real pages are not.)
 - **Dark mode is wired but unreachable** — the provider is pinned to light and
   no toggle exists.
 - Some dead code and stale config remain; they're listed at the end of

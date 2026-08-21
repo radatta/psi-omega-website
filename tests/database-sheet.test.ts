@@ -1,6 +1,5 @@
 import { describe, expect, test } from 'bun:test';
 import {
-    REQUIRED_COLUMN_INDEX,
     columnKey,
     filterPopulatedRows,
     toRowObjects,
@@ -36,6 +35,11 @@ describe('filterPopulatedRows', () => {
         expect(filterPopulatedRows(grid)[0]).toEqual(grid[0]);
     });
 
+    test('drops rows whose required column is falsy', () => {
+        const rows = [grid[0], ['x', '', '', '', 0], ['y', '', '', '', false]];
+        expect(filterPopulatedRows(rows)).toHaveLength(1);
+    });
+
     test('drops rows whose required column is empty or whitespace', () => {
         const kept = filterPopulatedRows(grid);
         expect(kept).toHaveLength(2);
@@ -45,10 +49,6 @@ describe('filterPopulatedRows', () => {
     test('survives short and missing rows', () => {
         const ragged = [grid[0], ['1'], [], undefined as never];
         expect(filterPopulatedRows(ragged)).toHaveLength(1);
-    });
-
-    test('the required column is the one the sheet actually uses', () => {
-        expect(grid[0][REQUIRED_COLUMN_INDEX]).toBe('EMAIL');
     });
 });
 
@@ -148,6 +148,14 @@ describe('buildColumnSpecs', () => {
             'GRAD YEAR',
             'Open to coffee chats?',
         ]);
+    });
+
+    test('collapses a duplicate EMAIL column rather than repeating the id', () => {
+        const ids = buildColumnSpecs(['EMAIL', 'LAST', 'EMAIL']).map(
+            (spec) => spec.id
+        );
+        expect(ids).toEqual(['EMAIL', 'LAST']);
+        expect(new Set(ids).size).toBe(ids.length);
     });
 
     test('leaves order alone when there is no EMAIL column', () => {

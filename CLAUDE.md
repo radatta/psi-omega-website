@@ -72,16 +72,20 @@ Two contracts to respect:
 Next.js App Router (Vercel) ── /database/api/sheet ──> Google Sheets API (service account, readonly)
 ```
 
-Static pages rendered from `lib/` data; the one runtime dependency is the Sheets read. Every page is currently `'use client'` (there are no server components yet), so `motion` animations and hooks work anywhere but nothing benefits from server rendering — don't assume a file is a server component because it lacks a directive.
+Static pages rendered from `lib/` data; the one runtime dependency is the Sheets read. All eight **pages** are `'use client'`, so `motion` animations and hooks work anywhere but no page can export `metadata` and nothing benefits from server rendering. The only server components are `app/not-found.tsx`, `app/sitemap.ts` and `app/robots.ts` — don't assume a file is one just because it lacks a directive, check it.
 
-Four env vars, all used only by the two `/database` API routes (see `.env.example`):
+Five env vars (see `.env.example`). Four are used only by the two `/database` API routes:
 
 - `DATABASE_PASSWORD` — the shared password for `/database`. Unset means the page fails closed.
 - `DATABASE_SESSION_SECRET` — random key signing the session cookie (`openssl rand -hex 32`). **Must not be the password** — deriving it from the password would turn every cookie into an offline password-cracking oracle. Rotating the password still invalidates sessions, via a fingerprint in the cookie payload.
 - `GOOGLE_SHEET_ID` — the spreadsheet id.
 - `GOOGLE_APPLICATION_CREDENTIALS` — **the entire service-account JSON as a string**, not a file path. This is the opposite of the Google SDK convention and the most common setup mistake here.
 
-All three are checked per-request, not at module scope, so a missing variable breaks `/database` instead of failing the whole build.
+Those four are checked per-request, not at module scope, so a missing variable breaks `/database` instead of failing the whole build.
+
+The fifth is optional and used by `app/sitemap.ts`, `app/robots.ts` and `metadataBase`:
+
+- `NEXT_PUBLIC_SITE_URL` — the site's absolute origin. Falls back to Vercel's `VERCEL_PROJECT_PRODUCTION_URL`, then to localhost. Set it if you want the custom domain used in preview builds too.
 
 ## Git workflow
 

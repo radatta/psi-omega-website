@@ -24,9 +24,10 @@ const yesNoIcon = (value: unknown) => {
         case 'maybe':
             return <HelpCircle className='h-5 w-5 text-yellow-500 mx-auto' />;
         default:
+            // Matches the original: unrecognised answers render lowercased.
             return (
                 <span className='block text-center'>
-                    {String(value) || '-'}
+                    {String(value).toLowerCase() || '-'}
                 </span>
             );
     }

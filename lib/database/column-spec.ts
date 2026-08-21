@@ -117,12 +117,14 @@ export function describeColumn(header: string, index: number): ColumnSpec {
     };
 }
 
-// EMAIL is hoisted to the first column wherever it appears in the sheet.
+// EMAIL is hoisted to the first column wherever it appears in the sheet. A
+// second EMAIL column is dropped rather than emitted twice — duplicate ids are
+// an error in TanStack Table, and the original code collapsed them too.
 export function buildColumnSpecs(headers: string[]): ColumnSpec[] {
     const specs = headers.map(describeColumn);
     const email = specs.find((spec) => spec.kind === 'email');
     if (!email) return specs;
-    return [email, ...specs.filter((spec) => spec !== email)];
+    return [email, ...specs.filter((spec) => spec.kind !== 'email')];
 }
 
 // Normalises a yes/no/maybe cell. Anything else renders as-is.

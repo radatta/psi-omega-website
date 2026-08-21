@@ -19,10 +19,10 @@ export const REQUIRED_COLUMN_INDEX = 4;
 export function filterPopulatedRows(grid: SheetGrid): SheetGrid {
     return grid.filter((row, index) => {
         if (index === 0) return true; // always keep the header row
+        // Truthiness, not just null/undefined — matches the original, which
+        // also dropped a cell holding 0 or false.
         const cell = row?.[REQUIRED_COLUMN_INDEX];
-        return (
-            cell !== undefined && cell !== null && String(cell).trim() !== ''
-        );
+        return Boolean(cell) && String(cell).trim() !== '';
     });
 }
 

@@ -5,8 +5,12 @@ import { GET } from '@/app/database/api/sheet/route';
 import { resetRateLimit } from '@/lib/server/rate-limit';
 import { SESSION_COOKIE, createSessionToken } from '@/lib/server/session';
 
-// These exercise the real handlers. Every assertion below is on a path that
-// short-circuits before the Google call, so the suite makes no network request.
+// These exercise the real handlers. All but one assertion sit on a path that
+// short-circuits before the Google call. The exception is the last test, which
+// deliberately gets past the gate; it still makes no network request, because
+// google-auth-library rejects the placeholder credentials locally. That is why
+// it expects 502 — the handler's own error path — and why bun test prints a
+// google-auth stack for that case.
 const PASSWORD = 'test-password';
 const SECRET = 'test-secret';
 
@@ -116,10 +120,12 @@ describe('POST /database/api/check-password', () => {
             .slice(1)
             .join('=');
 
-        // A valid session gets past the gate; it then fails at the Google call,
-        // which is exactly what proves the gate opened.
+        // A valid session gets past the gate and fails at the Google call,
+        // which is exactly what proves the gate opened. 502 is the handler's
+        // upstream-failure path — asserting it rather than `not 401` keeps the
+        // test from passing on an unrelated 500 or 503.
         const res = await GET(sheetRequest(`${SESSION_COOKIE}=${token}`));
-        expect(res.status).not.toBe(401);
+        expect(res.status).toBe(502);
     });
 
     test('rate limits repeated failures from one client', async () => {

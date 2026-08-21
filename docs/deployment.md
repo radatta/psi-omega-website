@@ -50,8 +50,8 @@ Loose convention, no enforcement: `feat/`, `fix/`, `refactor/`, `docs/`,
 
 ## Environment variables
 
-The four variables from [getting-started.md](getting-started.md) must **also**
-be set in Vercel. Your local `.env` is not deployed — it's gitignored and never
+The database variables from [getting-started.md](getting-started.md) must
+**also** be set in Vercel. Your local `.env` is not deployed — it's gitignored and never
 leaves your machine.
 
 In the Vercel dashboard: **Project → Settings → Environment Variables**.
@@ -60,11 +60,17 @@ In the Vercel dashboard: **Project → Settings → Environment Variables**.
 | -------------------------------- | ------------------------------------------- |
 | `DATABASE_PASSWORD`              | The shared password for `/database`         |
 | `DATABASE_SESSION_SECRET`        | Random cookie signing key, not the password |
+| `NEXT_PUBLIC_SITE_URL`           | Optional — the site's absolute origin       |
 | `GOOGLE_SHEET_ID`                | The spreadsheet id                          |
 | `GOOGLE_APPLICATION_CREDENTIALS` | The whole service-account JSON, one line    |
 
 Same trap as locally: `GOOGLE_APPLICATION_CREDENTIALS` is the **contents** of
 the JSON key file, not a path.
+
+`NEXT_PUBLIC_SITE_URL` is optional. Vercel sets `VERCEL_PROJECT_PRODUCTION_URL`
+itself, and `sitemap.xml` / `robots.txt` fall back to it, so production is
+correct without doing anything. Set it explicitly if you want the custom domain
+used in preview deployments as well.
 
 Set them for all three environments (Production, Preview, Development), or the
 database page will work in production and fail on every PR preview.

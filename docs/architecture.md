@@ -48,10 +48,11 @@ which Next serves as `/sitemap.xml` and `/robots.txt`. Both of those exclude
 There is no `loading.tsx`. Every page is statically prerendered, so there is no
 loading state to show — adding one would only introduce a flash.
 
-## Everything is a client component
+## Every page is a client component
 
-**All eight pages start with `'use client'`.** There are no server components in
-this codebase.
+**All eight pages start with `'use client'`.** The only server components are
+`app/not-found.tsx`, `app/sitemap.ts` and `app/robots.ts` — none of which is a
+page you navigate to.
 
 This matters more than it sounds:
 
