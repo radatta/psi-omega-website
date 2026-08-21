@@ -157,10 +157,6 @@ export default function MeetTheBrotherhood() {
                 </div>
             </section>
 
-            {/* Alpha Nu | Fall 2022 */}
-
-            {/* Alpha Xi | Winter 2023 */}
-
             {/* Alpha Omicron | Fall 2023 */}
             <section className='py-16 bg-gray-50'>
                 <div className='container'>
@@ -315,6 +311,8 @@ export default function MeetTheBrotherhood() {
                     </div>
                 </div>
             </section>
+
+            {/* Alpha Upsilon | Winter 2026 */}
             <section className='py-16 bg-white'>
                 <div className='container'>
                     <motion.h2

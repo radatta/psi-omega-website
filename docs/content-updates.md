@@ -47,16 +47,15 @@ that advance one per term, alternating Fall and Winter:
 
 | Array          | Class       |
 | -------------- | ----------- |
-| `alphaNu`      | Fall 2022   |
-| `alphaXi`      | Winter 2023 |
 | `alphaOmicron` | Fall 2023   |
 | `alphaPi`      | Winter 2024 |
 | `alphaRho`     | Fall 2024   |
 | `alphaSigma`   | Winter 2025 |
 | `alphaTau`     | Fall 2025   |
+| `alphaUpsilon` | Winter 2026 |
 
-So the next one is **`alphaUpsilon`, Winter 2026**, then `alphaPhi` for Fall
-2026, and so on down the Greek alphabet.
+So the next one is **`alphaPhi`, Fall 2026**, then `alphaChi` for Winter 2027,
+and so on down the Greek alphabet.
 
 Open `lib/brothers_data.ts`, scroll to the bottom of the last class array, and
 add a new block in the same shape:
@@ -112,10 +111,10 @@ At the top, add your new class to the import list:
 import {
     executiveCommittee,
     committeeChairs,
-    alphaNu,
+    alphaOmicron,
     // ... the rest ...
-    alphaTau,
-    alphaUpsilon, // <- add this
+    alphaUpsilon,
+    alphaPhi, // <- add this
 } from '@/lib/brothers_data';
 ```
 
@@ -274,7 +273,7 @@ Open `app/page.tsx` and find the section marked
 
 1. **The body text** — several `<p>` paragraphs inside the section.
 2. **The signature** — the president's name, near the bottom of the section.
-3. **The photo** — `src='/images/brothers/Fiona-Holdaway.jpg'`. Point it at the
+3. **The photo** — `src='/images/brothers/Kyle-Chew.jpg'`. Point it at the
    new president's existing brother photo. They will already have one.
 
 Edit only the text between the tags. Leave the `<p>`, `<div>`, and `className`

@@ -93,7 +93,7 @@ Runbooks for all of these are in [content-updates.md](content-updates.md).
 // lib/brothers_data.ts
 executiveCommittee: { name, position }[]     // rendered with photos
 committeeChairs:    { name, position }[]     // text only, no photos
-alphaNu … alphaTau: { name, major, year }[]  // rendered with photos
+alphaOmicron … alphaUpsilon: { name, major, year }[] // rendered with photos
 
 // lib/rush_data.ts
 currentRushData: {
