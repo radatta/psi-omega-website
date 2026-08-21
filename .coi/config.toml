@@ -1,0 +1,46 @@
+# code-on-incus config for Psi-Omega-Website — <psi-omega-website>/.coi/config.toml (project config → run `coi trust`).
+# VL-free, secret-free (token injected via env). Daytime base; night profile is a separate file (later).
+# Validated against `coi schema profile` on the installed COI (7.3) — not the wiki (stale on forward_env).
+
+[container]
+image      = "coi-default"   # Node 22 + pnpm + jq + git; only chromium missing (defer)
+persistent = false           # ephemeral; workspace is the host mount so code always survives
+alias      = "psi-omega-website"
+
+[tool]
+name            = "claude"
+permission_mode = "bypass"   # == --dangerously-skip-permissions; safe only because the container is the boundary
+
+[limits.cpu]
+count     = "6"      # pin all 6 vCPUs
+allowance = "80%"    # cap burst so guest OS + COI monitor aren't starved
+
+[limits.memory]
+limit = "12GiB"
+swap  = "4GiB"
+
+[limits.runtime]
+max_processes = 300   # integer, not a quoted string
+# max_duration — night profile only
+
+[network]
+mode = "restricted"   # CONFIRMED by your run output
+
+[[ports.map]]
+name      = "vite"
+container = 5174
+
+[monitoring]
+enabled               = true
+poll_interval_sec     = 2
+auto_pause_on_high    = true
+auto_kill_on_critical = true
+file_read_threshold_mb    = 50
+file_read_rate_mb_per_sec = 10
+
+[monitoring.nft]
+enabled               = true
+rate_limit_per_second = 100
+dns_query_threshold   = 100
+log_dns_queries       = true
+# lima_host = "incus"   # [VERIFY empirically] enable Mac network monitoring; test in a throwaway shell first

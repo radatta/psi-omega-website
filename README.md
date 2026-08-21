@@ -60,7 +60,7 @@ bun install
 
 bun run dev
 
-# Visit http://localhost:3000
+# Visit http://localhost:5174
 
 ```
 
