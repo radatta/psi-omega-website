@@ -1,8 +1,8 @@
 // Data for Executive Committee
 export const executiveCommittee = [
     { name: 'Kyle Chew', position: 'President' },
-    { name: 'Shayla Bansal', position: 'VP of Membership' },
-    { name: 'Kyle Poon', position: 'VP of Policy' },
+    { name: 'Kyle Poon', position: 'VP of Membership' },
+    { name: 'Shayla Bansal', position: 'VP of Policy' },
     { name: 'Raegan Shum', position: 'VP of Communications' },
     { name: 'Malia Aquino', position: 'VP of Marketing' },
     { name: 'Conan Xie', position: 'VP of Finance' },
@@ -31,29 +31,12 @@ export const committeeChairs = [
 
 // Data for Alpha Omicron | Fall 2023
 export const alphaOmicron = [
-    { name: 'Maggie Bowes', major: 'Management', year: '2026' },
     { name: 'Kyle Chew', major: 'Finance', year: '2027' },
     { name: 'Evelyn Williams', major: 'Marketing', year: '2027' },
-    {
-        name: 'Marcus Fong',
-        major: 'Management Information Systems',
-        year: '2026',
-    },
     { name: 'Ingrid Hurst', major: 'Accounting', year: '2027' },
-    {
-        name: 'Jonathan Felix Saucedo',
-        major: 'Management Information Systems',
-        year: '2027',
-    },
-    {
-        name: 'Armon Choudhry',
-        major: 'Electrical & Computer Engineering',
-        year: '2026',
-    },
     { name: 'Sophia Benitez', major: 'Marketing', year: '2027' },
     { name: 'Ryan Pool', major: 'Finance', year: '2027' },
     { name: 'Juliana Roesner', major: 'Finance', year: '2027' },
-    { name: 'Winston Qiu', major: 'Accounting', year: '2026' },
     { name: 'Emily Han', major: 'Marketing', year: '2027' },
     { name: 'Alexander Dobie', major: 'Finance', year: '2027' },
 ];
@@ -66,7 +49,6 @@ export const alphaPi = [
         major: 'Computer Science & Mathematics',
         year: '2027',
     },
-    { name: 'Juana Melgoza', major: 'Marketing', year: '2026' },
     {
         name: 'Richard Tseng',
         major: 'Accounting & Information Systems',
@@ -78,12 +60,6 @@ export const alphaPi = [
         major: 'Computer Science & Engineering',
         year: '2027',
     },
-    {
-        name: 'Kaardhika Nair',
-        major: 'Management Information Systems',
-        year: '2026',
-    },
-    { name: 'Huy Ngo', major: 'Computer Science & Engineering', year: '2026' },
     { name: 'Taylor Hoyte', major: 'Communication', year: '2027' },
     { name: 'Noor Khan', major: 'Political Science & Marketing', year: '2027' },
     { name: 'Macha Karpov', major: 'Finance', year: '2027' },

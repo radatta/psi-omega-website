@@ -238,7 +238,7 @@ Once a year, after elections. Open `lib/brothers_data.ts` and edit the
 ```ts
 export const executiveCommittee = [
     { name: 'Kyle Chew', position: 'President' },
-    { name: 'Shayla Bansal', position: 'VP of Membership' },
+    { name: 'Kyle Poon', position: 'VP of Membership' },
 ];
 ```
 
