@@ -6,9 +6,11 @@ import CountUp from 'react-countup';
 import { totalMajors, totalMembers } from '@/lib/utils/roster';
 
 // Members and majors are derived from the pledge-class rosters, so adding a
-// class updates them. Alumni is a genuine estimate — the chapter has no
-// complete alumni list in this repo.
-const totalAlumni = 600;
+// class updates them. Alumni cannot be: the only record is the alumni sheet,
+// which is not in this repo. Counted from it on 2026-08-22 — 369 unique names,
+// less the 72 who are still active brothers — giving ~297, rounded to 300.
+// Recount from the sheet rather than nudging this by hand.
+const totalAlumni = 300;
 
 // StatItem component with forwardRef to get references for animations
 interface StatItemProps {

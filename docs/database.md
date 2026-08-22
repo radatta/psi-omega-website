@@ -204,12 +204,18 @@ becomes an internal name like `_col_3`.
 
 ### Column E decides whether a row exists
 
-In `components/database/Database.tsx`:
+In `lib/database/sheet.ts`:
 
 ```ts
-const filtered = fetchedData.filter(
-    (row, idx) => idx === 0 || (row && row[4] && String(row[4]).trim() !== '')
-);
+export const REQUIRED_COLUMN_INDEX = 4;
+
+export function filterPopulatedRows(grid: SheetGrid): SheetGrid {
+    return grid.filter((row, index) => {
+        if (index === 0) return true;
+        const cell = row?.[REQUIRED_COLUMN_INDEX];
+        return Boolean(cell) && String(cell).trim() !== '';
+    });
+}
 ```
 
 **Any row with an empty column E is dropped from the table.** It's there to skip
@@ -218,8 +224,21 @@ that column happens to be. Insert or delete a column to the left of E and the
 filter starts testing a different field, and rows will vanish for reasons nobody
 can see.
 
+**This is not a rare edge case.** Counted on 2026-08-22, the sheet held 370
+named rows and only **85** had an email — so the table shows 85 people and
+silently omits 285. That is mostly working as intended, because those rows are
+empty in every other contact column too (role, company, location and industry
+all sit at exactly 85), so they would render as blank rows. But it does mean the
+page is a directory of the alumni who filled out the form, not of the alumni the
+chapter has on record. Worth knowing before anyone reports the table as "missing
+people."
+
 If an alum is missing from the table and you're sure they're in the sheet: check
 column E of their row.
+
+Two other things that count showed, both for a human to fix in the spreadsheet
+rather than in code: one name is entered twice, and eight rows carry a
+`YEAR + PC` label with no name (pledge-class section dividers).
 
 ### Header names are matched exactly
 
