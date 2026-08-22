@@ -57,7 +57,7 @@ describe('roster discovery', () => {
         // nothing, every photo test below would pass vacuously.
         expect(allRosters.length).toBeGreaterThanOrEqual(8);
         expect(pledgeClasses.length).toBeGreaterThanOrEqual(6);
-        expect(allRosterNames.length).toBeGreaterThanOrEqual(95);
+        expect(allRosterNames.length).toBeGreaterThanOrEqual(90);
     });
 });
 

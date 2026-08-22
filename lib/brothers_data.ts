@@ -1,13 +1,13 @@
 // Data for Executive Committee
 export const executiveCommittee = [
-    { name: 'Fiona Holdaway', position: 'President' },
-    { name: 'Maggie Bowes', position: 'VP of Membership' },
-    { name: 'Taylor Hoyte', position: 'VP of Marketing' },
-    { name: 'Blake Tretter', position: 'VP of Administration' },
-    { name: 'Jonathan Kimyai', position: 'VP of Policy' },
-    { name: 'Ashlyn Wang', position: 'Secretary' },
-    { name: 'Jenson Hart', position: 'VP of Finance' },
-    { name: 'Juliana Roesner', position: 'VP of Relations' },
+    { name: 'Kyle Chew', position: 'President' },
+    { name: 'Shayla Bansal', position: 'VP of Membership' },
+    { name: 'Kyle Poon', position: 'VP of Policy' },
+    { name: 'Raegan Shum', position: 'VP of Communications' },
+    { name: 'Malia Aquino', position: 'VP of Marketing' },
+    { name: 'Conan Xie', position: 'VP of Finance' },
+    { name: 'Aayush Kumbhare', position: 'VP of Relations' },
+    { name: 'Braden Auerbach', position: 'Executive Vice President' },
 ];
 
 // Data for Committee Chairs
