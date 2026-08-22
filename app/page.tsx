@@ -104,8 +104,8 @@ export default function Home() {
                                 transition={{ duration: 0.3 }}
                             >
                                 <Image
-                                    src='/images/brothers/Fiona-Holdaway.jpg'
-                                    alt='Chapter President'
+                                    src='/images/brothers/Kyle-Chew.jpg'
+                                    alt='Kyle Chew, Chapter President'
                                     fill
                                     className='object-cover rounded-md'
                                 />
@@ -205,12 +205,12 @@ export default function Home() {
                                     viewport={{ once: true }}
                                 >
                                     <p>Best,</p>
-                                    <p>Fiona Holdaway </p>
+                                    <p>Kyle Chew</p>
                                     <p className='italic'>
                                         President, Psi Omega Chapter
                                     </p>
                                     <p className='italic'>
-                                        Santa Clara University &apos;26
+                                        Santa Clara University &apos;27
                                     </p>
                                 </motion.div>
                             </motion.div>
@@ -284,7 +284,7 @@ export default function Home() {
                                 viewport={{ once: true }}
                             >
                                 The Psi Omega chapter was founded at Santa Clara
-                                University in 2005 and includes over 90 active
+                                University in 2005 and includes over 80 active
                                 brothers across the College of Arts & Sciences,
                                 Leavey School of Business, and School of
                                 Engineering — making us the only professional

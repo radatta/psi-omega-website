@@ -35,6 +35,6 @@ export const totalMembers = activeBrothers.length;
 // several roster entries are combined majors ('Finance & Computer Science'),
 // and some of those are single named SCU programmes ('Accounting & Information
 // Systems') rather than two majors. Splitting on '&' would therefore be wrong.
-// Today this is 24; the page labels it MAJORS.
+// Today this is 23; the page labels it MAJORS.
 export const totalMajors = new Set(activeBrothers.map((member) => member.major))
     .size;

@@ -1,120 +1,42 @@
 // Data for Executive Committee
 export const executiveCommittee = [
-    { name: 'Fiona Holdaway', position: 'President' },
-    { name: 'Maggie Bowes', position: 'VP of Membership' },
-    { name: 'Taylor Hoyte', position: 'VP of Marketing' },
-    { name: 'Blake Tretter', position: 'VP of Administration' },
-    { name: 'Jonathan Kimyai', position: 'VP of Policy' },
-    { name: 'Ashlyn Wang', position: 'Secretary' },
-    { name: 'Jenson Hart', position: 'VP of Finance' },
-    { name: 'Juliana Roesner', position: 'VP of Relations' },
+    { name: 'Kyle Chew', position: 'President' },
+    { name: 'Braden Auerbach', position: 'Executive Vice President' },
+    { name: 'Kyle Poon', position: 'VP of Membership' },
+    { name: 'Shayla Bansal', position: 'VP of Policy' },
+    { name: 'Raegan Shum', position: 'VP of Communications' },
+    { name: 'Malia Aquino', position: 'VP of Marketing' },
+    { name: 'Conan Xie', position: 'VP of Finance' },
+    { name: 'Aayush Kumbhare', position: 'VP of Relations' },
 ];
 
 // Data for Committee Chairs
 export const committeeChairs = [
-    { name: 'Sanjana Badami + Isha Nag', position: 'Fundraising' },
-    { name: 'Vaishnavi Tatipamula + Noor Khan', position: 'Professional' },
-    { name: 'Kyle Poon + Hyatt Tullu', position: 'Service' },
-    { name: 'Naila Ahsan + Clair Kim', position: 'Brotherhood' },
-
-    { name: 'Aayush Kumbhare + Megha Narumanchi', position: 'STEAM' },
-    { name: 'Dzidzo Lassey + Kaardhika Nair', position: 'Wellness' },
-
     {
-        name: 'Juana Melgoza + Sabrina Amaro',
+        name: 'Ankith Srinivas + Saahas Krishnamsetty',
+        position: 'Professional',
+    },
+    { name: 'Siri Venkatagiri + Anisa Taymuree', position: 'Service' },
+    {
+        name: 'Sabrina Amaro + Kashina Daceus',
         position: 'Diversity, Equity, & Inclusion',
     },
-    { name: 'Marcus Jackson + Youki Imai', position: 'Social' },
-    { name: 'Shayla Bansal + Anna Brundage', position: 'Content' },
-];
-
-// Data for Alpha Nu | Fall 2022
-export const alphaNu = [
-    { name: 'Dylan Patel', major: 'Finance', year: '2026' },
-    {
-        name: 'Kristy Chereath',
-        major: 'Finance & Computer Science',
-        year: '2026',
-    },
-    {
-        name: 'Kayla Huffman',
-        major: 'Computer Science & Engineering',
-        year: '2026',
-    },
-    { name: 'Fiona Holdaway', major: 'Accounting', year: '2026' },
-    {
-        name: 'Saanvi Agrawal',
-        major: 'Management Information Systems',
-        year: '2026',
-    },
-    {
-        name: 'Luke Ponssen',
-        major: 'Computer Science & Engineering',
-        year: '2026',
-    },
-    { name: 'Jenson Hart', major: 'Finance', year: '2026' },
-    {
-        name: 'Ashlyn Wang',
-        major: 'Accounting & Information Systems',
-        year: '2026',
-    },
-    { name: 'Sofia Spiga', major: 'Biology', year: '2026' },
-    { name: 'Dzidzo Lassey', major: 'Accounting', year: '2026' },
-    { name: 'Blake Tretter', major: 'Marketing & Economics', year: '2026' },
-    {
-        name: 'Jonathan Kimyai',
-        major: 'Management Information Systems',
-        year: '2026',
-    },
-];
-
-// Data for Alpha Xi | Winter 2023
-export const alphaXi = [
-    { name: 'Natalie Tun', major: 'Finance', year: '2026' },
-    {
-        name: 'Jonathan Preiss',
-        major: 'Computer Science & Engineering',
-        year: '2026',
-    },
-    {
-        name: 'Sanjita Maram',
-        major: 'Computer Science & Engineering',
-        year: '2026',
-    },
-    {
-        name: 'Riley Heike',
-        major: 'Computer Science & Engineering',
-        year: '2026',
-    },
-    { name: 'An Ton', major: 'Management', year: '2026' },
-    { name: 'Ananth Menon', major: 'Finance', year: '2026' },
+    { name: 'Camden Ogawa + Erica Tjandrasuwita', position: 'Fundraising' },
+    { name: 'Justin Shao + Julian Trotzenberg', position: 'STEAM' },
+    { name: 'Kaiya Lu + Kingsten Cambra', position: 'Wellness' },
+    { name: 'Aidan Kwapisz + Konstantine Mamoulelis', position: 'Brotherhood' },
+    { name: 'Minh Than + Lucca Walls', position: 'Social' },
+    { name: 'Clair Kim', position: 'Content' },
 ];
 
 // Data for Alpha Omicron | Fall 2023
 export const alphaOmicron = [
-    { name: 'Maggie Bowes', major: 'Management', year: '2026' },
     { name: 'Kyle Chew', major: 'Finance', year: '2027' },
     { name: 'Evelyn Williams', major: 'Marketing', year: '2027' },
-    {
-        name: 'Marcus Fong',
-        major: 'Management Information Systems',
-        year: '2026',
-    },
     { name: 'Ingrid Hurst', major: 'Accounting', year: '2027' },
-    {
-        name: 'Jonathan Felix Saucedo',
-        major: 'Management Information Systems',
-        year: '2027',
-    },
-    {
-        name: 'Armon Choudhry',
-        major: 'Electrical & Computer Engineering',
-        year: '2026',
-    },
     { name: 'Sophia Benitez', major: 'Marketing', year: '2027' },
     { name: 'Ryan Pool', major: 'Finance', year: '2027' },
     { name: 'Juliana Roesner', major: 'Finance', year: '2027' },
-    { name: 'Winston Qiu', major: 'Accounting', year: '2026' },
     { name: 'Emily Han', major: 'Marketing', year: '2027' },
     { name: 'Alexander Dobie', major: 'Finance', year: '2027' },
 ];
@@ -127,7 +49,6 @@ export const alphaPi = [
         major: 'Computer Science & Mathematics',
         year: '2027',
     },
-    { name: 'Juana Melgoza', major: 'Marketing', year: '2026' },
     {
         name: 'Richard Tseng',
         major: 'Accounting & Information Systems',
@@ -139,12 +60,6 @@ export const alphaPi = [
         major: 'Computer Science & Engineering',
         year: '2027',
     },
-    {
-        name: 'Kaardhika Nair',
-        major: 'Management Information Systems',
-        year: '2026',
-    },
-    { name: 'Huy Ngo', major: 'Computer Science & Engineering', year: '2026' },
     { name: 'Taylor Hoyte', major: 'Communication', year: '2027' },
     { name: 'Noor Khan', major: 'Political Science & Marketing', year: '2027' },
     { name: 'Macha Karpov', major: 'Finance', year: '2027' },
@@ -260,4 +175,46 @@ export const alphaTau = [
     { name: 'Kathryn Kimyai', major: 'Psychology', year: '2029' },
     { name: 'Max Lin', major: 'Finance', year: '2029' },
     { name: 'Konstantine Mamoulelis', major: 'Finance', year: '2028' },
+];
+
+// Data for Alpha Upsilon | Winter 2026
+export const alphaUpsilon = [
+    {
+        name: 'Justin Shao',
+        major: 'Electrical & Computer Engineering',
+        year: '2028',
+    },
+    { name: 'Yuvraj Sanghera', major: 'Finance', year: '2029' },
+    { name: 'Taylor Takeda', major: 'Marketing', year: '2028' },
+    { name: 'Camden Ogawa', major: 'Economics', year: '2029' },
+    { name: 'Minh Than', major: 'Accounting', year: '2029' },
+    {
+        name: 'Khai Rizkalla',
+        major: 'Electrical & Computer Engineering',
+        year: '2029',
+    },
+    { name: 'Kingsten Cambra', major: 'Economics', year: '2029' },
+    { name: 'Ethan Park', major: 'Accounting', year: '2029' },
+    {
+        name: 'Ananya Lal',
+        major: 'Management Information Systems',
+        year: '2029',
+    },
+    { name: 'Luke Durfee', major: 'Finance', year: '2029' },
+    { name: 'Nolan Vo', major: 'Finance', year: '2029' },
+    { name: 'Anisa Taymuree', major: 'Finance', year: '2029' },
+    {
+        name: 'Julian Trotzenberg',
+        major: 'Mechanical Engineering',
+        year: '2029',
+    },
+    { name: 'Brighton Kahng', major: 'Accounting', year: '2029' },
+    { name: 'Erica Tjandrasuwita', major: 'Accounting', year: '2029' },
+    { name: 'Elisha Hom', major: 'Marketing', year: '2029' },
+    {
+        name: 'Viraj Vagicherla',
+        major: 'Management Information Systems',
+        year: '2029',
+    },
+    { name: 'Adam Lee', major: 'Business Undeclared', year: '2029' },
 ];

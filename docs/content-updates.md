@@ -47,25 +47,24 @@ that advance one per term, alternating Fall and Winter:
 
 | Array          | Class       |
 | -------------- | ----------- |
-| `alphaNu`      | Fall 2022   |
-| `alphaXi`      | Winter 2023 |
 | `alphaOmicron` | Fall 2023   |
 | `alphaPi`      | Winter 2024 |
 | `alphaRho`     | Fall 2024   |
 | `alphaSigma`   | Winter 2025 |
 | `alphaTau`     | Fall 2025   |
+| `alphaUpsilon` | Winter 2026 |
 
-So the next one is **`alphaUpsilon`, Winter 2026**, then `alphaPhi` for Fall
-2026, and so on down the Greek alphabet.
+So the next one is **`alphaPhi`, Fall 2026**, then `alphaChi` for Winter 2027,
+and so on down the Greek alphabet.
 
 Open `lib/brothers_data.ts`, scroll to the bottom of the last class array, and
 add a new block in the same shape:
 
 ```ts
-// Data for Alpha Upsilon | Winter 2026
-export const alphaUpsilon = [
-    { name: 'Jane Doe', major: 'Finance', year: '2029' },
-    { name: 'John Smith', major: 'Computer Science', year: '2028' },
+// Data for Alpha Phi | Fall 2026
+export const alphaPhi = [
+    { name: 'Jane Doe', major: 'Finance', year: '2030' },
+    { name: 'John Smith', major: 'Computer Science', year: '2029' },
 ];
 ```
 
@@ -95,8 +94,12 @@ extension (not `.jpeg`, not `.png`). A mismatch gives you a broken image and no
 error.
 
 Names with hyphens, apostrophes, or three parts follow the same rule: only
-spaces become hyphens, everything else is kept as-is. `'Mary-Kate O'Brien'`
-needs `Mary-Kate-O'Brien.jpg`.
+spaces become hyphens, everything else is kept as-is. `"Mary-Kate O'Brien"`
+needs `Mary-Kate-O'Brien.jpg` — note the double quotes, since a name containing
+an apostrophe can't sit in a single-quoted string.
+
+> The shell audit at the end of this doc can't handle apostrophes in names and
+> will quietly skip them. `bun test` parses the data properly and does not.
 
 Photos need resizing before they go in — see
 [the photo pipeline](#the-photo-pipeline) below.
@@ -112,19 +115,22 @@ At the top, add your new class to the import list:
 import {
     executiveCommittee,
     committeeChairs,
-    alphaNu,
+    alphaOmicron,
     // ... the rest ...
-    alphaTau,
-    alphaUpsilon, // <- add this
+    alphaUpsilon,
+    alphaPhi, // <- add this
 } from '@/lib/brothers_data';
 ```
 
 Then scroll to the very bottom of the file, to the last `</section>` before
-`</main>`. Copy the whole `<section>` block above it and paste it after, then
-change exactly two things: the array name and the heading text.
+`</main>`. Copy the whole block above it — including the `{/* ... */}` comment that
+labels it — and paste it after, then change four things: the comment, the
+background class, the array name, and the heading text.
 
+<!-- prettier-ignore -->
 ```tsx
-<section className='py-16 bg-white'>
+{/* Alpha Phi | Fall 2026 */}
+<section className='py-16 bg-gray-50'>
     <div className='container'>
         <motion.h2
             className='text-4xl font-bold text-center mb-12'
@@ -133,10 +139,10 @@ change exactly two things: the array name and the heading text.
             transition={{ duration: 0.8 }}
             viewport={{ once: true, margin: '100px' }}
         >
-            ALPHA UPSILON | WINTER 2026
+            ALPHA PHI | FALL 2026
         </motion.h2>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-            {alphaUpsilon.map((member, index) => (
+            {alphaPhi.map((member, index) => (
                 <motion.div
                     key={index}
                     initial={{ opacity: 0, y: 50 }}
@@ -159,9 +165,10 @@ The `className` on the section alternates `py-16 bg-white` and
 `py-16 bg-gray-50` down the page so the classes are visually separated. Look at
 what the section above yours uses and pick the other one.
 
-> The existing alternation has a gap: Alpha Rho and Alpha Sigma are both
-> `bg-white`, so they run together. Not worth fixing on its own, but don't copy
-> that pair as your template.
+> The pledge classes alternate cleanly. The two sections above them don't —
+> EXECUTIVE COMMITTEE is `bg-white` and COMMITTEE CHAIRS has no `bg-*` at all,
+> so it inherits white and the two run together. Don't copy that pair as your
+> template.
 
 ### Step 4 — check it
 
@@ -215,8 +222,9 @@ Do the rename carefully — this is where mistakes happen. Check your work:
 ls public/images/brothers/ | wc -l
 ```
 
-That count should equal the total number of individual brothers across all
-pledge-class arrays plus the executive committee. It is 90 as of Fall 2025.
+That count should equal the number of distinct people across all pledge-class
+arrays, the executive committee, and any committee chair who isn't also in a
+class. It is 82 as of Winter 2026.
 
 Use `localNotes/` for the raw downloads and the `out/` folder. It's gitignored,
 so the 25MB originals will never be committed by accident.
@@ -228,8 +236,8 @@ Once a year, after elections. Open `lib/brothers_data.ts` and edit the
 
 ```ts
 export const executiveCommittee = [
-    { name: 'Fiona Holdaway', position: 'President' },
-    { name: 'Maggie Bowes', position: 'VP of Membership' },
+    { name: 'Kyle Chew', position: 'President' },
+    { name: 'Kyle Poon', position: 'VP of Membership' },
 ];
 ```
 
@@ -274,7 +282,7 @@ Open `app/page.tsx` and find the section marked
 
 1. **The body text** — several `<p>` paragraphs inside the section.
 2. **The signature** — the president's name, near the bottom of the section.
-3. **The photo** — `src='/images/brothers/Fiona-Holdaway.jpg'`. Point it at the
+3. **The photo** — `src='/images/brothers/Kyle-Chew.jpg'`. Point it at the
    new president's existing brother photo. They will already have one.
 
 Edit only the text between the tags. Leave the `<p>`, `<div>`, and `className`
@@ -456,7 +464,3 @@ comm -23 /tmp/names.txt /tmp/photos.txt
 
 That last command should print nothing. Anything it prints is a brother whose
 card will render as a blank box.
-
-> It also prints a handful of non-name entries (`2026.jpg`,
-> `Leavey-School-of-Business.jpg`) that come from unused chart data further down
-> the file. Ignore those — they are not brothers.

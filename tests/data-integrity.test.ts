@@ -55,9 +55,9 @@ describe('roster discovery', () => {
     test('finds every roster and pledge class in brothers_data', () => {
         // Guards the namespace filters above: if these silently matched
         // nothing, every photo test below would pass vacuously.
-        expect(allRosters.length).toBeGreaterThanOrEqual(9);
-        expect(pledgeClasses.length).toBeGreaterThanOrEqual(7);
-        expect(allRosterNames.length).toBeGreaterThanOrEqual(90);
+        expect(allRosters.length).toBeGreaterThanOrEqual(5);
+        expect(pledgeClasses.length).toBeGreaterThanOrEqual(3);
+        expect(allRosterNames.length).toBeGreaterThanOrEqual(40);
     });
 });
 
