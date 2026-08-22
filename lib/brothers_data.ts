@@ -220,7 +220,7 @@ export const alphaUpsilon = [
     },
     { name: 'Taylor Takeda', major: 'Marketing', year: '2028' },
     { name: 'Camden Ogawa', major: 'Economics', year: '2029' },
-    { name: 'Minh Than', major: 'Accounting & Finance', year: '2029' },
+    { name: 'Minh Than', major: 'Accounting', year: '2029' },
     { name: 'Kingsten Cambra', major: 'Economics', year: '2029' },
     { name: 'Ethan Park', major: 'Accounting', year: '2029' },
     {
