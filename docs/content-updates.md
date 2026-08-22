@@ -225,7 +225,7 @@ ls public/images/brothers/ | wc -l
 
 That count should equal the number of distinct people across all pledge-class
 arrays, the executive committee, and any committee chair who isn't also in a
-class. It is 96 as of Winter 2026.
+class. It is 82 as of Winter 2026.
 
 Use `localNotes/` for the raw downloads and the `out/` folder. It's gitignored,
 so the 25MB originals will never be committed by accident.

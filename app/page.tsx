@@ -284,7 +284,7 @@ export default function Home() {
                                 viewport={{ once: true }}
                             >
                                 The Psi Omega chapter was founded at Santa Clara
-                                University in 2005 and includes over 90 active
+                                University in 2005 and includes over 80 active
                                 brothers across the College of Arts & Sciences,
                                 Leavey School of Business, and School of
                                 Engineering — making us the only professional
