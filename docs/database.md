@@ -204,14 +204,17 @@ becomes an internal name like `_col_3`.
 
 ### Column E decides whether a row exists
 
-In `lib/database/sheet.ts`:
+In `lib/database/sheet.ts` (excerpt — inline comments trimmed):
 
 ```ts
+// The sheet keeps trailing blank rows and half-filled drafts. A row only counts
+// as real if this column is filled in. Positional and brittle — it does not
+// follow the header if someone reorders the spreadsheet.
 export const REQUIRED_COLUMN_INDEX = 4;
 
 export function filterPopulatedRows(grid: SheetGrid): SheetGrid {
     return grid.filter((row, index) => {
-        if (index === 0) return true;
+        if (index === 0) return true; // always keep the header row
         const cell = row?.[REQUIRED_COLUMN_INDEX];
         return Boolean(cell) && String(cell).trim() !== '';
     });
@@ -224,17 +227,54 @@ that column happens to be. Insert or delete a column to the left of E and the
 filter starts testing a different field, and rows will vanish for reasons nobody
 can see.
 
-**This is not a rare edge case.** Counted on 2026-08-22, the sheet held 370
-named rows and only **85** had an email — so the table shows 85 people and
-silently omits 285. That is mostly working as intended, because those rows are
-empty in every other contact column too (role, company, location and industry
-all sit at exactly 85), so they would render as blank rows. But it does mean the
-page is a directory of the alumni who filled out the form, not of the alumni the
-chapter has on record. Worth knowing before anyone reports the table as "missing
-people."
+**This is not a rare edge case.** Column E is currently `EMAIL` — the filter
+doesn't know that, which is the whole point of the warning above, but it is what
+column E holds today. Counted on 2026-08-22, the sheet held 370 named rows and
+only **85** had an email, so the table shows 85 people and omits 285.
+
+That is mostly working as intended. Those 285 rows are not blank — they have a
+name and a pledge class — but every column the table exists to show is empty for
+them, so they would render as a name followed by nothing. Fill counts from the
+same pass, out of 378 data rows:
+
+| Column       | Filled |
+| ------------ | ------ |
+| `LAST`       | 370    |
+| `FIRST`      | 370    |
+| `YEAR + PC`  | 378    |
+| `EMAIL`      | 85     |
+| `MAJOR`      | 86     |
+| `GRAD YEAR`  | 86     |
+| `ROLE`       | 85     |
+| `COMPANY`    | 85     |
+| `LOCATION`   | 85     |
+| `INDUSTRY`   | 85     |
+| `LINKEDIN`   | 84     |
+| coffee chats | 84     |
+| alumni panel | 84     |
+
+The practical consequence: this page is a directory of the alumni who filled out
+the form, not of the alumni the chapter has on record. Worth knowing before
+anyone reports the table as "missing people." Note `MAJOR` and `GRAD YEAR` are
+86, one ahead of `EMAIL` — so exactly one person has partial details and is
+still dropped.
 
 If an alum is missing from the table and you're sure they're in the sheet: check
 column E of their row.
+
+### Recounting the alumni total
+
+`components/about/statistics-section.tsx` hardcodes `totalAlumni`, because the
+repo has no alumni list to derive it from. The number comes from this sheet, and
+the derivation matters: **the sheet is a chapter directory, not an alumni list.**
+On 2026-08-22 it held 369 unique names, of which **72 were current active
+brothers** — so alumni-on-record was 369 − 72 = **297**. Counting rows and
+calling it the alumni total would overstate it by roughly the size of the active
+chapter.
+
+To recount, log in and compare unique `FIRST LAST` in the sheet against
+`activeBrothers` in `lib/utils/roster.ts`. Match on normalised names and expect
+a few off-by-ones from nicknames and changed surnames.
 
 Two other things that count showed, both for a human to fix in the spreadsheet
 rather than in code: one name is entered twice, and eight rows carry a
