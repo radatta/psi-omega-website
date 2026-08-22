@@ -105,7 +105,7 @@ export default function Home() {
                             >
                                 <Image
                                     src='/images/brothers/Kyle-Chew.jpg'
-                                    alt='Chapter President'
+                                    alt='Kyle Chew, Chapter President'
                                     fill
                                     className='object-cover rounded-md'
                                 />

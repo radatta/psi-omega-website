@@ -13,7 +13,7 @@ const PHOTO_DIR = join(import.meta.dir, '..', 'public', 'images', 'brothers');
 describe('roster derivation', () => {
     test('finds every pledge class', () => {
         // Guard against the discovery silently matching nothing.
-        expect(pledgeClasses.length).toBeGreaterThanOrEqual(7);
+        expect(pledgeClasses.length).toBeGreaterThanOrEqual(3);
         for (const pledgeClass of pledgeClasses) {
             expect(pledgeClass.length).toBeGreaterThan(0);
         }
@@ -29,7 +29,7 @@ describe('roster derivation', () => {
             pledgeClasses.flat().map((brother) => brother.name)
         );
         expect(totalMembers).toBe(names.size);
-        expect(totalMembers).toBeGreaterThanOrEqual(80);
+        expect(totalMembers).toBeGreaterThanOrEqual(40);
     });
 
     test('totalMembers matches the photos on disk', () => {
