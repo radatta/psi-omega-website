@@ -62,7 +62,6 @@ export const alphaPi = [
     },
     { name: 'Taylor Hoyte', major: 'Communication', year: '2027' },
     { name: 'Noor Khan', major: 'Political Science & Marketing', year: '2027' },
-    { name: 'Macha Karpov', major: 'Finance', year: '2027' },
     { name: 'Youki Imai', major: 'Finance', year: '2027' },
     {
         name: 'Vaishnavi Tatipamula',
