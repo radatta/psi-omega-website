@@ -279,6 +279,12 @@ existed. They were removed. Use `@/`.
 ## Tooling
 
 - **Bun** for installs and scripts. `bun.lock` is the committed lockfile.
+- **`bunfig.toml` pins the test root to `tests/`.** `bun test` is a bun
+  builtin, so it ignores the `package.json` `test` script and would
+  otherwise walk the whole tree — including gitignored scratch in
+  `localNotes/`, whose unrelated suites fail and take the pre-commit hook
+  down with them. `tsconfig.json` excludes the same directories for the
+  same reason.
 - **ESLint + Prettier**, with Prettier violations reported as lint _errors_ —
   formatting is enforced, not suggested. 4-space indent, single quotes,
   semicolons, 80 columns. Run `bun format` rather than fixing by hand.

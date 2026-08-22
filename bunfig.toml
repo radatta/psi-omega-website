@@ -1,0 +1,5 @@
+# `bun test` is a bun builtin, so it ignores the package.json "test" script and
+# walks the whole tree — including gitignored scratch like localNotes/. Pinning
+# the root keeps the pre-commit hook running only this repo's suite.
+[test]
+root = "tests"
