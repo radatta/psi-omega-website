@@ -5,7 +5,7 @@ import ValuesSection from '@/components/about/values-section';
 import StatisticsSection from '@/components/about/statistics-section';
 import HistorySection from '@/components/about/history-section';
 import { EnvelopeClosedIcon } from '@radix-ui/react-icons';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 // export const metadata = {
 //     title: 'About AKPsi - Psi Omega Chapter',

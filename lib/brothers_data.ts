@@ -261,17 +261,3 @@ export const alphaTau = [
     { name: 'Max Lin', major: 'Finance', year: '2029' },
     { name: 'Konstantine Mamoulelis', major: 'Finance', year: '2028' },
 ];
-
-// Chart data for StatisticsSection
-export const schoolsCollegesData = [
-    { name: 'Leavey School of Business', value: 61 },
-    { name: 'School of Engineering', value: 8 },
-    { name: 'College of Arts and Sciences', value: 19 },
-];
-
-export const classDistributionData = [
-    { name: '2026', value: 24 },
-    { name: '2027', value: 27 },
-    { name: '2028', value: 26 },
-    { name: '2029', value: 11 },
-];

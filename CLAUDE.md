@@ -26,21 +26,24 @@ Single Next.js 15 app (App Router), no monorepo:
 | `bun check-types` | `tsc --noEmit`                                 |
 | `bun lint`        | `next lint` (ESLint + Prettier as an error)    |
 | `bun format`      | Prettier write                                 |
-| `bun build`       | Production build                               |
+| `bun test`        | Data-integrity tests (bun's built-in runner)   |
+| `bun run build`   | Production build — **not** `bun build`         |
 | `bun start`       | Serve the production build on 5174             |
 | `bun install`     | Install dependencies                           |
 
-**Note the port: 5174, not Next's default 3000.** There is **no test suite and no test runner** — verification is `bun check-types` + `bun lint`, then the `run-app` skill to look at the rendered page. Don't claim a change is verified on types and lint alone if it changes anything visual.
+**`build` is the one exception to bare invocation.** `build` is a bun builtin, so `bun build` runs bun's own bundler and fails with "Missing entrypoints" — it never reaches `next build`. Use `bun run build`.
+
+**Note the port: 5174, not Next's default 3000.** The test suite is `tests/data-integrity.test.ts` on bun's built-in runner — it asserts that every image path the data references exists on disk, and vice versa. There are **no unit or component tests** yet. `.husky/pre-commit` runs `bun check-types` + `bun lint` + `bun test`; after that, use the `run-app` skill to look at the rendered page. Don't claim a change is verified on types, lint, and tests alone if it changes anything visual.
 
 ## Conventions (hard rules — these override defaults)
 
 - **bun only.** `bun install`, `bun add`. The tracked lockfile is `bun.lock`; `bun.lockb` is gitignored legacy.
 - **No secrets or credentials in source, ever.** This repo is **public on GitHub**. Secrets go in `.env` locally and Vercel project env in prod. `google-service-account.json` is gitignored — keep it that way.
 - **PII discipline.** This is a public site carrying real people's names, majors, employers, and emails. Roster names/majors are established practice; anything more exposed on a public page needs a deliberate reason. Never put a brother's or alumni's personal data in a commit message, an issue, or a log line.
-- **`/database` is not currently protected.** The password gate is client-side only and `GET /database/api/sheet` is unauthenticated, so the alumni sheet is world-readable today. Treat it as public until that's fixed; never add data to it assuming the gate protects anything.
-- **Animation is `motion/react`** — never bare `framer-motion`. Several older files still import `framer-motion`, which resolves only as a transitive dep of `motion` and is not in `package.json`; convert them when you touch them.
-- **Design tokens live in `app/globals.css`** (`@theme` + the light/`.dark` HSL sets). This is Tailwind **v4**. `tailwind.config.ts` is a leftover v3-style config with no `@config` directive — it is **never loaded**, so editing it does nothing.
-- **`cn` imports from `@/lib/utils/cn`** — not the shadcn default `@/lib/utils`. `components.json` still points at the old path, so `shadcn add` generates broken imports; fix them by hand.
+- **`/database` is server-gated, but the old password leaked.** `POST /database/api/check-password` checks `DATABASE_PASSWORD` in constant time and issues a signed HttpOnly session cookie; `GET /database/api/sheet` returns 401 without it and sends `Cache-Control: no-store`. It fails closed when the env var is unset. **The pre-fix password is still in git history**, so the sheet stays effectively public until Rahul rotates `DATABASE_PASSWORD` in `.env` and Vercel. Signing lives in `lib/server/session.ts` (under `lib/server/`, not `lib/utils/`, so it can't reach a client bundle); don't reimplement it inline.
+- **Animation is `motion/react`** — never bare `framer-motion`. `framer-motion` is not in `package.json` and resolves only as a transitive dep of `motion`. Every file now uses `motion/react`; keep it that way.
+- **Design tokens live in `app/globals.css`** (`@theme` + the light/`.dark` HSL sets). This is Tailwind **v4**. There is deliberately no `tailwind.config.ts` — v4 only reads one behind a `@config` directive, and nothing points at one. Don't reintroduce it.
+- **`cn` imports from `@/lib/utils/cn`** — not the shadcn default `@/lib/utils`. `components.json`'s `utils` alias points there too, so `shadcn add` generates the correct import.
 - **Dependency discipline.** This is a small static site. Default to rolling our own. Only propose a dependency when EITHER (A) it's substantial hard-to-own logic, OR (B) it's security-critical / subtle-correctness / hard cross-platform edges. Justify against A/B explicitly and state the roll-our-own alternative. **"It's popular" is not a reason.** Never add a browser driver (Playwright etc.) to `package.json` — install it in the scratchpad.
 - **Prettier is enforced by lint**: 4-space indent, single quotes, single-quote JSX, semicolons, 80 columns. Run `bun format` rather than hand-aligning.
 - **Images go through `next/image`** with real `alt` text, from `public/images/`.
@@ -61,7 +64,7 @@ The thing that actually gets edited every term. All of it is plain TypeScript �
 Two contracts to respect:
 
 - **Brother photos are name-derived.** `BrotherCard` builds the path from the roster `name`, so a brother named `Jane Doe` requires exactly `public/images/brothers/Jane-Doe.jpg`. Add the data entry and the photo in the same change or the card 404s. Photos get downscaled to ~100KB / max 1600px before landing there — see `docs/content-updates.md`.
-- **The alumni table is coupled to the Google Sheet's header strings.** `components/database/columns.tsx` special-cases exact headers (`EMAIL`, `LINKEDIN`, `Open to coffee chats?`, and a sortable-column list). Renaming a column in the spreadsheet silently degrades the table — no error, just lost formatting.
+- **The alumni table is coupled to the Google Sheet's header strings.** `lib/database/column-spec.ts` special-cases exact headers (`EMAIL`, `LINKEDIN`, `Open to coffee chats?`, and a sortable-column list); `components/database/columns.tsx` only renders what it decides. Matching ignores surrounding whitespace, but nothing else — renaming a column in the spreadsheet silently degrades the table, no error, just lost formatting.
 
 ## Architecture
 
@@ -69,12 +72,20 @@ Two contracts to respect:
 Next.js App Router (Vercel) ── /database/api/sheet ──> Google Sheets API (service account, readonly)
 ```
 
-Static pages rendered from `lib/` data; the one runtime dependency is the Sheets read. Every page is currently `'use client'` (there are no server components yet), so `motion` animations and hooks work anywhere but nothing benefits from server rendering — don't assume a file is a server component because it lacks a directive.
+Static pages rendered from `lib/` data; the one runtime dependency is the Sheets read. All eight **pages** are `'use client'`, so `motion` animations and hooks work anywhere but no page can export `metadata` and nothing benefits from server rendering. The server components are `app/layout.tsx` (which is why it, and only it, can export `metadata`), `app/not-found.tsx`, `app/sitemap.ts` and `app/robots.ts` — don't assume a file is one just because it lacks a directive, check it.
 
-Two env vars, both used only by `app/database/api/sheet/route.ts`:
+Five env vars (see `.env.example`). Four are used only by the two `/database` API routes:
 
+- `DATABASE_PASSWORD` — the shared password for `/database`. Unset means the page fails closed.
+- `DATABASE_SESSION_SECRET` — random key signing the session cookie (`openssl rand -hex 32`). **Must not be the password** — deriving it from the password would turn every cookie into an offline password-cracking oracle. Rotating the password still invalidates sessions, via a fingerprint in the cookie payload.
 - `GOOGLE_SHEET_ID` — the spreadsheet id.
 - `GOOGLE_APPLICATION_CREDENTIALS` — **the entire service-account JSON as a string**, not a file path. This is the opposite of the Google SDK convention and the most common setup mistake here.
+
+Those four are checked per-request, not at module scope, so a missing variable breaks `/database` instead of failing the whole build.
+
+The fifth is optional and used by `app/sitemap.ts`, `app/robots.ts` and `metadataBase`:
+
+- `NEXT_PUBLIC_SITE_URL` — the site's absolute origin. Falls back to Vercel's `VERCEL_PROJECT_PRODUCTION_URL`, then to localhost. Set it if you want the custom domain used in preview builds too.
 
 ## Git workflow
 

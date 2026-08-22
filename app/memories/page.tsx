@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useRef, useState, useEffect, useMemo } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'motion/react';
 import Image from 'next/image';
 import { memoriesPhotosPaths } from '@/lib/memories_data';
 
@@ -50,8 +50,22 @@ export default function PhotoCollagePage() {
         ? [...memoriesPhotosPaths].slice(0, 50)
         : [...memoriesPhotosPaths];
 
-    // Shuffle photos before breaking into rows
-    const shuffledPhotos = [...limitedPhotos].sort(() => Math.random() - 0.5);
+    // Shuffle photos before breaking into rows — but only after mounting.
+    // Shuffling during render gave the server and the client different orders
+    // (a hydration mismatch) and re-shuffled the whole wall on every resize.
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
+
+    const shuffledPhotos = useMemo(
+        () =>
+            mounted
+                ? [...limitedPhotos].sort(() => Math.random() - 0.5)
+                : limitedPhotos,
+        // limitedPhotos is derived from isMobile, which is the only thing that
+        // changes its contents.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [mounted, isMobile]
+    );
 
     const createOptimizedRows = (): Photo[][] => {
         // Create base rows first
@@ -236,11 +250,18 @@ export default function PhotoCollagePage() {
                                           }
                                 }
                                 style={{
+                                    // Rounded because motion serialises full
+                                    // float precision on the client but
+                                    // truncates on the server, which React
+                                    // reports as a hydration mismatch.
                                     rotate: isMobile
                                         ? 0
-                                        : rowIndex % 2 === 0
-                                          ? Math.sin(photoIndex) * 5
-                                          : Math.cos(photoIndex) * 8,
+                                        : Number(
+                                              (rowIndex % 2 === 0
+                                                  ? Math.sin(photoIndex) * 5
+                                                  : Math.cos(photoIndex) * 8
+                                              ).toFixed(2)
+                                          ),
                                 }}
                             >
                                 <Image

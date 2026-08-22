@@ -1,13 +1,22 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { Users, GraduationCap, Building } from 'lucide-react';
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import CountUp from 'react-countup';
+import { totalMajors, totalMembers } from '@/lib/utils/roster';
 
-// Calculate the totals for our statistics
-const totalMembers = 86;
-const totalMajors = 26; // Using an estimated number
-const totalAlumni = 600; // Using an estimated number
+// Members and majors are derived from the pledge-class rosters, so adding a
+// class updates them. Alumni cannot be: the only record is the alumni sheet,
+// which is not in this repo. Counted from it on 2026-08-22 — 369 unique names,
+// less the 72 who are still active brothers — giving 297 on record.
+//
+// Rounded up to 300, which StatItem renders as "300+". That reads as a claim of
+// at least 300, three more than were counted, and it holds only because the
+// sheet is an incomplete record: 40 pledge classes are represented but plenty
+// of older alumni were never entered. It is a floor, not a measurement. Drop it
+// to 290 if you want the "+" to be true on the counted number alone.
+// See docs/database.md for how to recount rather than nudging this by hand.
+const totalAlumni = 300;
 
 // StatItem component with forwardRef to get references for animations
 interface StatItemProps {

@@ -1,5 +1,12 @@
+# Abort on the first failing check — without this the hook exits with the
+# status of the last command only, so an earlier failure would still commit.
+set -e
+
 # Run type check
 bun check-types
 
 # Run lint
 bun lint
+
+# Run data-integrity tests
+bun test

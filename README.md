@@ -74,10 +74,13 @@ docs/         Everything above
 | `bun check-types` | TypeScript check           |
 | `bun lint`        | ESLint + Prettier          |
 | `bun format`      | Fix formatting             |
-| `bun build`       | Production build           |
+| `bun test`        | Data-integrity tests       |
+| `bun run build`   | Production build           |
 | `bun start`       | Serve the production build |
 
-`bun check-types` and `bun lint` also run automatically before every commit.
+`bun check-types`, `bun lint`, and `bun test` also run automatically before
+every commit. Note `bun run build`, not bare `bun build` — `build` is a bun
+builtin and would run bun's bundler instead of Next's.
 
 ## Contributing
 
@@ -92,13 +95,18 @@ deliberate about what personal information goes on a public page.
 
 Documented honestly so nobody rediscovers them the hard way:
 
-- **`/database` is not actually protected.** The password check is client-side
-  and the API route behind it is unauthenticated, so the alumni sheet is
-  effectively public. See [docs/database.md](docs/database.md). Fix in progress.
-- **No tests and no CI.** Verification is `bun check-types`, `bun lint`, and
-  looking at the page.
-- **No server components.** Every page is `'use client'`, so no page can export
-  `metadata` and nothing is server-rendered.
+- **`/database`'s old password is in git history.** The gate itself is now
+  enforced server-side — signed HttpOnly cookie, 401 on the sheet route — but
+  the password that was hardcoded in source before that fix cannot be unpublished
+  from a public repo. Rotate `DATABASE_PASSWORD` before relying on the gate. See
+  [docs/database.md](docs/database.md).
+- **No CI.** Nothing runs on a PR. `bun test` covers image/data integrity, the
+  derived roster counts, the sitemap, and the `/database` gate, but there are no
+  component or end-to-end tests. Verification is `bun check-types`, `bun lint`,
+  `bun test`, and looking at the page.
+- **Every _page_ is `'use client'`,** so no page can export `metadata` and none
+  is server-rendered. The server components are `app/layout.tsx` (the only file
+  that exports `metadata`), `not-found.tsx`, `sitemap.ts` and `robots.ts`.
 - **Dark mode is wired but unreachable** — the provider is pinned to light and
   no toggle exists.
 - Some dead code and stale config remain; they're listed at the end of

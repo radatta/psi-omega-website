@@ -1,16 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-// import { DataTable } from './DataTable'; // Old DataTable, will be replaced
-import { getColumns } from './columns'; // Import from new columns.tsx
-import { DataTable as ShadcnDataTable } from '@/components/database/data-table'; // New shadcn data-table component (to be created)
+import { getColumns } from './columns';
+import { DataTable as ShadcnDataTable } from '@/components/database/data-table';
+import {
+    SheetGrid,
+    filterPopulatedRows,
+    toRowObjects,
+} from '@/lib/database/sheet';
 
 export default function Database() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [unlocked, setUnlocked] = useState(false); // For testing, default to true
-    const [rawData, setRawData] = useState<any[][]>([]); // Renamed to rawData
+    const [unlocked, setUnlocked] = useState(false);
+    const [rawData, setRawData] = useState<SheetGrid>([]);
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -20,45 +23,39 @@ export default function Database() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ password }),
         });
-        const dataRes = await res.json();
-        if (dataRes.success) {
+        if (res.ok) {
+            setPassword('');
             setUnlocked(true);
+        } else if (res.status === 503) {
+            setError('The database is not configured. Contact an admin.');
         } else {
             setError('Incorrect password');
         }
     }
 
     useEffect(() => {
-        if (unlocked) {
-            fetch('/database/api/sheet')
-                .then((res) => res.json())
-                .then((fetchedData) => {
-                    if (fetchedData && Array.isArray(fetchedData)) {
-                        const filtered = fetchedData.filter(
-                            (row: any, idx: number) =>
-                                idx === 0 ||
-                                (row && row[4] && String(row[4]).trim() !== '')
-                        );
-                        setRawData(filtered);
-                    }
-                });
-        }
+        if (!unlocked) return;
+        fetch('/database/api/sheet')
+            .then((res) => {
+                // The session cookie is the real gate; if it is missing or
+                // expired the server says so and we drop back to the form.
+                if (res.status === 401) {
+                    setUnlocked(false);
+                    setError('Your session expired. Please log in again.');
+                    return null;
+                }
+                if (!res.ok) throw new Error(`sheet request ${res.status}`);
+                return res.json();
+            })
+            .then((fetchedData) => {
+                if (fetchedData && Array.isArray(fetchedData)) {
+                    setRawData(filterPopulatedRows(fetchedData));
+                }
+            })
+            .catch(() => setError('Could not load the database.'));
     }, [unlocked]);
 
-    // Transform rawData (arrays) into data suitable for TanStack Table (array of objects)
-    const processedData = useMemo(() => {
-        if (!rawData || rawData.length < 1 || !rawData[0]) return [];
-        const headers = rawData[0] as string[];
-        return rawData.slice(1).map((row: any[]) => {
-            const obj: Record<string, any> = {};
-            headers.forEach((header: string, i: number) => {
-                const key = header || `_col_${i}`;
-                obj[key] =
-                    row[i] !== undefined && row[i] !== null ? row[i] : '';
-            });
-            return obj;
-        });
-    }, [rawData]);
+    const processedData = useMemo(() => toRowObjects(rawData), [rawData]);
 
     const columns = useMemo(() => getColumns(rawData), [rawData]);
 
@@ -112,9 +109,7 @@ export default function Database() {
                     </div>
                 ) : (
                     <div>
-                        {/* <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">Alumni Database</h2> */}
                         {processedData.length > 0 && columns.length > 0 ? (
-                            // Replace with ShadcnDataTable once it's created
                             <ShadcnDataTable
                                 columns={columns}
                                 data={processedData}
@@ -124,7 +119,6 @@ export default function Database() {
                                 <p className='text-gray-600 text-xl'>
                                     Loading data or no data available...
                                 </p>
-                                {/* Optional: Add a spinner here */}
                             </div>
                         )}
                     </div>

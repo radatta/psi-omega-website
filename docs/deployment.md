@@ -50,19 +50,27 @@ Loose convention, no enforcement: `feat/`, `fix/`, `refactor/`, `docs/`,
 
 ## Environment variables
 
-The two variables from [getting-started.md](getting-started.md) must **also** be
-set in Vercel. Your local `.env` is not deployed — it's gitignored and never
+The database variables from [getting-started.md](getting-started.md) must
+**also** be set in Vercel. Your local `.env` is not deployed — it's gitignored and never
 leaves your machine.
 
 In the Vercel dashboard: **Project → Settings → Environment Variables**.
 
-| Variable                         | Value                                    |
-| -------------------------------- | ---------------------------------------- |
-| `GOOGLE_SHEET_ID`                | The spreadsheet id                       |
-| `GOOGLE_APPLICATION_CREDENTIALS` | The whole service-account JSON, one line |
+| Variable                         | Value                                       |
+| -------------------------------- | ------------------------------------------- |
+| `DATABASE_PASSWORD`              | The shared password for `/database`         |
+| `DATABASE_SESSION_SECRET`        | Random cookie signing key, not the password |
+| `NEXT_PUBLIC_SITE_URL`           | Optional — the site's absolute origin       |
+| `GOOGLE_SHEET_ID`                | The spreadsheet id                          |
+| `GOOGLE_APPLICATION_CREDENTIALS` | The whole service-account JSON, one line    |
 
 Same trap as locally: `GOOGLE_APPLICATION_CREDENTIALS` is the **contents** of
 the JSON key file, not a path.
+
+`NEXT_PUBLIC_SITE_URL` is optional. Vercel sets `VERCEL_PROJECT_PRODUCTION_URL`
+itself, and `sitemap.xml` / `robots.txt` fall back to it, so production is
+correct without doing anything. Set it explicitly if you want the custom domain
+used in preview deployments as well.
 
 Set them for all three environments (Production, Preview, Development), or the
 database page will work in production and fail on every PR preview.
@@ -81,11 +89,13 @@ The usual causes, in order:
 1. **A TypeScript error.** The pre-commit hook catches these, so this mostly
    happens when someone bypassed it with `--no-verify`. Run `bun check-types`
    locally.
-2. **A build-only error.** `bun build` is stricter than `bun dev`. If a
-   deployment fails but the site runs fine locally, run `bun build` locally to
-   reproduce it.
-3. **A missing environment variable.** The database route throws at startup if
-   either variable is absent, which fails the whole build, not just that page.
+2. **A build-only error.** `bun run build` is stricter than `bun dev`. If a
+   deployment fails but the site runs fine locally, run `bun run build` locally
+   to reproduce it. (It must be `bun run build` — bare `bun build` invokes
+   bun's own bundler and never reaches `next build`.)
+3. **A missing environment variable.** This no longer fails the build — the
+   database route checks its variables per-request and returns 503 — but
+   `/database` will be broken in the deployed site.
 
 A failed deployment does **not** take the live site down. Vercel keeps serving
 the last successful build.

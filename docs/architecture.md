@@ -38,12 +38,23 @@ One directory per page under `app/`, each containing a `page.tsx`.
 Plus two API routes under `app/database/api/`, covered in
 [database.md](database.md).
 
-`app/layout.tsx` wraps every page with the navbar, footer, and fonts.
+`app/layout.tsx` wraps every page with the navbar, footer, and fonts. Alongside
+it are the App Router's special files: `not-found.tsx` (404), `error.tsx` (the
+per-page error boundary — it must be a client component), `global-error.tsx`
+(which catches throws from the root layout itself, since `error.tsx` renders
+inside it), and `sitemap.ts` / `robots.ts`, which Next serves as `/sitemap.xml`
+and `/robots.txt`. Both of those exclude `/database`, and both need an absolute
+origin, which comes from `lib/utils/site-url.ts`.
 
-## Everything is a client component
+There is no `loading.tsx`. Every page is statically prerendered, so there is no
+loading state to show — adding one would only introduce a flash.
 
-**All eight pages start with `'use client'`.** There are no server components in
-this codebase.
+## Every page is a client component
+
+**All eight pages start with `'use client'`.** The server components are
+`app/layout.tsx` — which is why it is the only file that can export `metadata` —
+plus `app/not-found.tsx`, `app/sitemap.ts` and `app/robots.ts`. None of them is
+a `page.tsx`, though `not-found.tsx` does render for any unmatched URL.
 
 This matters more than it sounds:
 
@@ -100,14 +111,6 @@ memoriesPhotosPaths: { src, alt }[]  // src is a full path from /
 Note the inconsistency between `legacy_data` (bare filename, page prepends the
 directory) and `memories_data` (full path). Match whichever file you're editing.
 
-### Dead data
-
-`lib/brothers_data.ts` also exports `schoolsCollegesData` and
-`classDistributionData` at the bottom. Nothing imports them. They fed
-`components/charts/pie-chart.tsx`, which nothing imports either. Ignore them —
-they're the reason a name-vs-photo audit turns up entries like
-`Leavey-School-of-Business.jpg`.
-
 ## Components
 
 ```
@@ -144,8 +147,8 @@ mismatch renders a blank box.
 This is the most important contract in the codebase because it's the one that
 gets broken every term. See [content-updates.md](content-updates.md).
 
-The card accepts a `linkedin` prop that no data file supplies, and ignores the
-`year` field that every pledge-class entry has. Both are harmless.
+The card ignores the `year` field that every pledge-class entry has. Harmless —
+pages spread `{...member}` and the card takes only what it renders.
 
 ## Images
 
@@ -188,10 +191,10 @@ completely different.
 Plus light and dark HSL variable sets further down the same file. That's the
 whole theme — chapter colours, and the shadcn palette.
 
-> **`tailwind.config.ts` in the repo root is never loaded.** It's a leftover
-> v3-style config, and Tailwind v4 only reads such a file when a `@config`
-> directive points at it. Nothing does. Editing that file has no effect
-> whatsoever — a genuine trap. Change `app/globals.css` instead.
+> **There is no `tailwind.config.ts`, and there shouldn't be.** Tailwind v4
+> only reads one when a `@config` directive points at it, and nothing here
+> does. A v3-style config file used to sit in the repo root doing nothing at
+> all; it was deleted. Change `app/globals.css` instead.
 
 ### Fonts
 
@@ -235,24 +238,37 @@ The common pattern is a fade-and-rise on scroll:
 
 ## Utilities
 
+Three small modules live in `lib/utils/`:
+
+| Module        | What it does                                                     |
+| ------------- | ---------------------------------------------------------------- |
+| `cn.ts`       | Merges Tailwind class names                                      |
+| `roster.ts`   | Derives member and major counts from the pledge-class rosters    |
+| `site-url.ts` | Resolves the absolute site origin for `sitemap.ts` / `robots.ts` |
+
+Server-only code lives in `lib/server/` instead — currently the `/database`
+session signing and login rate limiter. Keeping it out of `lib/utils/` means a
+stray import can't drag `node:crypto` into a client bundle.
+
 `cn()` merges Tailwind class names. It lives at **`lib/utils/cn.ts`**:
 
 ```ts
 import { cn } from '@/lib/utils/cn';
 ```
 
-> `components.json` still points shadcn at the default `@/lib/utils`, so
-> `shadcn add` generates imports from the wrong path. Fix them by hand after
-> adding a component.
+> `components.json` points shadcn's `utils` alias at `@/lib/utils/cn`, so
+> `shadcn add` now generates the right import. It used to point at the default
+> `@/lib/utils`, which produced imports that didn't resolve.
 
 ## Path aliases
 
 `@/` maps to the project root — `@/lib/rush_data`, `@/components/navbar`. It's
 the only alias in real use.
 
-`tsconfig.json` declares four more (`@components/*`, `@hooks/*`, `@lib/*`,
-`@utils/*`, `@ui/*`) that nothing imports. `@ui/*` points at `./lib/ui/*`, which
-doesn't exist. Ignore all of them and use `@/`.
+It is also the only alias declared. `tsconfig.json` used to carry five more
+(`@components/*`, `@hooks/*`, `@lib/*`, `@utils/*`, `@ui/*`) that nothing
+imported — one of them pointing at a `lib/ui/` directory that has never
+existed. They were removed. Use `@/`.
 
 ## Tooling
 
@@ -260,25 +276,31 @@ doesn't exist. Ignore all of them and use `@/`.
 - **ESLint + Prettier**, with Prettier violations reported as lint _errors_ —
   formatting is enforced, not suggested. 4-space indent, single quotes,
   semicolons, 80 columns. Run `bun format` rather than fixing by hand.
-- **Husky** runs `bun check-types` and `bun lint` before every commit.
-- **No test suite and no test runner.** Verification is types, lint, and looking
-  at the page.
+- **Husky** runs `bun check-types`, `bun lint`, and `bun test` before every
+  commit.
+- **Tests** run on bun's built-in runner — no test framework in `package.json`.
+  Nine files:
+
+    | File                       | Covers                                           |
+    | -------------------------- | ------------------------------------------------ |
+    | `data-integrity.test.ts`   | Every `/images/...` path resolves, no orphans    |
+    | `roster.test.ts`           | Derived member counts vs photos on disk          |
+    | `site-routes.test.ts`      | The sitemap covers every page                    |
+    | `site-url.test.ts`         | The origin is always a parseable URL             |
+    | `session.test.ts`          | Session token signing and verification           |
+    | `rate-limit.test.ts`       | Login throttling                                 |
+    | `database-routes.test.ts`  | The `/database` gate, via the real handlers      |
+    | `database-sheet.test.ts`   | Sheet grid → rows, and header → column decisions |
+    | `database-columns.test.ts` | Column sizes, sorting flags and cell renderers   |
+
+    There are **no component tests** — for anything visual, still look at the page.
 
 ## Known rough edges
 
 Things that are true today and will confuse you if you don't know them:
 
 - Every page is `'use client'`; no page can export `metadata`.
-- `tailwind.config.ts` is inert.
-- `components.json` and four `tsconfig.json` aliases are stale.
-- `framer-motion` is imported but not declared as a dependency.
 - Dark mode is wired but unreachable.
-- `components/charts/pie-chart.tsx` and its data are dead; `chart.js` is in
-  `package.json` solely for them.
-- `components/database/DataTable.tsx` is dead, and differs from the live
-  `data-table.tsx` only by filename case.
-- `components/about/statistics-section.tsx` hardcodes `totalMembers = 86` while
-  the roster data contains 90.
-- No `not-found.tsx`, `error.tsx`, `sitemap.ts`, or `robots.ts`.
-- `eslint` sits in `dependencies` rather than `devDependencies`, and
-  `eslint-config-next` is pinned a patch behind `next`.
+- `eslint-config-next` is pinned a patch behind `next` (15.2.4 vs 15.2.8).
+- ESLint still uses the legacy `.eslintrc.json` format under Next 15, which
+  defaults to flat config. It works; migrating needs ESLint 9.
