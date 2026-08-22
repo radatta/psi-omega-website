@@ -279,12 +279,22 @@ existed. They were removed. Use `@/`.
 ## Tooling
 
 - **Bun** for installs and scripts. `bun.lock` is the committed lockfile.
-- **`bunfig.toml` pins the test root to `tests/`.** `bun test` is a bun
-  builtin, so it ignores the `package.json` `test` script and would
-  otherwise walk the whole tree — including gitignored scratch in
-  `localNotes/`, whose unrelated suites fail and take the pre-commit hook
-  down with them. `tsconfig.json` excludes the same directories for the
-  same reason.
+- **All three pre-commit checks are scoped to the app directories, and each
+  scopes itself differently.** `lint` takes `--dir` flags, `tsconfig.json`
+  lists its `include` paths explicitly, and `bun test` is pinned by
+  `bunfig.toml`'s `[test] root`. The reason is that gitignored scratch
+  lives in this repo — `localNotes/`, `.kiro/`, and `.claude/worktrees/`,
+  the last of which is a whole second checkout of this app. Anything that
+  walks the tree by default picks those up, and since `.husky/pre-commit`
+  runs under `set -e`, one stray broken file in scratch blocks every
+  commit in the repo. `include` is an allowlist on purpose: a denylist
+  would need editing every time a new tool drops a directory in the root.
+  `bun test` needs the config file because it is a bun **builtin** — like
+  `bun build`, it never reads the `package.json` script of the same name.
+- **After changing `include`/`exclude` in `tsconfig.json`, delete
+  `.next/cache/.tsbuildinfo`.** `incremental` is on, so `next build`
+  otherwise reuses the old file list and reports type errors in files the
+  config no longer covers. `bun check-types` is unaffected.
 - **ESLint + Prettier**, with Prettier violations reported as lint _errors_ —
   formatting is enforced, not suggested. 4-space indent, single quotes,
   semicolons, 80 columns. Run `bun format` rather than fixing by hand.
