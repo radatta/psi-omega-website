@@ -1,13 +1,13 @@
 // Data for Executive Committee
 export const executiveCommittee = [
     { name: 'Kyle Chew', position: 'President' },
+    { name: 'Braden Auerbach', position: 'Executive Vice President' },
     { name: 'Kyle Poon', position: 'VP of Membership' },
     { name: 'Shayla Bansal', position: 'VP of Policy' },
     { name: 'Raegan Shum', position: 'VP of Communications' },
     { name: 'Malia Aquino', position: 'VP of Marketing' },
     { name: 'Conan Xie', position: 'VP of Finance' },
     { name: 'Aayush Kumbhare', position: 'VP of Relations' },
-    { name: 'Braden Auerbach', position: 'Executive Vice President' },
 ];
 
 // Data for Committee Chairs
