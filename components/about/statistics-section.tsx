@@ -8,7 +8,9 @@ import { totalMajors, totalMembers } from '@/lib/utils/roster';
 // Members and majors are derived from the pledge-class rosters, so adding a
 // class updates them. Alumni cannot be: the only record is the alumni sheet,
 // which is not in this repo. Counted from it on 2026-08-22 — 369 unique names,
-// less the 72 who are still active brothers — giving 297 on record.
+// less the 72 who were then active brothers — giving 297 on record. That count
+// predates the Winter 2026 roster update, which moved 26 people off the active
+// roster; they are alumni now, so 297 is a floor that has since risen.
 //
 // Rounded up to 300, which StatItem renders as "300+". That reads as a claim of
 // at least 300, three more than were counted, and it holds only because the

@@ -267,10 +267,15 @@ column E of their row.
 `components/about/statistics-section.tsx` hardcodes `totalAlumni`, because the
 repo has no alumni list to derive it from. The number comes from this sheet, and
 the derivation matters: **the sheet is a chapter directory, not an alumni list.**
-On 2026-08-22 it held 369 unique names, of which **72 were current active
+On 2026-08-22 it held 369 unique names, of which **72 were then active
 brothers** — so alumni-on-record was 369 − 72 = **297**. Counting rows and
 calling it the alumni total would overstate it by roughly the size of the active
 chapter.
+
+That count was taken against the pre-Winter-2026 roster of 90. The roster is now
+82: the 26 people removed in that update graduated or left, so they have moved
+from the active side to the alumni side. **297 is therefore a low estimate**, and
+the rendered `300+` remains true. Recount before quoting a precise figure.
 
 To recount, log in and compare unique `FIRST LAST` in the sheet against
 `activeBrothers` in `lib/utils/roster.ts`. Match on normalised names and expect

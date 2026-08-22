@@ -127,10 +127,9 @@ Then scroll to the very bottom of the file, to the last `</section>` before
 labels it — and paste it after, then change four things: the comment, the
 background class, the array name, and the heading text.
 
+<!-- prettier-ignore -->
 ```tsx
-{
-    /* Alpha Phi | Fall 2026 */
-}
+{/* Alpha Phi | Fall 2026 */}
 <section className='py-16 bg-gray-50'>
     <div className='container'>
         <motion.h2
@@ -159,7 +158,7 @@ background class, the array name, and the heading text.
             ))}
         </div>
     </div>
-</section>;
+</section>
 ```
 
 The `className` on the section alternates `py-16 bg-white` and
