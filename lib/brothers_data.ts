@@ -12,20 +12,21 @@ export const executiveCommittee = [
 
 // Data for Committee Chairs
 export const committeeChairs = [
-    { name: 'Sanjana Badami + Isha Nag', position: 'Fundraising' },
-    { name: 'Vaishnavi Tatipamula + Noor Khan', position: 'Professional' },
-    { name: 'Kyle Poon + Hyatt Tullu', position: 'Service' },
-    { name: 'Naila Ahsan + Clair Kim', position: 'Brotherhood' },
-
-    { name: 'Aayush Kumbhare + Megha Narumanchi', position: 'STEAM' },
-    { name: 'Dzidzo Lassey + Kaardhika Nair', position: 'Wellness' },
-
     {
-        name: 'Juana Melgoza + Sabrina Amaro',
+        name: 'Ankith Srinivas + Saahas Krishnamsetty',
+        position: 'Professional',
+    },
+    { name: 'Siri Venkatagiri + Anisa Taymuree', position: 'Service' },
+    {
+        name: 'Sabrina Amaro + Kashina Daceus',
         position: 'Diversity, Equity, & Inclusion',
     },
-    { name: 'Marcus Jackson + Youki Imai', position: 'Social' },
-    { name: 'Shayla Bansal + Anna Brundage', position: 'Content' },
+    { name: 'Camden Ogawa + Erica Tjandrasuwita', position: 'Fundraising' },
+    { name: 'Justin Shao + Julian Trotzenberg', position: 'STEAM' },
+    { name: 'Kaiya Lu + Kingsten Cambra', position: 'Wellness' },
+    { name: 'Aidan Kwapisz + Konstantine Mamoulelis', position: 'Brotherhood' },
+    { name: 'Minh Than + Lucca Walls', position: 'Social' },
+    { name: 'Clair Kim', position: 'Content' },
 ];
 
 // Data for Alpha Omicron | Fall 2023
