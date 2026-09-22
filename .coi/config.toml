@@ -4,7 +4,7 @@
 
 [container]
 image      = "coi-default"   # Node 22 + pnpm + jq + git; only chromium missing (defer)
-persistent = false           # ephemeral; workspace is the host mount so code always survives
+persistent = true            # kept running when you leave → reconnect with `coi attach`; `coi shutdown` still deletes it
 alias      = "psi-omega-website"
 
 [tool]
@@ -12,31 +12,43 @@ name            = "claude"
 permission_mode = "bypass"   # == --dangerously-skip-permissions; safe only because the container is the boundary
 
 [limits.cpu]
-count     = "6"      # pin all 6 vCPUs
-allowance = "80%"    # cap burst so guest OS + COI monitor aren't starved
+count     = "4"      # pinned vCPUs; may overlap with other projects' — idle containers cost nothing
+allowance = "80%"    # soft share, so the guest OS + COI monitor aren't starved
 
 [limits.memory]
-limit = "12GiB"
-swap  = "4GiB"
+limit = "4GiB"       # other projects' 12 + psi 4 must fit the VM (22 GiB) with room to spare
+swap  = "2GiB"
 
 [limits.runtime]
-max_processes = 300   # integer, not a quoted string
+max_processes = 2048   # integer, not a quoted string; the default of 300 SIGABRTs a second session
 # max_duration — night profile only
 
 [network]
-mode = "restricted"   # CONFIRMED by your run output
+mode = "restricted"
 
+# Own port band: 5173+ is the Mac's. Host pinned to container so
+# localhost:7173 on the Mac is the same server. Run the dev server on 7173 inside the container.
 [[ports.map]]
 name      = "vite"
-container = 5174
+container = 7173
+host      = 7173
+[[ports.map]]
+name      = "vite1"
+container = 7174
+host      = 7174
+[[ports.map]]
+name      = "vite2"
+container = 7175
+host      = 7175
 
 [monitoring]
 enabled               = true
 poll_interval_sec     = 2
 auto_pause_on_high    = true
 auto_kill_on_critical = true
-file_read_threshold_mb    = 50
-file_read_rate_mb_per_sec = 10
+# 50 / 10 froze a session 2 min in on normal startup reads (apertur's values.
+file_read_threshold_mb    = 500
+file_read_rate_mb_per_sec = 250
 
 [monitoring.nft]
 enabled               = true
