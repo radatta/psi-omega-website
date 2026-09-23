@@ -273,7 +273,7 @@ calling it the alumni total would overstate it by roughly the size of the active
 chapter.
 
 That count was taken against the pre-Winter-2026 roster of 90. The roster is now
-82: the 26 people removed in that update graduated or left, so they have moved
+81: the people removed in that update graduated or left, so they have moved
 from the active side to the alumni side. **297 is therefore a low estimate**, and
 the rendered `300+` remains true. Recount before quoting a precise figure.
 

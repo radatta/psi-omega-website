@@ -24,10 +24,17 @@
     },
     "include": [
         "next-env.d.ts",
-        "**/*.ts",
-        "**/*.tsx",
+        "*.ts",
         ".next/types/**/*.ts",
-        "next.config.js"
+        "app/**/*.ts",
+        "app/**/*.tsx",
+        "components/**/*.ts",
+        "components/**/*.tsx",
+        "hooks/**/*.ts",
+        "hooks/**/*.tsx",
+        "lib/**/*.ts",
+        "lib/**/*.tsx",
+        "tests/**/*.ts"
     ],
     "exclude": ["node_modules"]
 }
