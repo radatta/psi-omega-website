@@ -141,7 +141,7 @@ export const alphaSigma = [
         year: '2028',
     },
     { name: 'Naila Ahsan', major: 'Economics', year: '2028' },
-    { name: 'Aidan Kwapisz', major: 'Economics & Mathematics', year: '2028' },
+    { name: 'Aidan Kwapisz', major: 'Finance', year: '2028' },
     { name: 'Kaiya Lu', major: 'Finance', year: '2028' },
 ];
 
