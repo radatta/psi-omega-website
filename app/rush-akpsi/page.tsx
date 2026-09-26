@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Mail } from 'lucide-react';
 import RushFAQ from '@/components/rush/rush-faq';
 import RushVideo from '@/components/rush/rush-video';
-import RushCountdown from '@/components/home/rush-countdown';
+import RushCountdown from '@/components/rush/rush-countdown';
 import { motion } from 'motion/react';
 import { currentRushData } from '@/lib/rush_data';
 
@@ -140,7 +140,10 @@ export default function RushPage() {
                             >
                                 {currentRushData.rushWeek}
                             </motion.h2>
-                            <RushCountdown start={currentRushData.rushStart} />
+                            <RushCountdown
+                                start={currentRushData.rushStart}
+                                end={currentRushData.rushEnd}
+                            />
                         </motion.div>
 
                         <motion.div

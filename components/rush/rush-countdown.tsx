@@ -50,11 +50,19 @@ const Unit = ({ value, label }: { value?: number; label: string }) => {
     );
 };
 
-export default function RushCountdown({ start }: { start: string }) {
+export default function RushCountdown({
+    start,
+    end,
+}: {
+    start: string;
+    end: string;
+}) {
     const target = new Date(start).getTime();
+    const endTime = new Date(end).getTime();
     // Undefined until mounted, so server and client render the same markup.
     const [parts, setParts] = useState<Parts | null>();
     const [when, setWhen] = useState('');
+    const [over, setOver] = useState(false);
 
     useEffect(() => {
         setWhen(
@@ -67,11 +75,16 @@ export default function RushCountdown({ start }: { start: string }) {
                 timeZone: 'America/Los_Angeles',
             })
         );
-        const tick = () => setParts(partsUntil(target));
+        const tick = () => {
+            setParts(partsUntil(target));
+            setOver(Date.now() >= endTime);
+        };
         tick();
         const id = setInterval(tick, 1000);
         return () => clearInterval(id);
-    }, [start, target]);
+    }, [start, target, endTime]);
+
+    if (over) return null;
 
     if (parts === null)
         return (
