@@ -169,7 +169,7 @@ export const alphaTau = [
         year: '2029',
     },
     { name: 'Matthew Ikeda', major: 'Accounting', year: '2028' },
-    { name: 'Malia Aquino', major: 'Business Undeclared', year: '2029' },
+    { name: 'Malia Aquino', major: 'Finance', year: '2029' },
     { name: 'Joseph Bui', major: 'Finance', year: '2029' },
     { name: 'Kathryn Kimyai', major: 'Psychology', year: '2029' },
     { name: 'Max Lin', major: 'Finance', year: '2029' },

@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { motion } from 'motion/react';
 import { TypewriterEffect } from '@/components/home/typewriter-effect';
+import RushCountdown from '@/components/rush/rush-countdown';
+import { currentRushData } from '@/lib/rush_data';
 
 export default function Home() {
     const taglineWords = [
@@ -335,6 +337,10 @@ export default function Home() {
                         how we can help you invest in your future and enhance
                         your college experience.
                     </motion.h3>
+                    <RushCountdown
+                        start={currentRushData.rushStart}
+                        end={currentRushData.rushEnd}
+                    />
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
