@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Mail } from 'lucide-react';
 import RushFAQ from '@/components/rush/rush-faq';
+import RushVideo from '@/components/rush/rush-video';
 import { motion } from 'motion/react';
 import { currentRushData } from '@/lib/rush_data';
 
@@ -243,20 +244,13 @@ export default function RushPage() {
                                 about!
                             </motion.h3>
                             <motion.div
-                                className='aspect-video w-full'
+                                className='mx-auto w-full max-w-2xl aspect-[4/3]'
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8, delay: 0.4 }}
                                 viewport={{ once: true }}
-                                whileHover={{ scale: 1.02 }}
                             >
-                                <iframe
-                                    className='w-full h-full rounded-lg shadow-lg'
-                                    src='https://www.youtube.com/embed/deYrnHClMUM'
-                                    title='Alpha Kappa Psi Rush Video'
-                                    allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-                                    allowFullScreen
-                                ></iframe>
+                                <RushVideo />
                             </motion.div>
                         </motion.div>
                     </div>
