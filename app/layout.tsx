@@ -8,6 +8,7 @@ import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
 import AnimatePage from '@/components/ui/animate-page';
 import { siteUrl } from '@/lib/utils/site-url';
+import { Analytics } from '@vercel/analytics/next';
 
 const cerapro = localFont({
     src: [
@@ -111,6 +112,7 @@ export default function RootLayout({
                         <Footer />
                     </AnimatePage>
                 </ThemeProvider>
+                <Analytics />
             </body>
         </html>
     );

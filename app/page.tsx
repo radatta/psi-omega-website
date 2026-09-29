@@ -5,17 +5,24 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { motion } from 'motion/react';
+import { useRef } from 'react';
 import { TypewriterEffect } from '@/components/home/typewriter-effect';
+import { HeroVideo } from '@/components/home/hero-video';
 import RushCountdown from '@/components/rush/rush-countdown';
 import { currentRushData } from '@/lib/rush_data';
 
+// Module-level so re-renders (e.g. the hero video finishing) don't hand the
+// typewriter a new array and restart it.
+const taglineWords = [
+    { text: 'SHAPING' },
+    { text: 'PEOPLE,', pauseAfter: 1000 },
+    { text: 'SHAPING' },
+    { text: 'BUSINESS' },
+];
+
 export default function Home() {
-    const taglineWords = [
-        { text: 'SHAPING' },
-        { text: 'PEOPLE,', pauseAfter: 1000 },
-        { text: 'SHAPING' },
-        { text: 'BUSINESS' },
-    ];
+    // HeroVideo sets this block's opacity as the video plays.
+    const heroTextRef = useRef<HTMLDivElement>(null);
     return (
         <main className='min-h-screen'>
             {/* Hero Section */}
@@ -29,16 +36,7 @@ export default function Home() {
                     animate={{ scale: 1 }}
                     transition={{ duration: 1.5, ease: 'easeOut' }}
                 >
-                    <Link href='/'>
-                        <Image
-                            src='/images/hero.png'
-                            alt='Alpha Kappa Psi Brotherhood'
-                            fill
-                            className='object-cover'
-                            priority
-                        />
-                    </Link>
-                    <div className='absolute inset-0 bg-black/50'></div>
+                    <HeroVideo textRef={heroTextRef} />
                 </motion.div>
                 <motion.div
                     className='container z-10 text-center'
@@ -46,37 +44,43 @@ export default function Home() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.5 }}
                 >
-                    <motion.h1
-                        className='text-4xl md:text-6xl font-bold mb-4'
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.8 }}
+                    <div
+                        ref={heroTextRef}
+                        // Matches the video's fade to the still.
+                        className='transition-opacity duration-[2500ms] lg:opacity-75'
                     >
-                        <TypewriterEffect
-                            words={taglineWords}
+                        <motion.h1
                             className='text-4xl md:text-6xl font-bold mb-4'
-                            cursorClassName='bg-white h-8 md:h-12'
-                            delay={2000}
-                        />
-                    </motion.h1>
-                    <motion.h3
-                        className='text-xl md:text-2xl mb-8'
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 1.1 }}
-                    >
-                        Alpha Kappa Psi is recognized as the premier developer
-                        of principled business leaders.
-                    </motion.h3>
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 1.4 }}
-                    >
-                        <Button asChild variant={'link'} size={'lg'}>
-                            <Link href='/about-akpsi'>LEARN MORE</Link>
-                        </Button>
-                    </motion.div>
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.8 }}
+                        >
+                            <TypewriterEffect
+                                words={taglineWords}
+                                className='text-4xl md:text-6xl font-bold mb-4'
+                                cursorClassName='bg-white h-8 md:h-12'
+                                delay={2000}
+                            />
+                        </motion.h1>
+                        <motion.h3
+                            className='text-xl md:text-2xl mb-8'
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 1.1 }}
+                        >
+                            Alpha Kappa Psi is recognized as the premier
+                            developer of principled business leaders.
+                        </motion.h3>
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 1.4 }}
+                        >
+                            <Button asChild variant={'link'} size={'lg'}>
+                                <Link href='/about-akpsi'>LEARN MORE</Link>
+                            </Button>
+                        </motion.div>
+                    </div>
                 </motion.div>
                 <motion.div
                     className='absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center'

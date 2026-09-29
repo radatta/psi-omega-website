@@ -48,6 +48,7 @@ bun.lockb
 google-service-account.json
 
 .kiro
+.codex
 
 # local scratch — never tracked
 localNotes

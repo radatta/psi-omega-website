@@ -126,10 +126,10 @@ describe('memories', () => {
     });
 });
 
-// Catch-all: any '/images/...' literal anywhere in source must resolve.
-// This covers the inline event galleries in app/events/page.tsx and every
-// hero image, which no data file exports.
-describe('image literals in source', () => {
+// Catch-all: any '/images/...' or '/videos/...' literal anywhere in source
+// must resolve. This covers the inline event galleries in app/events/page.tsx,
+// every hero image, and the rush video, which no data file exports.
+describe('asset literals in source', () => {
     const sourceFiles = (dir: string): string[] =>
         readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
             const p = join(dir, e.name);
@@ -143,13 +143,13 @@ describe('image literals in source', () => {
         expect(files.length).toBeGreaterThan(20);
     });
 
-    test('every referenced image path exists in public/', () => {
+    test('every referenced asset path exists in public/', () => {
         const missing: string[] = [];
         let found = 0;
         for (const file of files) {
             const matches =
                 readFileSync(file, 'utf8').match(
-                    /['"`](\/images\/[^'"`${}]+)['"`]/g
+                    /['"`](\/(?:images|videos)\/[^'"`${}]+)['"`]/g
                 ) ?? [];
             for (const m of matches) {
                 found++;
