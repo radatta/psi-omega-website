@@ -165,10 +165,10 @@ export const HeroVideo = ({
                         {muted && !done && !paused && (
                             <motion.div
                                 key='sound-hint'
-                                className='pointer-events-none absolute bottom-8 right-[7.25rem] p-2 text-white/70'
+                                className='pointer-events-none absolute bottom-8 right-[7.25rem] p-[5px] text-white/70'
                                 aria-hidden='true'
                                 initial={{ opacity: 0 }}
-                                animate={{ opacity: 1, x: [0, 4, 0] }}
+                                animate={{ opacity: 1, x: [0, 5, 0] }}
                                 exit={{
                                     opacity: 0,
                                     transition: { duration: 0.3 },
@@ -182,7 +182,7 @@ export const HeroVideo = ({
                                     },
                                 }}
                             >
-                                <ArrowRight size={18} />
+                                <ArrowRight size={24} strokeWidth={2.25} />
                             </motion.div>
                         )}
                     </AnimatePresence>
