@@ -8,9 +8,9 @@ export const currentRushData = {
     rushEnd: '2026-10-03T00:00:00-07:00',
     rushFlyer: '/images/rush/rush-flyer.png',
     rushMailingList:
-        'https://docs.google.com/forms/d/e/1FAIpQLSfbbMGFp-1sXfBL059j8WxMcpqQf5qYRtVuqW8ziQm6QRiQ-w/viewform',
+        'https://docs.google.com/forms/d/e/1FAIpQLSeQjXkRljR4H7mXBQkFONaLumUA1GxwwK97maoNceerjRWSzQ/viewform',
     rushApplication: {
-        link: '',
+        link: 'https://docs.google.com/forms/d/e/1FAIpQLSfbbMGFp-1sXfBL059j8WxMcpqQf5qYRtVuqW8ziQm6QRiQ-w/viewform',
         dueDate: 'September 30th @ 5:00 PM',
     },
 };
