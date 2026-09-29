@@ -47,7 +47,7 @@ export default function Home() {
                     <div
                         ref={heroTextRef}
                         // Matches the video's fade to the still.
-                        className='transition-opacity duration-[2500ms] lg:opacity-40'
+                        className='transition-opacity duration-[2500ms] lg:opacity-75'
                     >
                         <motion.h1
                             className='text-4xl md:text-6xl font-bold mb-4'

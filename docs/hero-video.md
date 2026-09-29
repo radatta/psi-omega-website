@@ -147,7 +147,7 @@ The hero has no loop points to tune. It plays the whole file once, the `ended`
 event fades the `<video>` to `opacity-0` (2.5s ease-in-out CSS transition)
 while the still underneath slowly zooms out from `scale-110`, and the element
 stays mounted so Replay is instant from cache. A 1s fade read as a hard cut:
-most of it is the black end card dimming into a dark, tinted photo. The pause
+most of it is the black end card dimming into the photo. The pause
 button's slot turns into Replay at the end; the sound button stays, so "sound
 on, then Replay" plays with audio — `play()` runs synchronously inside the
 click, which keeps the user gesture on iOS. The `@akpsiscu` end card
@@ -159,9 +159,11 @@ starts over from a fresh, not-ended state.
 
 While the video plays, the headline, subtitle and Learn More (one block in
 `app/page.tsx`, passed to `HeroVideo` as `textRef`) brighten with it:
-`TEXT_START` 40% at 0:00, rising linearly to `TEXT_PEAK` 80% at `END_CARD`
-(61.2s), holding at 80% through the end card, then finishing to 100% as the
-still fades in. Replay eases it back to 40%. `HeroVideo` writes
+`TEXT_START` 75% at 0:00, rising linearly to `TEXT_PEAK` 90% at `END_CARD`
+(61.2s), holding at 90% through the end card, then finishing to 100% as the
+still fades in. Replay eases it back to 75%. `TEXT_START` must match the text
+block's `lg:opacity-75` class in `app/page.tsx` (the first-paint value, so
+nothing fades on load). `HeroVideo` writes
 `style.opacity` on that element from `timeupdate`/`seeked`/`ended` rather than
 through React state, so the page doesn't re-render several times a second; the
 block's 2.5s `transition-opacity` matches the video's fade to the still, and
@@ -169,6 +171,16 @@ smooths the ~4Hz `timeupdate` steps. Phones (no video) leave the style unset, so
 the text is always full. The three constants sit at the top of
 `hero-video.tsx`; if a new edit's end card starts elsewhere, update
 `END_CARD`.
+
+## Shading behind the text
+
+There is no full-screen tint over the video or the still (the old `bg-black/50`
+made the footage dull and soft-looking). Instead two gradients sit only where
+text is: a top fade behind the navbar, and a radial shade (70% black at the
+centre, clear at the edges) behind the headline, subtitle and Learn More. Much
+of the edit is shot against white backdrops, so those shades — together with
+the 75%+ text ramp — are what keep the white text readable. Lower either and
+check the white-backdrop shots (~0:09, ~0:40).
 
 ## Gotchas
 

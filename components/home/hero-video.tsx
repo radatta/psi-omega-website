@@ -25,9 +25,9 @@ const DESKTOP = '(min-width: 1024px)';
 // TEXT_PEAK by the end card, holds there through it, then finishes to full as
 // the still fades in. Set on the element directly so the page doesn't
 // re-render per frame. Keep TEXT_START in sync with the text block's
-// `lg:opacity-40` baseline in app/page.tsx, so the first paint doesn't fade.
-const TEXT_START = 0.4;
-const TEXT_PEAK = 0.8;
+// `lg:opacity-75` baseline in app/page.tsx, so the first paint doesn't fade.
+const TEXT_START = 0.75;
+const TEXT_PEAK = 0.9;
 // The dissolve into the @akpsiscu card starts at 61.21s.
 const END_CARD = 61.2;
 
@@ -157,7 +157,10 @@ export const HeroVideo = ({
                     aria-hidden='true'
                 />
             )}
-            <div className='absolute inset-0 bg-black/50'></div>
+            {/* Shade only where text sits — behind the nav and the centered
+                headline — so the rest of the footage stays bright. */}
+            <div className='absolute inset-x-0 top-0 h-40 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.5),transparent)]' />
+            <div className='absolute inset-0 bg-[radial-gradient(ellipse_60%_45%_at_50%_50%,rgba(0,0,0,0.7),transparent)]' />
             {desktop && (
                 <>
                     {/* A lowkey nudge toward the sound button while it plays muted */}
