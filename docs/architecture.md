@@ -20,6 +20,10 @@ lib/*_data.ts  ──>  app/*/page.tsx  ──>  components/
 There is no CMS, no database, and no build step beyond Next's own. Changing site
 content means editing a `.ts` file and committing it.
 
+Besides the Sheets read, every page loads Vercel Web Analytics
+(`<Analytics />` in `app/layout.tsx`), which reports page views to the Vercel
+dashboard. It only works once Analytics is enabled for the project in Vercel.
+
 ## Routes
 
 One directory per page under `app/`, each containing a `page.tsx`.

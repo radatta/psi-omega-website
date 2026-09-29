@@ -75,6 +75,11 @@ used in preview deployments as well.
 Set them for all three environments (Production, Preview, Development), or the
 database page will work in production and fail on every PR preview.
 
+**Vercel Web Analytics must be enabled** (Project → Analytics → Enable) for
+`<Analytics />` in `app/layout.tsx` to record anything. Until it is, the
+analytics script 404s and logs a console error on every page — harmless, but
+noisy.
+
 **Changing an environment variable does not redeploy the site.** The new value
 only takes effect on the next deployment. To apply it immediately, go to the
 Deployments tab and redeploy the latest one.
