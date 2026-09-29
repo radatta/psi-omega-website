@@ -192,7 +192,12 @@ export default function RushPage() {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                <Button asChild size='lg'>
+                                {/* Wraps on phones instead of overflowing the page */}
+                                <Button
+                                    asChild
+                                    size='lg'
+                                    className='h-auto min-h-20 max-w-full whitespace-normal px-6 py-4 text-center sm:px-10'
+                                >
                                     <Link
                                         href={
                                             currentRushData.rushApplication.link
@@ -249,7 +254,7 @@ export default function RushPage() {
                                 about!
                             </motion.h3>
                             <motion.div
-                                className='mx-auto w-full max-w-2xl aspect-[4/3]'
+                                className='mx-auto w-full max-w-4xl aspect-video'
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8, delay: 0.4 }}

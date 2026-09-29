@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Volume2 } from 'lucide-react';
+import { rushVideo } from '@/lib/rush_data';
 
-// Autoplays once the whole video is on screen, with sound if the browser
-// allows it (e.g. the visitor already clicked something on the site),
-// otherwise muted with a "Tap for sound" button. Pauses when it leaves.
-// A manual pause (or reaching the end) stops autoplay until they press play.
+// Autoplays muted once the whole video is on screen, with a "Tap for sound"
+// button; pauses when it leaves. A manual pause (or reaching the end) stops
+// autoplay until they press play.
 export default function RushVideo() {
     const videoRef = useRef<HTMLVideoElement>(null);
     const userPaused = useRef(false);
@@ -16,28 +16,42 @@ export default function RushVideo() {
     useEffect(() => {
         const video = videoRef.current;
         if (!video) return;
+        // React may not emit the muted attribute in server HTML.
+        video.muted = true;
 
+        // Always starts muted so autoplay is never blocked; the pill unmutes.
+        // Later auto-resumes keep whatever the visitor chose; if the browser
+        // refuses an unmuted resume, fall back to muted again.
         const autoplay = async () => {
-            video.muted = false;
             try {
                 await video.play();
             } catch (e) {
+                // AbortError means we paused it mid-load (scrolled away);
+                // retrying would leave it playing off screen.
                 if ((e as DOMException).name !== 'NotAllowedError') return;
                 video.muted = true;
                 video.play().catch(() => {});
-                setNeedsTap(true);
             }
+            if (video.muted) setNeedsTap(true);
         };
 
         const onPause = () => {
             if (autoPausing.current) autoPausing.current = false;
             else userPaused.current = true;
         };
-        const onPlay = () => (userPaused.current = false);
+        // A restart from the native controls after the end comes back muted,
+        // so offer the pill again.
+        const onPlay = () => {
+            userPaused.current = false;
+            if (video.muted) setNeedsTap(true);
+        };
         const onVolume = () => !video.muted && setNeedsTap(false);
+        // A pill over a finished video would restart it on click.
+        const onEnded = () => setNeedsTap(false);
         video.addEventListener('pause', onPause);
         video.addEventListener('play', onPlay);
         video.addEventListener('volumechange', onVolume);
+        video.addEventListener('ended', onEnded);
 
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -56,6 +70,7 @@ export default function RushVideo() {
             video.removeEventListener('pause', onPause);
             video.removeEventListener('play', onPlay);
             video.removeEventListener('volumechange', onVolume);
+            video.removeEventListener('ended', onEnded);
         };
     }, []);
 
@@ -73,7 +88,7 @@ export default function RushVideo() {
             <video
                 ref={videoRef}
                 className='w-full h-full rounded-lg shadow-lg bg-black'
-                src='/videos/rush.mp4'
+                src={rushVideo}
                 aria-label='Alpha Kappa Psi rush video'
                 muted
                 controls

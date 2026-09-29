@@ -1,3 +1,7 @@
+// Played by the home hero and the rush page. New video = new filename (the
+// file is cached as immutable); recipe in docs/hero-video.md.
+export const rushVideo = '/videos/rush-fall-26-v2.mp4';
+
 export const currentRushData = {
     rushName: 'Fall Rush 2026',
     rushDate: 'September 28th - October 2nd',
