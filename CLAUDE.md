@@ -56,6 +56,7 @@ The thing that actually gets edited every term. All of it is plain TypeScript �
 | ------------------------------------------------------ | -------------------------------------------------- |
 | Exec committee, committee chairs, pledge-class rosters | `lib/brothers_data.ts`                             |
 | Rush dates, flyer, application link                    | `lib/rush_data.ts`                                 |
+| Rush video (home hero + rush page player)              | `public/videos/` + `docs/hero-video.md`            |
 | Alumni employer logos                                  | `lib/legacy_data.ts` + `public/images/companies/`  |
 | Memories photo wall                                    | `lib/memories_data.ts` + `public/images/memories/` |
 | Event galleries                                        | inline arrays in `app/events/page.tsx`             |
@@ -72,7 +73,7 @@ Two contracts to respect:
 Next.js App Router (Vercel) ── /database/api/sheet ──> Google Sheets API (service account, readonly)
 ```
 
-Static pages rendered from `lib/` data; the one runtime dependency is the Sheets read. All eight **pages** are `'use client'`, so `motion` animations and hooks work anywhere but no page can export `metadata` and nothing benefits from server rendering. The server components are `app/layout.tsx` (which is why it, and only it, can export `metadata`), `app/not-found.tsx`, `app/sitemap.ts` and `app/robots.ts` — don't assume a file is one just because it lacks a directive, check it.
+Static pages rendered from `lib/` data; the one runtime dependency is the Sheets read (plus Vercel Web Analytics, `<Analytics />` in `app/layout.tsx`). All eight **pages** are `'use client'`, so `motion` animations and hooks work anywhere but no page can export `metadata` and nothing benefits from server rendering. The server components are `app/layout.tsx` (which is why it, and only it, can export `metadata`), `app/not-found.tsx`, `app/sitemap.ts` and `app/robots.ts` — don't assume a file is one just because it lacks a directive, check it.
 
 Five env vars (see `.env.example`). Four are used only by the two `/database` API routes:
 

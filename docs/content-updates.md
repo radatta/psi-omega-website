@@ -321,11 +321,15 @@ Update all seven values every term:
 | `rushApplication.link`    | Google Form URL for the application          |
 | `rushApplication.dueDate` | Free text deadline                           |
 
-Two things to get right:
+Three things to get right:
 
 - **Replace the flyer image.** Drop the new flyer at
   `public/images/rush/rush-flyer.png`, same filename, and it's picked up
   automatically. If you use a different filename, update `rushFlyer` to match.
+- **Replace the rush video.** New filename every time it changes
+  (`rush-<term>.mp4`, or `rush-<term>-v2.mp4` for a re-cut), point
+  `rushVideo` in `lib/rush_data.ts` at it, and delete the old file. Full recipe
+  in [hero-video.md](hero-video.md).
 - **Test both Google Form links** by clicking them on the running site. A form
   set to "not accepting responses" still returns a working-looking page — open
   it and confirm you can actually fill it out.
