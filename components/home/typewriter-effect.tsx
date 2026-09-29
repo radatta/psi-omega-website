@@ -49,15 +49,18 @@ export const TypewriterEffect = ({
                 }
             });
 
+            const fullText = characters.map((c) => c.char).join('');
             let charIndex = 0;
-            let timer: NodeJS.Timeout;
+            let timer: ReturnType<typeof setTimeout>;
 
-            // Function to type the next character
+            // Show a prefix of the full text rather than appending, so a
+            // restarted run can never type the headline twice.
+            setDisplayedText('');
             const typeNextChar = () => {
                 if (charIndex < characters.length) {
                     const currentChar = characters[charIndex];
-                    setDisplayedText((prev) => prev + currentChar.char);
                     charIndex++;
+                    setDisplayedText(fullText.slice(0, charIndex));
 
                     // If the character has a pauseAfter property, pause for that duration
                     if (currentChar.pauseAfter) {
@@ -71,10 +74,10 @@ export const TypewriterEffect = ({
                 }
             };
 
-            // Start the typing after the initial delay
-            setTimeout(() => {
-                typeNextChar();
-            }, delay);
+            // Start the typing after the initial delay. Both timers are
+            // cleared on cleanup; the start one used to leak and run a second
+            // typing loop alongside the first.
+            timer = setTimeout(typeNextChar, delay);
 
             return () => clearTimeout(timer);
         }
