@@ -20,10 +20,16 @@ referenced once as `rushVideo` in `lib/rush_data.ts`. Using one file means a
 visitor who lands on the home page and clicks through to the rush page already
 has it cached.
 
-If the hero video can't play — autoplay blocked (Safari's "Never Auto-Play"),
-or the file fails to load — the hero shows its finished state instead: the
-still, full-brightness text, and Replay (whose click is a real gesture, so it
-plays).
+If autoplay is blocked — Safari in **Low Power Mode** blocks it even for muted
+video, as does Safari's per-site "Never Auto-Play" — the video waits paused on
+its first frame, and after 1.5s a small down arrow bounces above the Play
+button until it has actually played. As it refuses, Safari still fires `play`,
+`playing` and then `pause`, so "started" means `currentTime` actually advanced
+(`timeupdate` past 0.1s), not that a `playing` event arrived. (An earlier
+version switched to the finished state here; the `pause` sync undid it,
+leaving a bare Play button.) If the file fails to
+load, the hero shows its finished state instead: the still and
+full-brightness text.
 
 ## Phones get the still
 
