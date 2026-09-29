@@ -7,7 +7,9 @@ One video file plays in two places:
   card included, then fades out over 2.5s to the `hero.png` still. A sound
   button and a pause button sit bottom-right; once it ends the pause button
   becomes Replay, which restarts it with whatever sound setting the visitor
-  chose.
+  chose. While it plays muted, a small arrow fades in after 2s left of the
+  sound button and nudges toward it, so visitors notice there's audio; it
+  disappears once sound is on, the video is paused, or it ends.
 - **Rush page** (`components/rush/rush-video.tsx`) — a normal player that plays
   the whole thing once, end card included. It autoplays muted once the whole
   player is on screen, shows a "Tap for sound" pill, pauses when scrolled off

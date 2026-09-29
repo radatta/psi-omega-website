@@ -2,7 +2,15 @@
 
 import Image from 'next/image';
 import { type RefObject, useEffect, useRef, useState } from 'react';
-import { Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import {
+    ArrowRight,
+    Pause,
+    Play,
+    RotateCcw,
+    Volume2,
+    VolumeX,
+} from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { rushVideo } from '@/lib/rush_data';
 
@@ -152,6 +160,32 @@ export const HeroVideo = ({
             <div className='absolute inset-0 bg-black/50'></div>
             {desktop && (
                 <>
+                    {/* A lowkey nudge toward the sound button while it plays muted */}
+                    <AnimatePresence>
+                        {muted && !done && !paused && (
+                            <motion.div
+                                key='sound-hint'
+                                className='pointer-events-none absolute bottom-8 right-[7.25rem] p-2 text-white/70'
+                                aria-hidden='true'
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1, x: [0, 4, 0] }}
+                                exit={{
+                                    opacity: 0,
+                                    transition: { duration: 0.3 },
+                                }}
+                                transition={{
+                                    opacity: { duration: 0.6, delay: 2 },
+                                    x: {
+                                        duration: 1.4,
+                                        repeat: Infinity,
+                                        ease: 'easeInOut',
+                                    },
+                                }}
+                            >
+                                <ArrowRight size={18} />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                     <button
                         type='button'
                         onClick={toggleSound}
