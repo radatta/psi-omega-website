@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { type RefObject, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
+    ArrowDown,
     ArrowRight,
     Pause,
     Play,
@@ -41,6 +42,9 @@ export const HeroVideo = ({
     const [paused, setPaused] = useState(true);
     const [muted, setMuted] = useState(true);
     const [done, setDone] = useState(false);
+    // False until the video has actually played, e.g. while autoplay is
+    // blocked (Safari in Low Power Mode) and it waits on the Play button.
+    const [started, setStarted] = useState(false);
 
     // Decided after mount so the server and first client render agree.
     useEffect(() => {
@@ -49,6 +53,7 @@ export const HeroVideo = ({
         const update = () => {
             setDesktop(query.matches);
             setDone(false);
+            setStarted(false);
         };
         update();
         query.addEventListener('change', update);
@@ -71,17 +76,21 @@ export const HeroVideo = ({
         const setText = (opacity: string) => {
             if (textRef?.current) textRef.current.style.opacity = opacity;
         };
-        // Autoplay blocked (Safari "Never Auto-Play") or the file failed:
-        // show the finished state — the still, full-brightness text, and
-        // Replay, whose click is a real gesture.
+        // If autoplay is blocked it stays paused on the first frame, and an
+        // arrow points at Play. If the file fails to load, show the finished
+        // state instead: the still and full-brightness text.
+        video.play().catch(() => {});
         const fallback = () => {
             setDone(true);
             setText('1');
         };
-        video.play().catch((e: DOMException) => {
-            if (e.name === 'NotAllowedError') fallback();
-        });
         video.addEventListener('error', fallback);
+        // Started means time actually advanced: Safari can fire `play` and
+        // `playing` while refusing autoplay, so events alone aren't proof.
+        const onPlaying = () => {
+            if (video.currentTime > 0.1) setStarted(true);
+        };
+        video.addEventListener('timeupdate', onPlaying);
         // `playing` fires after Replay's seek to 0 lands, in case `ended` was
         // still true when `play` fired.
         const events = ['play', 'playing', 'pause', 'ended'];
@@ -98,6 +107,7 @@ export const HeroVideo = ({
             events.forEach((e) => video.removeEventListener(e, sync));
             textEvents.forEach((e) => video.removeEventListener(e, updateText));
             video.removeEventListener('error', fallback);
+            video.removeEventListener('timeupdate', onPlaying);
             // Phones (no video) keep the text at full brightness.
             setText('');
         };
@@ -186,6 +196,32 @@ export const HeroVideo = ({
                                 }}
                             >
                                 <ArrowRight size={24} strokeWidth={2.25} />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                    {/* Autoplay blocked: point at Play until it has started */}
+                    <AnimatePresence>
+                        {!started && paused && !done && (
+                            <motion.div
+                                key='play-hint'
+                                className='pointer-events-none absolute bottom-[4.75rem] right-8 p-[5px] text-white/70'
+                                aria-hidden='true'
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1, y: [0, 5, 0] }}
+                                exit={{
+                                    opacity: 0,
+                                    transition: { duration: 0.3 },
+                                }}
+                                transition={{
+                                    opacity: { duration: 0.6, delay: 1.5 },
+                                    y: {
+                                        duration: 1.4,
+                                        repeat: Infinity,
+                                        ease: 'easeInOut',
+                                    },
+                                }}
+                            >
+                                <ArrowDown size={24} strokeWidth={2.25} />
                             </motion.div>
                         )}
                     </AnimatePresence>
