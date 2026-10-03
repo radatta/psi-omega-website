@@ -102,7 +102,7 @@ alphaOmicron … alphaUpsilon: { name, major, year }[] // rendered with photos
 // lib/rush_data.ts
 currentRushData: {
     rushName, rushDate, rushWeek, rushFlyer, rushMailingList,
-    rushApplication: { link, dueDate }
+    rushApplication: { link, dueDate, closedMessage }
 }
 
 // lib/legacy_data.ts

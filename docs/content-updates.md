@@ -305,21 +305,23 @@ export const currentRushData = {
     rushApplication: {
         link: 'https://docs.google.com/forms/d/e/1FAIpQLS.../viewform',
         dueDate: 'January 14th @ 5:00 PM',
+        closedMessage: 'Application will be next week!',
     },
 };
 ```
 
-Update all seven values every term:
+Update all eight values every term:
 
-| Field                     | Notes                                        |
-| ------------------------- | -------------------------------------------- |
-| `rushName`                | Also used as the flyer's alt text            |
-| `rushDate`                | Free text, shown as written                  |
-| `rushWeek`                | Free text, e.g. `'Week 2 of Winter Quarter'` |
-| `rushFlyer`               | Path under `public/` — replace the image too |
-| `rushMailingList`         | Google Form URL for the interest list        |
-| `rushApplication.link`    | Google Form URL for the application          |
-| `rushApplication.dueDate` | Free text deadline                           |
+| Field                           | Notes                                            |
+| ------------------------------- | ------------------------------------------------ |
+| `rushName`                      | Also used as the flyer's alt text                |
+| `rushDate`                      | Free text, shown as written                      |
+| `rushWeek`                      | Free text, e.g. `'Week 2 of Winter Quarter'`     |
+| `rushFlyer`                     | Path under `public/` — replace the image too     |
+| `rushMailingList`               | Google Form URL for the interest list            |
+| `rushApplication.link`          | Google Form URL for the application              |
+| `rushApplication.dueDate`       | Free text deadline                               |
+| `rushApplication.closedMessage` | Shown instead of the button when `link` is empty |
 
 Three things to get right:
 
@@ -335,8 +337,8 @@ Three things to get right:
   it and confirm you can actually fill it out.
 
 Setting `rushApplication.link` to an empty string `''` hides the application
-button. That's the correct way to take the application down between terms —
-don't delete the field.
+button and shows `closedMessage` in its place. That's the correct way to take
+the application down between terms — don't delete the field.
 
 ## Memories photo wall
 
