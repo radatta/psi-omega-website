@@ -222,8 +222,11 @@ export default function RushPage() {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                <p className='text-xl font-semibold'>
-                                    Application will be next week!
+                                <p className='text-xl font-semibold text-center'>
+                                    {
+                                        currentRushData.rushApplication
+                                            .closedMessage
+                                    }
                                 </p>
                             </motion.div>
                         )}
