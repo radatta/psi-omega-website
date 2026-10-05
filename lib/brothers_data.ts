@@ -54,7 +54,6 @@ export const alphaPi = [
         major: 'Accounting & Information Systems',
         year: '2027',
     },
-    { name: 'Pranav Bhargava', major: 'Marketing', year: '2027' },
     {
         name: 'Rayhan Rani',
         major: 'Computer Science & Engineering',
